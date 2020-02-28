@@ -13,8 +13,6 @@ public class _PokerGameHUD : MonoBehaviour
 
     //public Button[] inviteButtons = new Button[6];
     public Button btnChat;
-    public Button btnMission;
-    public Image imgBgMission;
     public Sprite sprClosed;
     public Sprite sprOpened;
 
@@ -38,7 +36,6 @@ public class _PokerGameHUD : MonoBehaviour
     private void Start()
     {
         //transform.parent.gameObject.SetActive(false);
-        btnMission.onClick.AddListener (OnMission);
         Hide();
     }
 

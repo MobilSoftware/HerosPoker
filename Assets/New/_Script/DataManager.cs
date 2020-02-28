@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public enum ConnectionStrength
 {
@@ -35,6 +37,10 @@ public class DataManager : MonoBehaviour
         }
     }
 
+    public TMP_InputField ipfNickname;
+    public Button btnSet;
+    public Button btnPlay;
+
     public string prototypeBet;
 
     public int id;
@@ -45,19 +51,35 @@ public class DataManager : MonoBehaviour
 
     private void Start ()
     {
-#if UNITY_EDITOR
-        id = 10;
-        displayName = "ProtoEditor";
+        btnSet.onClick.AddListener (OnSet);
+        btnPlay.gameObject.SetActive (false);
+    }
+
+    public void OnSet ()
+    {
+        if (ipfNickname.text == string.Empty)
+        {
+            displayName = "NoName";
+        }
+        else
+        {
+            displayName = ipfNickname.text;
+        }
+
+        id = Random.Range (1, 10000);
+        displayName = id + "_" + displayName;
+        if (displayName.Length > 9)
+        {
+            displayName = displayName.Substring (0, 7);
+            displayName = displayName + "...";
+        }
         ownedGold = 50000;
-        PhotonNetwork.player.NickName = "1000";
-#else
-        id = 20;
-        displayName = "ProtoEmulator";
-        ownedGold = 30000;
-        PhotonNetwork.player.NickName = "2000";
-#endif
+        PhotonNetwork.player.NickName = id.ToString ();
 
         PhotonNetwork.ConnectUsingSettings ("v1.0");
         PhotonRoomInfoManager.instance.InitialiseCardGameScripts ();
+        prototypeBet = "20";
+        btnSet.gameObject.SetActive (false);
+        btnPlay.gameObject.SetActive (true);
     }
 }

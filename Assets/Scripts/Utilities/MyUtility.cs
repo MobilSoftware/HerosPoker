@@ -133,7 +133,7 @@ public static class MyUtility
 
     public static string GetRankTitleByIndex(int rankIndex)
     {
-        string[] strRanks = { "ID_Rank01", "ID_Rank02", "ID_Rank03", "ID_Rank04", "ID_Rank05", "ID_Rank06", "ID_Rank07" };
+        string[] strRanks = { "ID_Rank01", "ID_Rank02", "ID_Rank03", "ID_Rank04", "ID_Rank05", "ID_Rank06", "ID_Rank07", "ID_Rank08" };
 
         if(rankIndex < strRanks.Length)
             return LocalisationManager.instance.GetText(strRanks[rankIndex]);

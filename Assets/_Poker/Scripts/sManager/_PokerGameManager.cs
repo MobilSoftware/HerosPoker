@@ -309,6 +309,9 @@ public class _PokerGameManager : MonoBehaviour
 
         yield return _WFSUtility.wfs2;
 
+        //DEBUG ONLY
+        yield return _WFSUtility.wfs5;
+
         potOnTable.Reverse ();
 
         for (int x = potOnTable.Count - 1; x >= 0; x--)

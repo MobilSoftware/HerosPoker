@@ -88,11 +88,7 @@ public class RoomInfoManager : MonoBehaviour
 
         //LoginSceneManager.Instance.uiBusyIndicator.Show(true);
 
-        byte expectedPlayer = 4;
-        if (gameType == GameType.TexasPoker)
-            expectedPlayer = 7;
-        if (gameType == GameType.CapsaSusun)
-            expectedPlayer = 4;
+        byte expectedPlayer = 8;
 
         GlobalVariables.roomOptions.MaxPlayers = expectedPlayer;
         GlobalVariables.roomOptions.IsOpen = true;
@@ -150,7 +146,7 @@ public class RoomInfoManager : MonoBehaviour
         string gametype = GlobalVariables.gameType.ToString();
         //LoginSceneManager.Instance.uiBusyIndicator.Show(true);
 
-        byte expectedPlayer = 7;
+        byte expectedPlayer = 8;
 
         GlobalVariables.roomOptions.MaxPlayers = expectedPlayer;
         GlobalVariables.roomOptions.IsOpen = true;
@@ -207,11 +203,12 @@ public class RoomInfoManager : MonoBehaviour
     {
         //HomeSceneManager.Instance.myHomeMenuReference.uiHome.myAvatar.HideAvatar();
         Debug.LogError ("joined room");
+        DataManager.instance.btnPlay.gameObject.SetActive (false);
         ExitGames.Client.Photon.Hashtable properties = PhotonNetwork.room.CustomProperties;
         if (!properties.ContainsKey(PhotonEnums.Room.Slots))
         {
             if (GlobalVariables.gameType == GameType.TexasPoker)
-                PhotonUtility.SetRoomProperties(PhotonEnums.Room.Slots, new bool[7] { false, false, false, false, false, false, false });
+                PhotonUtility.SetRoomProperties(PhotonEnums.Room.Slots, new bool[8] { false, false, false, false, false, false, false, false });
         }        
 
         string strBetType = PhotonUtility.GetRoomProperties<string>(PhotonEnums.Room.BetType);

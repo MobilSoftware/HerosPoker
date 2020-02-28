@@ -27,7 +27,7 @@ public class MyCouponPokerUI : MonoBehaviour
     public void Hide ()
     {
         gameObject.SetActive (false);
-        _PokerGameHUD.instance.imgBgMission.sprite = _PokerGameHUD.instance.sprClosed;
+        //_PokerGameHUD.instance.imgBgMission.sprite = _PokerGameHUD.instance.sprClosed;
     }
 
     private void MisssionCompleted (int index )
