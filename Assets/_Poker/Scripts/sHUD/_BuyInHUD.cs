@@ -34,7 +34,8 @@ public class _BuyInHUD : MonoBehaviour
     void SetMinMax()
     {
         minBuy = GlobalVariables.MinBetAmount * 10;
-        myMoney = DataManager.instance.ownedGold;
+        //myMoney = DataManager.instance.ownedGold;
+        myMoney = PlayerData.owned_gold;
         maxBuy = myMoney > minBuy * 20 ? minBuy * 20 : myMoney;
 
         if (myMoney < maxBuy)
@@ -73,7 +74,7 @@ public class _BuyInHUD : MonoBehaviour
     {
         GlobalVariables.bQuitOnNextRound = false;
 
-        StartCoroutine(MenuManager.instance.uiPause.LoadMenu ());
+        StartCoroutine(SePokerManager.instance.uiPause.LoadMenu ());
     }
 
     void ReturnScrollValue(float _val)

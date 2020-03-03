@@ -128,7 +128,7 @@ public class PhotonTexasPokerManager : PunBehaviour
         if (PhotonNetwork.playerList.Length < 2)
         {
             RequestToSit ();
-            MenuManager.instance.uiWaitingPlayers.Show ();
+            SePokerManager.instance.uiWaitingPlayers.Show ();
         }
         else
         {
@@ -137,7 +137,7 @@ public class PhotonTexasPokerManager : PunBehaviour
             SyncMatchOnGoingWithProperties ();
             Invoke ("RequestToSit", 4f);
 
-            MenuManager.instance.uiWaitingNextRound.Show ();
+            SePokerManager.instance.uiWaitingNextRound.Show ();
         }
     }
 
@@ -166,12 +166,15 @@ public class PhotonTexasPokerManager : PunBehaviour
 
         //Check whether the game is already started
         ExitGames.Client.Photon.Hashtable playerProperties = PhotonNetwork.player.CustomProperties;
-        playerProperties[PhotonEnums.Player.ContentURL] = DataManager.instance.hero.id;
+        //playerProperties[PhotonEnums.Player.ContentURL] = DataManager.instance.hero.id;
+        playerProperties[PhotonEnums.Player.ContentURL] = PlayerData.hero_id;
 
-        playerProperties[PhotonEnums.Player.PlayerID] = DataManager.instance.id;
+        //playerProperties[PhotonEnums.Player.PlayerID] = DataManager.instance.id;
+        playerProperties[PhotonEnums.Player.PlayerID] = PlayerData.id;
         playerProperties[PhotonEnums.Player.IsBot] = false;
 
-        playerProperties[PhotonEnums.Player.Name] = DataManager.instance.displayName;
+        //playerProperties[PhotonEnums.Player.Name] = DataManager.instance.displayName;
+        playerProperties[PhotonEnums.Player.Name] = PlayerData.display_name;
         //playerProperties[PhotonEnums.Player.Gender] = DataManager.instance.genderID;
         playerProperties[PhotonEnums.Player.Gender] = 0;
         //playerProperties[PhotonEnums.Player.PictureURL] = DataManager.instance.displayPictureURL;
@@ -455,7 +458,7 @@ public class PhotonTexasPokerManager : PunBehaviour
     protected void PrepareRoundRPC ()
     {
         msgDelayPoker = ""; //From Next Game Round
-        MenuManager.instance.uiRoundRestart.Show ();
+        SePokerManager.instance.uiRoundRestart.Show ();
     }
 
     public virtual void StartRound () //Only Masterr
@@ -480,7 +483,8 @@ public class PhotonTexasPokerManager : PunBehaviour
         yield return _WFSUtility.wfs1;
 
         int counter = 0;
-        while (!DataManager.instance.pokerHandler.isSetup)
+        //while (!DataManager.instance.pokerHandler.isSetup)
+        while (!PokerData.is_setup)
         {
 
             if (counter >= 5)
@@ -495,13 +499,15 @@ public class PhotonTexasPokerManager : PunBehaviour
         {
             int[] playerIDs = GetOtherPlayerID (PhotonEnums.Player.Active);
 
-            DataManager.instance.pokerHandler.Generate ();
+            //DataManager.instance.pokerHandler.Generate ();
+            PokerData.Generate ();
             //HomeSceneManager.Instance.StartPoker(PhotonNetwork.room.Name, GlobalVariables.bIsCoins ? GlobalVariables.MinBetAmount : 0, GlobalVariables.bIsCoins ? 0 : GlobalVariables.MinBetAmount, playerIDs[0], playerIDs[1], playerIDs[2], playerIDs[3], playerIDs[4], playerIDs[5], playerIDs[6], 0, 0, 0, HomeSceneManager.Instance.myPlayerData.player.player_id);
 
             yield return _WFSUtility.wfs3;
 
             counter = 0;
-            while (!DataManager.instance.pokerHandler.isSetup)
+            //while (!DataManager.instance.pokerHandler.isSetup)
+            while (!PokerData.is_setup)
             {
                 if (counter >= 5)
                     break;
@@ -525,7 +531,8 @@ public class PhotonTexasPokerManager : PunBehaviour
         }
 
 
-        if (DataManager.instance.pokerHandler.cards.Length == 0)
+        //if (DataManager.instance.pokerHandler.cards.Length == 0)
+        if (PokerData.cards.Length == 0)
         {
             ForceStopTheMatch();
             yield break;
@@ -540,7 +547,8 @@ public class PhotonTexasPokerManager : PunBehaviour
         StopAllCoroutines ();
 
         msgDelayPoker = ""; //From StartRound
-        int[] cardPack = DataManager.instance.pokerHandler.cards;
+        //int[] cardPack = DataManager.instance.pokerHandler.cards;
+        int[] cardPack = PokerData.cards;
         int[] cardTable = new int[5] { cardPack[0], cardPack[1], cardPack[2], cardPack[3], cardPack[4] };
         _PokerGameManager.instance.InstallCardTable (cardTable);
 
@@ -704,14 +712,14 @@ public class PhotonTexasPokerManager : PunBehaviour
         {
             GlobalVariables.bQuitOnNextRound = false;
             ImLeaving();
-            StartCoroutine(MenuManager.instance.uiPause.LoadMenu ());
+            StartCoroutine(SePokerManager.instance.uiPause.LoadMenu ());
             yield break;
         }
         else if (GlobalVariables.bSwitchTableNextRound)
         {
             GlobalVariables.bSwitchTableNextRound = false;
             ImLeaving();
-            StartCoroutine(MenuManager.instance.uiPause.LoadSwitchTable());
+            StartCoroutine(SePokerManager.instance.uiPause.LoadSwitchTable());
             yield break;
         }
 
@@ -719,7 +727,7 @@ public class PhotonTexasPokerManager : PunBehaviour
         {
             GlobalVariables.bQuitOnNextRound = false;
             ImLeaving ();
-            StartCoroutine (MenuManager.instance.uiPause.LoadMenu ());
+            StartCoroutine (SePokerManager.instance.uiPause.LoadMenu ());
             yield break;
         }
         else if (bMoneyEnuf <= _PokerGameManager.startBet)
@@ -730,7 +738,7 @@ public class PhotonTexasPokerManager : PunBehaviour
             {
                 GlobalVariables.bQuitOnNextRound = false;
                 ImLeaving ();
-                StartCoroutine (MenuManager.instance.uiPause.LoadMenu ());
+                StartCoroutine (SePokerManager.instance.uiPause.LoadMenu ());
 
                 //PhotonNetwork.Disconnect();
                 //Application.LoadLevel("Menu");
@@ -913,14 +921,14 @@ public class PhotonTexasPokerManager : PunBehaviour
         if (PhotonNetwork.room == null)
             yield break;
 
-        MenuManager.instance.uiRoundRestart.Hide ();
+        SePokerManager.instance.uiRoundRestart.Hide ();
         yield return _WFSUtility.wfs1;
 
         int readycount = CheckPlayerReady ();
 
         if (readycount < 2)
             if (GlobalVariables.bInGame)
-                MenuManager.instance.uiWaitingPlayers.Show ();
+                SePokerManager.instance.uiWaitingPlayers.Show ();
 
         while (PhotonNetwork.room != null && readycount < 2)
         {
@@ -930,7 +938,7 @@ public class PhotonTexasPokerManager : PunBehaviour
 
         if (PhotonNetwork.room != null) //player ready to start
         {
-            MenuManager.instance.uiWaitingPlayers.Hide ();
+            SePokerManager.instance.uiWaitingPlayers.Hide ();
             PrepareRound ();
         }
     }
@@ -1095,7 +1103,8 @@ public class PhotonTexasPokerManager : PunBehaviour
     [PunRPC]
     protected virtual void SetMyStartPokerRPC ( int roundID, string roomBet, string strCards)
     {
-        DataManager.instance.pokerHandler.Setup (roundID, roomBet, strCards);
+        //DataManager.instance.pokerHandler.Setup (roundID, roomBet, strCards);
+        PokerData.Setup (roundID, roomBet, strCards);
     }
 
 
@@ -1445,7 +1454,7 @@ public class PhotonTexasPokerManager : PunBehaviour
     {
         //If the player's in game then quit message
         if (PhotonNetwork.room != null)
-            MenuManager.instance.uiMessageBox.Show(gameObject, "ID_ConnectionError", MessageBoxType.OK, 2, true);
+            SePokerManager.instance.uiMessageBox.Show(gameObject, "ID_ConnectionError", MessageBoxType.OK, 2, true);
     }
 
     public override void OnMasterClientSwitched(PhotonPlayer newMasterClient)
@@ -1463,7 +1472,7 @@ public class PhotonTexasPokerManager : PunBehaviour
         Logger.D (codeAndMsg[0] + " OnPhotonRandomJoinFailed : " + codeAndMsg[1]);
         //LoginSceneManager.Instance.uiBusyIndicator.Hide ();
 
-        MenuManager.instance.uiMessageBox.Show (null, codeAndMsg[0].ToString () == "32765" ? "ID_GameFull" : "ID_GameClosed");
+        SePokerManager.instance.uiMessageBox.Show (null, codeAndMsg[0].ToString () == "32765" ? "ID_GameFull" : "ID_GameClosed");
         //32758 Game Doesn't exist
         //32765 Game Full
     }
@@ -1524,10 +1533,12 @@ public class PhotonTexasPokerManager : PunBehaviour
 
         if (_PokerGameManager.matchOnGoing)
         {
-            if (DataManager.instance.pokerHandler.isSetup)
+            //if (DataManager.instance.pokerHandler.isSetup)
+            if (PokerData.is_setup)
             {
-                PokerHandler ph = DataManager.instance.pokerHandler;
-                photonView.RPC (PhotonEnums.RPC.SetMyStartPokerRPC, info.sender, ph.poker_round_id, ph.room_bet, ph.strCards); //Bombardir JSon Start gpp
+                //PokerHandler ph = DataManager.instance.pokerHandler;
+                //photonView.RPC (PhotonEnums.RPC.SetMyStartPokerRPC, info.sender, ph.poker_round_id, ph.room_bet, ph.strCards); //Bombardir JSon Start gpp
+                photonView.RPC (PhotonEnums.RPC.SetMyStartGameRPC, info.sender, PokerData.poker_round_id, PokerData.room_bet, PokerData.str_cards);
             }
 
             SendInfoOnMatch (info.sender);
@@ -1585,7 +1596,7 @@ public class PhotonTexasPokerManager : PunBehaviour
         Hashtable dataInfo = syncInfos.toHashtable ();
         _PokerGameManager.matchOnGoing = true;
 
-        MenuManager.instance.uiWaitingNextRound.Hide ();
+        SePokerManager.instance.uiWaitingNextRound.Hide ();
 
         //Region Player 
         stringIndex = (string) dataInfo["slotCurrentPlayers"];
@@ -1659,7 +1670,7 @@ public class PhotonTexasPokerManager : PunBehaviour
 
             if (diffVal > _timeLeftforPause)
             {
-                MenuManager.instance.uiMessageBox.Show (gameObject, "ID_ConnectionError", MessageBoxType.OK, 2, true);
+                SePokerManager.instance.uiMessageBox.Show (gameObject, "ID_ConnectionError", MessageBoxType.OK, 2, true);
             }
         }
     }
@@ -1667,16 +1678,18 @@ public class PhotonTexasPokerManager : PunBehaviour
     [PunRPC]
     void RPC_ForceQuitMatch()
     {
-        MenuManager.instance.uiMessageBox.Show (gameObject, "ID_Timeout", MessageBoxType.OK, 1, true);        
+        SePokerManager.instance.uiMessageBox.Show (gameObject, "ID_Timeout", MessageBoxType.OK, 1, true);        
     }
 
     private void onMessageBoxOKClicked(int returnedCode)
     {
         if (returnedCode == 1)
         {
+
+            Debug.LogError ("Quit Game 99");
             GlobalVariables.bQuitOnNextRound = false;
             ImLeaving ();
-            StartCoroutine (MenuManager.instance.uiPause.LoadMenu ());
+            StartCoroutine (SePokerManager.instance.uiPause.LoadMenu ());
         }
         else if (returnedCode == 2)
             SceneManager.LoadScene ("Menu");

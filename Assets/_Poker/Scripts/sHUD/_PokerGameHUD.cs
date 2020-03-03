@@ -49,7 +49,7 @@ public class _PokerGameHUD : MonoBehaviour
             if (GlobalVariables.bInGame)
             {
                 SceneManager.LoadScene("Menu");
-                MenuManager.instance.uiMessageBox.Show(null, "ID_PhotonDisconnectedMessage");
+                SePokerManager.instance.uiMessageBox.Show(null, "ID_PhotonDisconnectedMessage");
 
                 //int widthR = HomeSceneManager.Instance.fsResolution.width;
                 //int heightR = HomeSceneManager.Instance.fsResolution.height;
@@ -110,7 +110,7 @@ public class _PokerGameHUD : MonoBehaviour
         if (lowConnectionCount >= 15 && GlobalVariables.bInGame)
         {
             GlobalVariables.bQuitOnNextRound = false;
-            StartCoroutine(MenuManager.instance.uiPause.LoadMenu ());
+            StartCoroutine(SePokerManager.instance.uiPause.LoadMenu ());
             MenuPhotonNetworkManager.instance.Disconnect();
             lowConnectionCount = 0;
         }
@@ -155,7 +155,7 @@ public class _PokerGameHUD : MonoBehaviour
         InvokeRepeating("CheckConnection", 0.0f, 2.0f);
     }
 
-    public void onPause() { MenuManager.instance.uiPause.Show(); }
+    public void onPause() { SePokerManager.instance.uiPause.Show(); }
 
     public void onInvite()
     {

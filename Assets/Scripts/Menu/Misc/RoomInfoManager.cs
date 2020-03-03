@@ -203,7 +203,7 @@ public class RoomInfoManager : MonoBehaviour
     {
         //HomeSceneManager.Instance.myHomeMenuReference.uiHome.myAvatar.HideAvatar();
         Debug.LogError ("joined room");
-        DataManager.instance.btnPlay.gameObject.SetActive (false);
+        //DataManager.instance.btnPlay.gameObject.SetActive (false);
         ExitGames.Client.Photon.Hashtable properties = PhotonNetwork.room.CustomProperties;
         if (!properties.ContainsKey(PhotonEnums.Room.Slots))
         {
@@ -267,12 +267,13 @@ public class RoomInfoManager : MonoBehaviour
         {
             if (GlobalVariables.bIsCoins)
             {
-                long lCredit = DataManager.instance.ownedGold;
+                //long lCredit = DataManager.instance.ownedGold;
+                long lCredit = PlayerData.owned_gold;
                 if (lCredit < GlobalVariables.MinBetAmount)
                 {
                     string strTitle = LocalisationManager.instance.GetText("ID_Warning");
                     string strDesc = string.Format("Koin tidak cukup untuk masuk ke ruangan. Anda butuh minimum {0} koin untuk bermain di room ini.", GlobalVariables.MinBetAmount.toShortCurrency());
-                    MenuManager.instance.uiMessageBox.Show(gameObject, strDesc, MessageBoxType.OK);
+                    SePokerManager.instance.uiMessageBox.Show(gameObject, strDesc, MessageBoxType.OK);
 
                     DisconnectFromSwitchRoom();
 

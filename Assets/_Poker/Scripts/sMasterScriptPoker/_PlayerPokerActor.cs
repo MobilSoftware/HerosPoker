@@ -783,7 +783,7 @@ public class _PlayerPokerActor : MonoBehaviour
         chatItem.SetActive(false);
 
         foreach(Image i in imgBetAmount)
-            i.sprite = MenuManager.instance.sprCoin;
+            i.sprite = SePokerManager.instance.sprCoin;
 
         ExitGames.Client.Photon.Hashtable properties = myPlayer.CustomProperties;
         #region change name & picture & Avatar 3D
@@ -795,9 +795,10 @@ public class _PlayerPokerActor : MonoBehaviour
 
         //Load Avatar 3D
         if (isMine && !isBot)
-            avatarEquiped = DataManager.instance.hero.id;
+            //avatarEquiped = DataManager.instance.hero.id;
+            avatarEquiped = PlayerData.hero_id;
         else
-            avatarEquiped = PhotonUtility.GetPlayerProperties<int>(myPlayer, PhotonEnums.Player.ContentURL);
+            avatarEquiped = PhotonUtility.GetPlayerProperties<int> (myPlayer, PhotonEnums.Player.ContentURL);
 
         hero.LoadSkin ();
         //avater3D.LoadAvatar(avatarEquiped, true, true);

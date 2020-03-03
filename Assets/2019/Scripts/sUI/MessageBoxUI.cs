@@ -13,7 +13,6 @@ public class MessageBoxUI : MonoBehaviour
 
     private GameObject listener;
     private int returnedCode;
-    private MenuOrBoxType prevMenuOrBox;
 
     private void Awake ()
     {
@@ -21,7 +20,9 @@ public class MessageBoxUI : MonoBehaviour
         btnNegative.onClick.AddListener (OnNegative);
     }
 
-    public void Show ( GameObject listener, string strDescription, MessageBoxType type = MessageBoxType.OK, int returnedCode = -1, bool bTranslate = false, string strBtnPositive = null, string strBtnNegative = null )
+
+
+    public void Show (GameObject listener, string strDescription, MessageBoxType type = MessageBoxType.OK, int returnedCode = -1, bool bTranslate = false, string strBtnPositive = null, string strBtnNegative = null )
     {
 
         if (!bTranslate)
@@ -71,16 +72,20 @@ public class MessageBoxUI : MonoBehaviour
 
     private void OnPositive ()
     {
-        Hide ();
         if (listener)
+        {
             listener.SendMessage ("onMessageBoxOKClicked", returnedCode, SendMessageOptions.DontRequireReceiver);
+        }
+
+        Hide ();
     }
 
     private void OnNegative ()
     {
-        Hide ();
-
         if (listener)
             listener.SendMessage ("onMessageBoxCancelledClicked", returnedCode, SendMessageOptions.DontRequireReceiver);
+
+        Hide ();
+
     }
 }

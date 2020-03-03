@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class _SceneManager : MonoBehaviour
@@ -23,16 +25,48 @@ public class _SceneManager : MonoBehaviour
         }
     }
 
-    Scene scMenu;
-    Scene scPoker;
+    private List<Scene> loadedScenes = new List<Scene> ();
+    private SeMenuManager menuManager;
+    private SePokerManager pokerManager;
+
+    private void Start ()
+    {
+        DontDestroyOnLoad (this);
+        StartCoroutine (_LoadAllScenes ());
+    }
+
+    IEnumerator _LoadAllScenes ()
+    {
+        AsyncOperation async;
+        for (int i = 1; i < SceneManager.sceneCountInBuildSettings; i++)
+        {
+            async = SceneManager.LoadSceneAsync (i, LoadSceneMode.Additive);
+            while (!async.isDone)
+            {
+                yield return new WaitForEndOfFrame ();
+            }
+            loadedScenes.Add (SceneManager.GetSceneByBuildIndex (i));
+        }
+        yield return new WaitForEndOfFrame ();
+        menuManager = SeMenuManager.instance;
+        pokerManager = SePokerManager.instance;
+        SetActiveMenu ();
+        SceneManager.UnloadSceneAsync ("SeSplash");
+    }
 
     public void SetActiveMenu ()
     {
-        SceneManager.SetActiveScene (scMenu);
+        menuManager.objMenu.SetActive (true);
+        menuManager.Init ();
+        pokerManager.objPoker.SetActive (false);
     }
 
     public void SetActivePoker ()
     {
-        SceneManager.SetActiveScene (scPoker);
+        menuManager.objMenu.SetActive (false);
+        pokerManager.objPoker.SetActive (true);
+
+        PhotonRoomInfoManager.instance.InitialiseCardGameScripts ();
+        RoomInfoManager.instance.JoinRandomRoom ();
     }
 }

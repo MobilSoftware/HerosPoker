@@ -30,7 +30,8 @@ public class PokerHandler : MonoBehaviour
     public void Generate ()
     {
         poker_round_id = 99;
-        room_bet = DataManager.instance.prototypeBet;
+        //room_bet = DataManager.instance.prototypeBet;
+        room_bet = PlayerData.proto_bet;
 
         RandomizeCards ();
 

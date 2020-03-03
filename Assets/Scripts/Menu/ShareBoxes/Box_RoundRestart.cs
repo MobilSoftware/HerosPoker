@@ -45,8 +45,8 @@ public class Box_RoundRestart : MonoBehaviour
         PhotonTexasPokerManager.msgDelayPoker = "Start Round";
 
         txtTimer.SetText("", false);
-        MenuManager.instance.uiWaitingNextRound.Hide ();
-        MenuManager.instance.uiWaitingPlayers.Hide ();
+        SePokerManager.instance.uiWaitingNextRound.Hide ();
+        SePokerManager.instance.uiWaitingPlayers.Hide ();
 
         yield return _WFSUtility.wfs1;
 
@@ -93,7 +93,8 @@ public class Box_RoundRestart : MonoBehaviour
         int[] playerIDs = PhotonTexasPokerManager.instance.GetOtherPlayerID(PhotonEnums.Player.ReadyInitialized);
         //Debug.LogError("HOI : " +playerIDs.Length);
 
-        DataManager.instance.pokerHandler.Generate ();
+        //DataManager.instance.pokerHandler.Generate ();
+        PokerData.Generate ();
         //HomeSceneManager.Instance.StartPoker(PhotonNetwork.room.Name, GlobalVariables.bIsCoins ? GlobalVariables.MinBetAmount : 0, GlobalVariables.bIsCoins ? 0 : GlobalVariables.MinBetAmount, playerIDs[0], playerIDs[1], playerIDs[2], playerIDs[3], playerIDs[4], playerIDs[5], playerIDs[6], playerIDs[7], playerIDs[8], playerIDs[9], HomeSceneManager.Instance.myPlayerData.player.player_id);
     }
 

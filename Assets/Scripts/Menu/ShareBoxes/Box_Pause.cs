@@ -19,7 +19,7 @@ public class Box_Pause : MonoBehaviour
     {
         gameObject.SetActive (true);
         SoundManager.instance.PlaySFX(SFXType.SFX_PopupOpen, Vector3.zero);
-        MenuManager.instance.uiThrowItem.Hide();
+        SePokerManager.instance.uiThrowItem.Hide();
 
         //if (PhotonNetwork.room != null)
         //    txtRoomTitle.SetText(PhotonNetwork.room.Name, false);
@@ -28,24 +28,31 @@ public class Box_Pause : MonoBehaviour
 
     private void onQuitGame()
     {
-        //Debug.LogError ("Quit Game");
+        Debug.LogError ("Quit Game");
         if (GlobalVariables.gameType == GameType.TexasPoker)
         {
             if (PhotonNetwork.room != null || PhotonTexasPokerManager.instance.GetNumActivePlayers() <= 1)
             {
-                if (!PhotonUtility.GetPlayerProperties<bool>(PhotonNetwork.player, PhotonEnums.Player.Active))
+                Debug.LogError ("Quit Game 1");
+                if (!PhotonUtility.GetPlayerProperties<bool> (PhotonNetwork.player, PhotonEnums.Player.Active))
                 {
                     GlobalVariables.bQuitOnNextRound = false;
-                    PhotonTexasPokerManager.instance.ImLeaving();
-                    StartCoroutine(LoadMenu());
+                    PhotonTexasPokerManager.instance.ImLeaving ();
+
+                    Debug.LogError ("Quit Game 2");
+                    StartCoroutine (LoadMenu ());
                 }
-                else if (PhotonTexasPokerManager.instance != null && PhotonTexasPokerManager.instance.GetNumActivePlayers() > 1)
-                    MenuManager.instance.uiMessageBox.Show (gameObject, "ID_QuitRoom", MessageBoxType.OK_CANCEL, 1, true);
+                else if (PhotonTexasPokerManager.instance != null && PhotonTexasPokerManager.instance.GetNumActivePlayers () > 1)
+                {
+
+                    Debug.LogError ("Quit Game55");
+                    SePokerManager.instance.uiMessageBox.Show (this.gameObject, "ID_QuitRoom", MessageBoxType.OK_CANCEL, 1, true);
+                }
                 else
                 {
                     GlobalVariables.bQuitOnNextRound = false;
-                    PhotonTexasPokerManager.instance.ImLeaving();
-                    StartCoroutine(LoadMenu());
+                    PhotonTexasPokerManager.instance.ImLeaving ();
+                    StartCoroutine (LoadMenu ());
                 }
             }
             else
@@ -54,7 +61,7 @@ public class Box_Pause : MonoBehaviour
             }
         }
 
-        Hide();
+        //Hide();
     }
 
     void onSwitchTable()
@@ -70,7 +77,7 @@ public class Box_Pause : MonoBehaviour
                     StartCoroutine(LoadSwitchTable());
                 }
                 else if (PhotonTexasPokerManager.instance != null && PhotonTexasPokerManager.instance.GetNumActivePlayers() > 1)
-                    MenuManager.instance.uiMessageBox.Show(gameObject, "ID_ConfirmSwitchTable", MessageBoxType.OK_CANCEL, 2, true);
+                    SePokerManager.instance.uiMessageBox.Show(gameObject, "ID_ConfirmSwitchTable", MessageBoxType.OK_CANCEL, 2, true);
                 else
                 {
                     GlobalVariables.bSwitchTableNextRound = false;
@@ -87,6 +94,7 @@ public class Box_Pause : MonoBehaviour
     {
         Logger.E ("start load menu");
 
+        //_SceneManager.instance.SetActiveSceneByIndex (1);
         _SceneManager.instance.SetActiveMenu ();
         yield return null;
 
@@ -143,9 +151,9 @@ public class Box_Pause : MonoBehaviour
         yield return null;
         //LoginSceneManager.Instance.uiBusyIndicator.Show(true);
 
-        MenuManager.instance.uiRoundRestart.Hide ();
-        MenuManager.instance.uiWaitingPlayers.Hide ();
-        MenuManager.instance.uiWaitingNextRound.Hide ();
+        SePokerManager.instance.uiRoundRestart.Hide ();
+        SePokerManager.instance.uiWaitingPlayers.Hide ();
+        SePokerManager.instance.uiWaitingNextRound.Hide ();
 
         SoundManager.instance.sfxSource.Stop();
         SoundManager.instance.sfxSource2.Stop();       
@@ -186,19 +194,23 @@ public class Box_Pause : MonoBehaviour
 
     private void onMessageBoxOKClicked(int returnedCode)
     {
+        Debug.LogError ("Quit Game 100");
+        Debug.LogError (returnedCode);
         if (returnedCode == 1)
         {
-            Hide();
             GlobalVariables.bQuitOnNextRound = false;
             PhotonTexasPokerManager.instance.ImLeavingInTheMiddleOfTheGame();
             StartCoroutine(LoadMenu());
+
+            Hide ();
         }
         else if (returnedCode == 2)
         {
-            Hide();
             GlobalVariables.bSwitchTableNextRound = false;
             PhotonTexasPokerManager.instance.ImLeavingInTheMiddleOfTheGame();
             StartCoroutine(LoadSwitchTable());
+
+            Hide ();
         }
     }
 }
