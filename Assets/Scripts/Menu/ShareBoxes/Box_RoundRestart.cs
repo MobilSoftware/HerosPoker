@@ -45,8 +45,8 @@ public class Box_RoundRestart : MonoBehaviour
         PhotonTexasPokerManager.msgDelayPoker = "Start Round";
 
         txtTimer.SetText("", false);
-        SePokerManager.instance.uiWaitingNextRound.Hide ();
-        SePokerManager.instance.uiWaitingPlayers.Hide ();
+        PokerManager.instance.uiWaitingNextRound.Hide ();
+        PokerManager.instance.uiWaitingPlayers.Hide ();
 
         yield return _WFSUtility.wfs1;
 

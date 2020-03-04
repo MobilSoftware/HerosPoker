@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/New/_Scene/SeSplash.unity
     guid: 128eb2b1e295a48fd96497faadd02a05
   - enabled: 1
-    path: Assets/New/_Scene/SeMenu.unity
+    path: Assets/New/_Scene/SeHome.unity
     guid: c8ef76df76d3d478baace90696d5b49e
   - enabled: 1
     path: Assets/New/_Scene/SePoker.unity

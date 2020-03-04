@@ -3,6 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+public enum SceneType
+{
+    SPLASH,
+    MENU,
+    POKER
+}
+
 public class _SceneManager : MonoBehaviour
 {
     private static _SceneManager s_Instance = null;
@@ -26,8 +33,8 @@ public class _SceneManager : MonoBehaviour
     }
 
     private List<Scene> loadedScenes = new List<Scene> ();
-    private SeMenuManager menuManager;
-    private SePokerManager pokerManager;
+    private HomeManager menuManager;
+    private PokerManager pokerManager;
 
     private void Start ()
     {
@@ -48,8 +55,8 @@ public class _SceneManager : MonoBehaviour
             loadedScenes.Add (SceneManager.GetSceneByBuildIndex (i));
         }
         yield return new WaitForEndOfFrame ();
-        menuManager = SeMenuManager.instance;
-        pokerManager = SePokerManager.instance;
+        menuManager = HomeManager.instance;
+        pokerManager = PokerManager.instance;
         SetActiveMenu ();
         SceneManager.UnloadSceneAsync ("SeSplash");
     }

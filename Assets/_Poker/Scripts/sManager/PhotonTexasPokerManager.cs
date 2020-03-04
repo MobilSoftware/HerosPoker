@@ -128,7 +128,7 @@ public class PhotonTexasPokerManager : PunBehaviour
         if (PhotonNetwork.playerList.Length < 2)
         {
             RequestToSit ();
-            SePokerManager.instance.uiWaitingPlayers.Show ();
+            PokerManager.instance.uiWaitingPlayers.Show ();
         }
         else
         {
@@ -137,7 +137,7 @@ public class PhotonTexasPokerManager : PunBehaviour
             SyncMatchOnGoingWithProperties ();
             Invoke ("RequestToSit", 4f);
 
-            SePokerManager.instance.uiWaitingNextRound.Show ();
+            PokerManager.instance.uiWaitingNextRound.Show ();
         }
     }
 
@@ -458,7 +458,7 @@ public class PhotonTexasPokerManager : PunBehaviour
     protected void PrepareRoundRPC ()
     {
         msgDelayPoker = ""; //From Next Game Round
-        SePokerManager.instance.uiRoundRestart.Show ();
+        PokerManager.instance.uiRoundRestart.Show ();
     }
 
     public virtual void StartRound () //Only Masterr
@@ -712,14 +712,14 @@ public class PhotonTexasPokerManager : PunBehaviour
         {
             GlobalVariables.bQuitOnNextRound = false;
             ImLeaving();
-            StartCoroutine(SePokerManager.instance.uiPause.LoadMenu ());
+            StartCoroutine(PokerManager.instance.uiPause.LoadMenu ());
             yield break;
         }
         else if (GlobalVariables.bSwitchTableNextRound)
         {
             GlobalVariables.bSwitchTableNextRound = false;
             ImLeaving();
-            StartCoroutine(SePokerManager.instance.uiPause.LoadSwitchTable());
+            StartCoroutine(PokerManager.instance.uiPause.LoadSwitchTable());
             yield break;
         }
 
@@ -727,7 +727,7 @@ public class PhotonTexasPokerManager : PunBehaviour
         {
             GlobalVariables.bQuitOnNextRound = false;
             ImLeaving ();
-            StartCoroutine (SePokerManager.instance.uiPause.LoadMenu ());
+            StartCoroutine (PokerManager.instance.uiPause.LoadMenu ());
             yield break;
         }
         else if (bMoneyEnuf <= _PokerGameManager.startBet)
@@ -738,7 +738,7 @@ public class PhotonTexasPokerManager : PunBehaviour
             {
                 GlobalVariables.bQuitOnNextRound = false;
                 ImLeaving ();
-                StartCoroutine (SePokerManager.instance.uiPause.LoadMenu ());
+                StartCoroutine (PokerManager.instance.uiPause.LoadMenu ());
 
                 //PhotonNetwork.Disconnect();
                 //Application.LoadLevel("Menu");
@@ -921,14 +921,14 @@ public class PhotonTexasPokerManager : PunBehaviour
         if (PhotonNetwork.room == null)
             yield break;
 
-        SePokerManager.instance.uiRoundRestart.Hide ();
+        PokerManager.instance.uiRoundRestart.Hide ();
         yield return _WFSUtility.wfs1;
 
         int readycount = CheckPlayerReady ();
 
         if (readycount < 2)
             if (GlobalVariables.bInGame)
-                SePokerManager.instance.uiWaitingPlayers.Show ();
+                PokerManager.instance.uiWaitingPlayers.Show ();
 
         while (PhotonNetwork.room != null && readycount < 2)
         {
@@ -938,7 +938,7 @@ public class PhotonTexasPokerManager : PunBehaviour
 
         if (PhotonNetwork.room != null) //player ready to start
         {
-            SePokerManager.instance.uiWaitingPlayers.Hide ();
+            PokerManager.instance.uiWaitingPlayers.Hide ();
             PrepareRound ();
         }
     }
@@ -1454,7 +1454,7 @@ public class PhotonTexasPokerManager : PunBehaviour
     {
         //If the player's in game then quit message
         if (PhotonNetwork.room != null)
-            SePokerManager.instance.uiMessageBox.Show(gameObject, "ID_ConnectionError", MessageBoxType.OK, 2, true);
+            PokerManager.instance.uiMessageBox.Show(gameObject, "ID_ConnectionError", MessageBoxType.OK, 2, true);
     }
 
     public override void OnMasterClientSwitched(PhotonPlayer newMasterClient)
@@ -1472,7 +1472,7 @@ public class PhotonTexasPokerManager : PunBehaviour
         Logger.D (codeAndMsg[0] + " OnPhotonRandomJoinFailed : " + codeAndMsg[1]);
         //LoginSceneManager.Instance.uiBusyIndicator.Hide ();
 
-        SePokerManager.instance.uiMessageBox.Show (null, codeAndMsg[0].ToString () == "32765" ? "ID_GameFull" : "ID_GameClosed");
+        PokerManager.instance.uiMessageBox.Show (null, codeAndMsg[0].ToString () == "32765" ? "ID_GameFull" : "ID_GameClosed");
         //32758 Game Doesn't exist
         //32765 Game Full
     }
@@ -1596,7 +1596,7 @@ public class PhotonTexasPokerManager : PunBehaviour
         Hashtable dataInfo = syncInfos.toHashtable ();
         _PokerGameManager.matchOnGoing = true;
 
-        SePokerManager.instance.uiWaitingNextRound.Hide ();
+        PokerManager.instance.uiWaitingNextRound.Hide ();
 
         //Region Player 
         stringIndex = (string) dataInfo["slotCurrentPlayers"];
@@ -1670,7 +1670,7 @@ public class PhotonTexasPokerManager : PunBehaviour
 
             if (diffVal > _timeLeftforPause)
             {
-                SePokerManager.instance.uiMessageBox.Show (gameObject, "ID_ConnectionError", MessageBoxType.OK, 2, true);
+                PokerManager.instance.uiMessageBox.Show (gameObject, "ID_ConnectionError", MessageBoxType.OK, 2, true);
             }
         }
     }
@@ -1678,7 +1678,7 @@ public class PhotonTexasPokerManager : PunBehaviour
     [PunRPC]
     void RPC_ForceQuitMatch()
     {
-        SePokerManager.instance.uiMessageBox.Show (gameObject, "ID_Timeout", MessageBoxType.OK, 1, true);        
+        PokerManager.instance.uiMessageBox.Show (gameObject, "ID_Timeout", MessageBoxType.OK, 1, true);        
     }
 
     private void onMessageBoxOKClicked(int returnedCode)
@@ -1689,7 +1689,7 @@ public class PhotonTexasPokerManager : PunBehaviour
             Debug.LogError ("Quit Game 99");
             GlobalVariables.bQuitOnNextRound = false;
             ImLeaving ();
-            StartCoroutine (SePokerManager.instance.uiPause.LoadMenu ());
+            StartCoroutine (PokerManager.instance.uiPause.LoadMenu ());
         }
         else if (returnedCode == 2)
             SceneManager.LoadScene ("Menu");

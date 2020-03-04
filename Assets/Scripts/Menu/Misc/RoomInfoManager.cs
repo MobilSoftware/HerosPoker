@@ -273,7 +273,7 @@ public class RoomInfoManager : MonoBehaviour
                 {
                     string strTitle = LocalisationManager.instance.GetText("ID_Warning");
                     string strDesc = string.Format("Koin tidak cukup untuk masuk ke ruangan. Anda butuh minimum {0} koin untuk bermain di room ini.", GlobalVariables.MinBetAmount.toShortCurrency());
-                    SePokerManager.instance.uiMessageBox.Show(gameObject, strDesc, MessageBoxType.OK);
+                    PokerManager.instance.uiMessageBox.Show(gameObject, strDesc, MessageBoxType.OK);
 
                     DisconnectFromSwitchRoom();
 

@@ -380,7 +380,7 @@ public class _PlayerPokerActor : MonoBehaviour
 
             SetPanelAction();
 
-            _PokerGameManager.instance.fxTableSpotlite.ShowFxSpotlight(System.Array.IndexOf(_PokerGameManager.instance.unsortedPlayers, this));
+            //_PokerGameManager.instance.fxTableSpotlite.ShowFxSpotlight(System.Array.IndexOf(_PokerGameManager.instance.unsortedPlayers, this));
         }
     }
 
@@ -783,7 +783,7 @@ public class _PlayerPokerActor : MonoBehaviour
         chatItem.SetActive(false);
 
         foreach(Image i in imgBetAmount)
-            i.sprite = SePokerManager.instance.sprCoin;
+            i.sprite = PokerManager.instance.sprCoin;
 
         ExitGames.Client.Photon.Hashtable properties = myPlayer.CustomProperties;
         #region change name & picture & Avatar 3D
@@ -800,7 +800,7 @@ public class _PlayerPokerActor : MonoBehaviour
         else
             avatarEquiped = PhotonUtility.GetPlayerProperties<int> (myPlayer, PhotonEnums.Player.ContentURL);
 
-        hero.LoadSkin ();
+        hero.LoadSpine ();
         //avater3D.LoadAvatar(avatarEquiped, true, true);
         #endregion
 
@@ -1008,7 +1008,7 @@ public class _PlayerPokerActor : MonoBehaviour
         else
             flowT = FlowType.All;
 
-        myChipsFlow.SetFlowType(flowT);
+        //myChipsFlow.SetFlowType(flowT);
 
         if (pull)
             myChipsFlow.ShowFx(1, 0);

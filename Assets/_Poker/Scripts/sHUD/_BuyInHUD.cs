@@ -74,7 +74,7 @@ public class _BuyInHUD : MonoBehaviour
     {
         GlobalVariables.bQuitOnNextRound = false;
 
-        StartCoroutine(SePokerManager.instance.uiPause.LoadMenu ());
+        StartCoroutine(PokerManager.instance.uiPause.LoadMenu ());
     }
 
     void ReturnScrollValue(float _val)

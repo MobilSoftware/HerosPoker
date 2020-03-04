@@ -19,7 +19,7 @@ public class Box_Pause : MonoBehaviour
     {
         gameObject.SetActive (true);
         SoundManager.instance.PlaySFX(SFXType.SFX_PopupOpen, Vector3.zero);
-        SePokerManager.instance.uiThrowItem.Hide();
+        PokerManager.instance.uiThrowItem.Hide();
 
         //if (PhotonNetwork.room != null)
         //    txtRoomTitle.SetText(PhotonNetwork.room.Name, false);
@@ -46,7 +46,7 @@ public class Box_Pause : MonoBehaviour
                 {
 
                     Debug.LogError ("Quit Game55");
-                    SePokerManager.instance.uiMessageBox.Show (this.gameObject, "ID_QuitRoom", MessageBoxType.OK_CANCEL, 1, true);
+                    PokerManager.instance.uiMessageBox.Show (this.gameObject, "ID_QuitRoom", MessageBoxType.OK_CANCEL, 1, true);
                 }
                 else
                 {
@@ -77,7 +77,7 @@ public class Box_Pause : MonoBehaviour
                     StartCoroutine(LoadSwitchTable());
                 }
                 else if (PhotonTexasPokerManager.instance != null && PhotonTexasPokerManager.instance.GetNumActivePlayers() > 1)
-                    SePokerManager.instance.uiMessageBox.Show(gameObject, "ID_ConfirmSwitchTable", MessageBoxType.OK_CANCEL, 2, true);
+                    PokerManager.instance.uiMessageBox.Show(gameObject, "ID_ConfirmSwitchTable", MessageBoxType.OK_CANCEL, 2, true);
                 else
                 {
                     GlobalVariables.bSwitchTableNextRound = false;
@@ -151,9 +151,9 @@ public class Box_Pause : MonoBehaviour
         yield return null;
         //LoginSceneManager.Instance.uiBusyIndicator.Show(true);
 
-        SePokerManager.instance.uiRoundRestart.Hide ();
-        SePokerManager.instance.uiWaitingPlayers.Hide ();
-        SePokerManager.instance.uiWaitingNextRound.Hide ();
+        PokerManager.instance.uiRoundRestart.Hide ();
+        PokerManager.instance.uiWaitingPlayers.Hide ();
+        PokerManager.instance.uiWaitingNextRound.Hide ();
 
         SoundManager.instance.sfxSource.Stop();
         SoundManager.instance.sfxSource2.Stop();       

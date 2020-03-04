@@ -20,7 +20,7 @@ public class ChipFlow : MonoBehaviour
     public bool isReady = true;
 
     private int lastIndex;
-    private MeshFilter[] meshChips;
+    //private MeshFilter[] meshChips;
 
     Vector3 fdOut = new Vector3(0.5f, 0.5f, 0.5f);
     float ofsetX = 0, ofsetY = 0;
@@ -28,77 +28,77 @@ public class ChipFlow : MonoBehaviour
     private void Start ()
     {
         lastIndex = transCashes.Length - 1;
-        meshChips = new MeshFilter[chips.Length];
-        for (int i = 0; i < meshChips.Length; i++)
-        {
-            meshChips[i] = chips[i].GetComponent<MeshFilter> ();
-        }
+        //meshChips = new MeshFilter[chips.Length];
+        //for (int i = 0; i < meshChips.Length; i++)
+        //{
+        //    meshChips[i] = chips[i].GetComponent<MeshFilter> ();
+        //}
 
         gameObject.SetActive(false);
     }
 
-    public void SetFlowType (FlowType _ft )
-    {
-        switch (_ft)
-        {
-            case FlowType.Ten:
-                for (int i = 0; i < meshChips.Length; i++)
-                {
-                    meshChips[i].mesh = _PokerGameManager.instance.chipTen;
-                }
-                break;
-            case FlowType.Hundred:
-                for (int i = 0; i < meshChips.Length; i++)
-                {
-                    meshChips[i].mesh = _PokerGameManager.instance.chipHundred;
-                }
-                break;
-            case FlowType.Thousand:
-                for (int i = 0; i < meshChips.Length; i++)
-                {
-                    meshChips[i].mesh = _PokerGameManager.instance.chipThousand;
-                }
-                break;
-            case FlowType.TenAndHundred:
-                for (int i = 0; i < meshChips.Length; i++)
-                {
-                    if (i % 2 == 0)
-                        meshChips[i].mesh = _PokerGameManager.instance.chipTen;
-                    else
-                        meshChips[i].mesh = _PokerGameManager.instance.chipHundred;
-                }
-                break;
-            case FlowType.TenAndThousand:
-                for (int i = 0; i < meshChips.Length; i++)
-                {
-                    if (i % 2 == 0)
-                        meshChips[i].mesh = _PokerGameManager.instance.chipTen;
-                    else
-                        meshChips[i].mesh = _PokerGameManager.instance.chipThousand;
-                }
-                break;
-            case FlowType.HundredAndThousand:
-                for (int i = 0; i < meshChips.Length; i++)
-                {
-                    if (i % 2 == 0)
-                        meshChips[i].mesh = _PokerGameManager.instance.chipHundred;
-                    else
-                        meshChips[i].mesh = _PokerGameManager.instance.chipThousand;
-                }
-                break;
-            case FlowType.All:
-                for (int i = 0; i < meshChips.Length; i++)
-                {
-                    if (i == meshChips.Length - 1 || i == meshChips.Length - 2)
-                        meshChips[i].mesh = _PokerGameManager.instance.chipThousand;
-                    else if (i % 2 == 0)
-                        meshChips[i].mesh = _PokerGameManager.instance.chipTen;
-                    else
-                        meshChips[i].mesh = _PokerGameManager.instance.chipHundred;
-                }
-                break;
-        }
-    }
+    //public void SetFlowType (FlowType _ft )
+    //{
+    //    switch (_ft)
+    //    {
+    //        case FlowType.Ten:
+    //            for (int i = 0; i < meshChips.Length; i++)
+    //            {
+    //                meshChips[i].mesh = _PokerGameManager.instance.chipTen;
+    //            }
+    //            break;
+    //        case FlowType.Hundred:
+    //            for (int i = 0; i < meshChips.Length; i++)
+    //            {
+    //                meshChips[i].mesh = _PokerGameManager.instance.chipHundred;
+    //            }
+    //            break;
+    //        case FlowType.Thousand:
+    //            for (int i = 0; i < meshChips.Length; i++)
+    //            {
+    //                meshChips[i].mesh = _PokerGameManager.instance.chipThousand;
+    //            }
+    //            break;
+    //        case FlowType.TenAndHundred:
+    //            for (int i = 0; i < meshChips.Length; i++)
+    //            {
+    //                if (i % 2 == 0)
+    //                    meshChips[i].mesh = _PokerGameManager.instance.chipTen;
+    //                else
+    //                    meshChips[i].mesh = _PokerGameManager.instance.chipHundred;
+    //            }
+    //            break;
+    //        case FlowType.TenAndThousand:
+    //            for (int i = 0; i < meshChips.Length; i++)
+    //            {
+    //                if (i % 2 == 0)
+    //                    meshChips[i].mesh = _PokerGameManager.instance.chipTen;
+    //                else
+    //                    meshChips[i].mesh = _PokerGameManager.instance.chipThousand;
+    //            }
+    //            break;
+    //        case FlowType.HundredAndThousand:
+    //            for (int i = 0; i < meshChips.Length; i++)
+    //            {
+    //                if (i % 2 == 0)
+    //                    meshChips[i].mesh = _PokerGameManager.instance.chipHundred;
+    //                else
+    //                    meshChips[i].mesh = _PokerGameManager.instance.chipThousand;
+    //            }
+    //            break;
+    //        case FlowType.All:
+    //            for (int i = 0; i < meshChips.Length; i++)
+    //            {
+    //                if (i == meshChips.Length - 1 || i == meshChips.Length - 2)
+    //                    meshChips[i].mesh = _PokerGameManager.instance.chipThousand;
+    //                else if (i % 2 == 0)
+    //                    meshChips[i].mesh = _PokerGameManager.instance.chipTen;
+    //                else
+    //                    meshChips[i].mesh = _PokerGameManager.instance.chipHundred;
+    //            }
+    //            break;
+    //    }
+    //}
 
     IEnumerator _Flow(Vector3 _sp, Vector3 _ep, int indexTo)
     {
