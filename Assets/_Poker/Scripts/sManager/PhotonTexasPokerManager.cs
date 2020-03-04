@@ -712,14 +712,16 @@ public class PhotonTexasPokerManager : PunBehaviour
         {
             GlobalVariables.bQuitOnNextRound = false;
             ImLeaving();
-            StartCoroutine(PokerManager.instance.uiPause.LoadMenu ());
+            //StartCoroutine(PokerManager.instance.uiPause._LoadMenu ());
+            PokerManager.instance.uiPause.LoadMenu ();
             yield break;
         }
         else if (GlobalVariables.bSwitchTableNextRound)
         {
             GlobalVariables.bSwitchTableNextRound = false;
             ImLeaving();
-            StartCoroutine(PokerManager.instance.uiPause.LoadSwitchTable());
+            //StartCoroutine(PokerManager.instance.uiPause._LoadSwitchTable());
+            PokerManager.instance.uiPause.LoadSwitchTable ();
             yield break;
         }
 
@@ -727,7 +729,8 @@ public class PhotonTexasPokerManager : PunBehaviour
         {
             GlobalVariables.bQuitOnNextRound = false;
             ImLeaving ();
-            StartCoroutine (PokerManager.instance.uiPause.LoadMenu ());
+            //StartCoroutine (PokerManager.instance.uiPause._LoadMenu ());
+            PokerManager.instance.uiPause.LoadMenu ();
             yield break;
         }
         else if (bMoneyEnuf <= _PokerGameManager.startBet)
@@ -738,7 +741,8 @@ public class PhotonTexasPokerManager : PunBehaviour
             {
                 GlobalVariables.bQuitOnNextRound = false;
                 ImLeaving ();
-                StartCoroutine (PokerManager.instance.uiPause.LoadMenu ());
+                //StartCoroutine (PokerManager.instance.uiPause._LoadMenu ());
+                PokerManager.instance.uiPause.LoadMenu ();
 
                 //PhotonNetwork.Disconnect();
                 //Application.LoadLevel("Menu");
@@ -1689,7 +1693,8 @@ public class PhotonTexasPokerManager : PunBehaviour
             Debug.LogError ("Quit Game 99");
             GlobalVariables.bQuitOnNextRound = false;
             ImLeaving ();
-            StartCoroutine (PokerManager.instance.uiPause.LoadMenu ());
+            //StartCoroutine (PokerManager.instance.uiPause._LoadMenu ());
+            PokerManager.instance.uiPause.LoadMenu ();
         }
         else if (returnedCode == 2)
             SceneManager.LoadScene ("Menu");

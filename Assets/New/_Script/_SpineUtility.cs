@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class _SpineUtility
 {
-    public static void PlayAnimation (SkeletonAnimation sa, int trackIndex, string animName, bool isLoop )
+    public static void PlayAnimation (SkeletonAnimation sa, int trackIndex, string animName, bool isLoop,  float speed = 1f)
     {
         ExposedList<Spine.Animation> anims = sa.skeleton.Data.Animations;
 
@@ -12,7 +12,8 @@ public class _SpineUtility
         {
             if (anims.Items[i].Name.Equals (animName))
             {
-                sa.AnimationState.SetAnimation (trackIndex, animName, isLoop);
+                TrackEntry entry = sa.AnimationState.SetAnimation (trackIndex, animName, isLoop);
+                entry.TimeScale = speed;
                 break;
             }
         }

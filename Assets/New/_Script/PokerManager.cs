@@ -2,6 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ConnectionStrength
+{
+    Excellent,
+    Good,
+    Normal,
+    Low,
+    VeryLow,
+    NotPlayable,
+}
+
 public class PokerManager : MonoBehaviour
 {
     private static PokerManager s_Instance = null;

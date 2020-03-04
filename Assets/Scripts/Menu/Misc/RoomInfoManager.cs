@@ -111,10 +111,7 @@ public class RoomInfoManager : MonoBehaviour
         else
             GlobalVariables.bIsPassword = true;
 
-        if (!GlobalVariables.bIsCoins)
-            GlobalVariables.roomData[PhotonEnums.Room.BetType] = "gems";
-        else
-            GlobalVariables.roomData[PhotonEnums.Room.BetType] = "coins";
+        GlobalVariables.roomData[PhotonEnums.Room.BetType] = "coins";
 
         GlobalVariables.roomData[PhotonEnums.Room.Environment] = city;
         GlobalVariables.roomData["C0"] = city;
@@ -236,15 +233,24 @@ public class RoomInfoManager : MonoBehaviour
     #endregion
 
     bool waitingSwitch = false;
-    public IEnumerator SwitchingRoom()
+
+    public void SwitchingRoom ()
     {
+        StartCoroutine (_SwitchingRoom ());
+    }
+
+    public IEnumerator _SwitchingRoom()
+    {
+        Debug.LogError ("switching room");
         waitingSwitch = true;
         if (PhotonNetwork.room != null)
             PhotonNetwork.LeaveRoom();
 
         if (!PhotonNetwork.connected)
         {
-            DisconnectFromSwitchRoom();
+            //DisconnectFromSwitchRoom();
+            Debug.LogError ("photon not connect");
+            PokerManager.instance.uiPause.LoadMenu ();
             yield break;
         }
 
@@ -252,7 +258,7 @@ public class RoomInfoManager : MonoBehaviour
         while (cd >= 0)
         {
             yield return _WFSUtility.wfs1;
-
+            Debug.LogError ("waiting switch: " + cd);
             if (!waitingSwitch)
                 cd = -1;
 
@@ -261,12 +267,15 @@ public class RoomInfoManager : MonoBehaviour
 
         if (waitingSwitch)
         {
-            DisconnectFromSwitchRoom();
+            //DisconnectFromSwitchRoom();
+            PokerManager.instance.uiPause.LoadMenu ();
+            Debug.LogError ("inside waiting switch true");
         }
         else if(!waitingSwitch)
         {
             if (GlobalVariables.bIsCoins)
             {
+                Debug.LogError ("inside is coin");
                 //long lCredit = DataManager.instance.ownedGold;
                 long lCredit = PlayerData.owned_gold;
                 if (lCredit < GlobalVariables.MinBetAmount)
@@ -275,12 +284,15 @@ public class RoomInfoManager : MonoBehaviour
                     string strDesc = string.Format("Koin tidak cukup untuk masuk ke ruangan. Anda butuh minimum {0} koin untuk bermain di room ini.", GlobalVariables.MinBetAmount.toShortCurrency());
                     PokerManager.instance.uiMessageBox.Show(gameObject, strDesc, MessageBoxType.OK);
 
-                    DisconnectFromSwitchRoom();
+                    //DisconnectFromSwitchRoom();
+                    PokerManager.instance.uiPause.LoadMenu ();
+                    Debug.Log ("not enough coin");
 
                     yield break;
                 }
             }
 
+            Debug.LogError ("creating private");
             CreatePrivateRoom(GlobalVariables.gameType, "");
         }
     }

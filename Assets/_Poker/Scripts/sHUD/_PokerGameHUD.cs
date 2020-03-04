@@ -110,7 +110,8 @@ public class _PokerGameHUD : MonoBehaviour
         if (lowConnectionCount >= 15 && GlobalVariables.bInGame)
         {
             GlobalVariables.bQuitOnNextRound = false;
-            StartCoroutine(PokerManager.instance.uiPause.LoadMenu ());
+            //StartCoroutine(PokerManager.instance.uiPause._LoadMenu ());
+            PokerManager.instance.uiPause.LoadMenu ();
             MenuPhotonNetworkManager.instance.Disconnect();
             lowConnectionCount = 0;
         }

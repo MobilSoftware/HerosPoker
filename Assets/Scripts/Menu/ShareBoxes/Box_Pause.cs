@@ -40,7 +40,8 @@ public class Box_Pause : MonoBehaviour
                     PhotonTexasPokerManager.instance.ImLeaving ();
 
                     Debug.LogError ("Quit Game 2");
-                    StartCoroutine (LoadMenu ());
+                    //StartCoroutine (_LoadMenu ());
+                    LoadMenu ();
                 }
                 else if (PhotonTexasPokerManager.instance != null && PhotonTexasPokerManager.instance.GetNumActivePlayers () > 1)
                 {
@@ -52,12 +53,14 @@ public class Box_Pause : MonoBehaviour
                 {
                     GlobalVariables.bQuitOnNextRound = false;
                     PhotonTexasPokerManager.instance.ImLeaving ();
-                    StartCoroutine (LoadMenu ());
+                    //StartCoroutine (_LoadMenu ());
+                    LoadMenu ();
                 }
             }
             else
             {
-                StartCoroutine(LoadMenu());
+                //StartCoroutine(_LoadMenu());
+                LoadMenu ();
             }
         }
 
@@ -74,7 +77,8 @@ public class Box_Pause : MonoBehaviour
                 {
                     GlobalVariables.bSwitchTableNextRound = false;
                     PhotonTexasPokerManager.instance.ImLeaving();
-                    StartCoroutine(LoadSwitchTable());
+                    //StartCoroutine(_LoadSwitchTable());
+                    LoadSwitchTable ();
                 }
                 else if (PhotonTexasPokerManager.instance != null && PhotonTexasPokerManager.instance.GetNumActivePlayers() > 1)
                     PokerManager.instance.uiMessageBox.Show(gameObject, "ID_ConfirmSwitchTable", MessageBoxType.OK_CANCEL, 2, true);
@@ -82,58 +86,105 @@ public class Box_Pause : MonoBehaviour
                 {
                     GlobalVariables.bSwitchTableNextRound = false;
                     PhotonTexasPokerManager.instance.ImLeaving();
-                    StartCoroutine(LoadSwitchTable());
+                    //StartCoroutine(_LoadSwitchTable());
+                    LoadSwitchTable ();
                 }
             }
         }
 
-        Hide();
+        //Hide();
     }
 
-    public IEnumerator LoadMenu()
+    public void LoadMenu ()
     {
         Logger.E ("start load menu");
 
-        //_SceneManager.instance.SetActiveSceneByIndex (1);
         _SceneManager.instance.SetActiveMenu ();
-        yield return null;
 
-        //GlobalVariables.bInGame = false;
-        //yield return null;
+        Hide ();
+
+        GlobalVariables.bInGame = false;
+        if (GlobalVariables.gameType == GameType.TexasPoker)
+        {
+            PhotonTexasPokerManager.instance.StopAllCoroutines ();
+            _PokerGameManager.instance.StopAllCoroutines ();
+
+            _PokerGameHUD.instance.boxThrow.Hide ();
+            _PokerGameHUD.instance.buyInHUD.Hide ();
+            _PokerGameHUD.instance.Hide ();
+
+            //yield return null;
+
+            _PokerGameManager.instance.CleanEverything ();
+
+            PhotonTexasPokerManager.instance.ClearPlayerProperties (PhotonNetwork.player);
+
+            //yield return null;
+            PokerData.Reset ();
+        }
+
+        PokerManager.instance.uiRoundRestart.Hide ();
+        PokerManager.instance.uiWaitingPlayers.Hide ();
+        PokerManager.instance.uiWaitingNextRound.Hide ();
+
+        if (PhotonNetwork.room != null)
+        {
+            PhotonNetwork.LeaveRoom ();
+            Debug.LogError ("leaving photon room");
+        }
+
+        PhotonRoomInfoManager.instance.RemoveCardGameScripts ();
+    }
+
+    public IEnumerator _LoadMenu()
+    {
+        Logger.E ("start load menu");
+
+        _SceneManager.instance.SetActiveMenu ();
+
+        Hide();
+
+        GlobalVariables.bInGame = false;
+        if (GlobalVariables.gameType == GameType.TexasPoker)
+        {
+            PhotonTexasPokerManager.instance.StopAllCoroutines();
+            _PokerGameManager.instance.StopAllCoroutines();
+
+            _PokerGameHUD.instance.boxThrow.Hide();
+            _PokerGameHUD.instance.buyInHUD.Hide();
+            _PokerGameHUD.instance.Hide();
+
+            //yield return null;
+
+            _PokerGameManager.instance.CleanEverything();
+
+            PhotonTexasPokerManager.instance.ClearPlayerProperties(PhotonNetwork.player);
+
+            //yield return null;
+            PokerData.Reset ();
+        }
+
+        PokerManager.instance.uiRoundRestart.Hide ();
+        PokerManager.instance.uiWaitingPlayers.Hide ();
+        PokerManager.instance.uiWaitingNextRound.Hide ();
+
+        if (PhotonNetwork.room != null)
+        {
+            PhotonNetwork.LeaveRoom ();
+            Debug.LogError ("leaving photon room");
+        }
+
+        PhotonRoomInfoManager.instance.RemoveCardGameScripts();
+
+        yield return null;
         ////        Debug.Log("Going back to main menu!");
         ////LoginSceneManager.Instance.uiBusyIndicator.Show(true);
 
-        //Box_RoundRestart.instance.Hide();
         ////HomeSceneManager.Instance.myHomeMenuReference.wholeUI.SetActive (true);
         ////CameraManager.instance.HideGameCamera();
 
         //SoundManager.instance.sfxSource.Stop();
         //SoundManager.instance.sfxSource2.Stop();
-
-        //Box_WaitingPlayers.instance.Hide();
-        //Box_WaitingNextRound.instance.Hide();
-
-        //Hide();
-
-        //if (GlobalVariables.gameType == GameType.TexasPoker)
-        //{
-        //    PhotonTexasPokerManager.instance.StopAllCoroutines();
-        //    _PokerGameManager.instance.StopAllCoroutines();
-
-        //    _PokerGameHUD.instance.boxThrow.Hide();
-        //    _PokerGameHUD.instance.buyInHUD.Hide();
-        //    _PokerGameHUD.instance.Hide();
-
-        //    _PokerGameManager.instance.CleanEverything();
-
-        //    PhotonTexasPokerManager.instance.ClearPlayerProperties(PhotonNetwork.player);
-        //    //HomeSceneManager.Instance.ResetPropertiesServer(GameType.TexasPoker);
-        //}
-
-        //PhotonRoomInfoManager.instance.RemoveCardGameScripts();
-
-        //if (PhotonNetwork.room != null)
-            //PhotonNetwork.LeaveRoom();
 
 
         //RoomInfoManager.instance.DeactiveGameEnvi();
@@ -145,7 +196,47 @@ public class Box_Pause : MonoBehaviour
         //LoginSceneManager.Instance.uiBusyIndicator.Hide ();
     }
 
-    public IEnumerator LoadSwitchTable()
+    public void LoadSwitchTable ()
+    {
+        GlobalVariables.bInGame = false;
+        //LoginSceneManager.Instance.uiBusyIndicator.Show(true);
+
+        PokerManager.instance.uiRoundRestart.Hide ();
+        PokerManager.instance.uiWaitingPlayers.Hide ();
+        PokerManager.instance.uiWaitingNextRound.Hide ();
+
+        //SoundManager.instance.sfxSource.Stop ();
+        //SoundManager.instance.sfxSource2.Stop ();
+
+
+        if (GlobalVariables.gameType == GameType.TexasPoker)
+        {
+            PhotonTexasPokerManager.instance.StopAllCoroutines ();
+            _PokerGameManager.instance.StopAllCoroutines ();
+
+            _PokerGameHUD.instance.boxThrow.Hide ();
+            _PokerGameHUD.instance.buyInHUD.Hide ();
+            _PokerGameHUD.instance.Hide ();
+
+            _PokerGameManager.instance.CleanEverything ();
+
+            PhotonTexasPokerManager.instance.ClearPlayerProperties (PhotonNetwork.player);
+
+            PokerData.Reset ();
+        }
+
+        PhotonRoomInfoManager.instance.RemoveCardGameScripts ();
+        PhotonRoomInfoManager.instance.InitialiseCardGameScripts ();
+
+        //HomeSceneManager.stockBot.Clear();
+
+        //StartCoroutine (RoomInfoManager.instance._SwitchingRoom ());
+        RoomInfoManager.instance.SwitchingRoom ();
+
+        Hide ();
+    }
+
+    public IEnumerator _LoadSwitchTable()
     {
         GlobalVariables.bInGame = false;
         yield return null;
@@ -181,7 +272,8 @@ public class Box_Pause : MonoBehaviour
 
         //HomeSceneManager.stockBot.Clear();
 
-        StartCoroutine(RoomInfoManager.instance.SwitchingRoom());
+        //StartCoroutine(RoomInfoManager.instance._SwitchingRoom());
+        RoomInfoManager.instance.SwitchingRoom ();
     }
 
     public void Hide()
@@ -200,7 +292,8 @@ public class Box_Pause : MonoBehaviour
         {
             GlobalVariables.bQuitOnNextRound = false;
             PhotonTexasPokerManager.instance.ImLeavingInTheMiddleOfTheGame();
-            StartCoroutine(LoadMenu());
+            //StartCoroutine(_LoadMenu());
+            LoadMenu ();
 
             Hide ();
         }
@@ -208,7 +301,8 @@ public class Box_Pause : MonoBehaviour
         {
             GlobalVariables.bSwitchTableNextRound = false;
             PhotonTexasPokerManager.instance.ImLeavingInTheMiddleOfTheGame();
-            StartCoroutine(LoadSwitchTable());
+            //StartCoroutine(_LoadSwitchTable());
+            LoadSwitchTable ();
 
             Hide ();
         }

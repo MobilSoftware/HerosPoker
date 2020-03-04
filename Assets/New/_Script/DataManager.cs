@@ -4,15 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public enum ConnectionStrength
-{
-    Excellent,
-    Good,
-    Normal,
-    Low,
-    VeryLow,
-    NotPlayable,
-}
+
 
 public class DataManager : MonoBehaviour
 {

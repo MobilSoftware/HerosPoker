@@ -8,14 +8,13 @@ public class Hero : MonoBehaviour
     public int id;
     private _SpineObject spineHero;
 
-    public void Show ()
+    public void Reset ()
     {
-        gameObject.SetActive (true);
-    }
-
-    public void Hide ()
-    {
-        gameObject.SetActive (false);
+        if (spineHero != null)
+        {
+            spineHero.StopRandomMove ();
+            Destroy (spineHero.gameObject);
+        }
     }
 
     public void LoadSpine ()

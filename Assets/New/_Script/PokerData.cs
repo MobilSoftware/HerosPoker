@@ -25,8 +25,7 @@ public static class PokerData
 
     public static void Generate ()
     {
-        poker_round_id = 99;
-        //room_bet = DataManager.instance.prototypeBet;
+        poker_round_id = UnityEngine.Random.Range (1, 90000);
         room_bet = PlayerData.proto_bet;
 
         RandomizeCards ();
@@ -61,5 +60,13 @@ public static class PokerData
 
         cardIndices = cardIndices.Take (25).ToArray ();
         cards = cardIndices;
+    }
+
+    public static void Reset ()
+    {
+        poker_round_id = 0;
+        room_bet = "0";
+        cards = null;
+        str_cards = string.Empty;
     }
 }

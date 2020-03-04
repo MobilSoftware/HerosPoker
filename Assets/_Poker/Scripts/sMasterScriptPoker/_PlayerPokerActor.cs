@@ -147,8 +147,7 @@ public class _PlayerPokerActor : MonoBehaviour
     {
         //ActivateInviteButton(true);
 
-        if (hero != null)
-            hero.Hide();
+        hero.Reset();
     }
 
     private void Start()
