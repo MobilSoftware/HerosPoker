@@ -2,6 +2,13 @@
 using Spine.Unity;
 using UnityEngine;
 
+public enum SpineAnim
+{
+    FOLD,
+    CALL,
+    CHECK
+}
+
 public class _SpineObject : MonoBehaviour
 {
     public SkeletonAnimation mySkelAnim;
@@ -13,12 +20,7 @@ public class _SpineObject : MonoBehaviour
     private int luckyEye = 6;
     private int luckyNod = 11;
 
-    private void Start ()
-    {
-        StartRandomMove ();
-    }
-
-    private void StartRandomMove ()
+    public void StartRandomMove ()
     {
         crRandomBlink = StartCoroutine (_StartRandomMove ());
     }
@@ -44,6 +46,26 @@ public class _SpineObject : MonoBehaviour
     {
         if (crRandomBlink != null)
             StopCoroutine (crRandomBlink);
+    }
+
+    public void SetAction (SpineAnim action )
+    {
+        string strActionName = string.Empty;
+        switch (action)
+        {
+            case SpineAnim.FOLD:
+                strActionName = "Fold";
+                break;
+            case SpineAnim.CALL:
+                strActionName = "Call";
+                break;
+            case SpineAnim.CHECK:
+                strActionName = "Check";
+                break;
+        }
+
+        if (!strActionName.Equals (string.Empty))
+            _SpineUtility.PlayAnimation (mySkelAnim, 0, strActionName, false);
     }
 
 }

@@ -36,5 +36,26 @@ public class Hero : MonoBehaviour
         spineHero.transform.localPosition = Vector3.zero;
         spineHero.transform.localEulerAngles = Vector3.zero;
         spineHero.transform.localScale = Vector3.one;
+        spineHero.StartRandomMove ();
+    }
+
+    public void Black ()
+    {
+        _SpineUtility.SetColorTintObjects (spineHero.mySkelAnim, Color.black);
+    }
+
+    public void FoldAction ()
+    {
+        spineHero.SetAction (SpineAnim.FOLD);
+    }
+
+    public void CallAction ()
+    {
+        spineHero.SetAction (SpineAnim.CALL);
+    }
+
+    public void CheckAction ()
+    {
+        spineHero.SetAction (SpineAnim.CHECK);
     }
 }

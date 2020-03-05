@@ -544,6 +544,8 @@ public class _PlayerPokerActor : MonoBehaviour
         SyncBet(_bet, _lastbet);
         DoBet(val);
         DoneAction();
+
+        hero.CallAction ();
         //avater3D.PlayAvaterExpression((int)AvaterAnimation.SitAllIn);
     }
 
@@ -565,6 +567,10 @@ public class _PlayerPokerActor : MonoBehaviour
         DoBet(_val);
         DoneAction();
 
+        if (_val == 0)
+            hero.CheckAction ();
+        else
+            hero.CallAction ();
         //avater3D.PlayAvaterExpression(_val == 0 ? (int)AvaterAnimation.SitCheck : (int) AvaterAnimation.SitBet);
         SoundManager.instance.PlaySFX(_val == 0 ? SFXType.SFX_PokerCheck : SFXType.SFX_PokerCall, Vector3.zero);
     }
@@ -589,6 +595,7 @@ public class _PlayerPokerActor : MonoBehaviour
         txtRole.text = "Raise : " + val.toFlexibleCurrency();
         panelState.color = raiseColor;
 
+        hero.CallAction ();
         //avater3D.PlayAvaterExpression((int)AvaterAnimation.SitBet);
     }
 
@@ -631,6 +638,10 @@ public class _PlayerPokerActor : MonoBehaviour
 
         txtRole.text = "Fold";
         panelState.color = foldColor;
+
+
+        hero.FoldAction ();
+        hero.Black ();
         //avater3D.ChangeSkinColor(Color.gray);
         //avater3D.PlayAvaterExpression((int)AvaterAnimation.SitFold);
     }

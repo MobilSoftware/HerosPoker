@@ -28,10 +28,11 @@ public class _BuyInHUD : MonoBehaviour
         btnBuy.onClick.AddListener(ConfirmBuy);
         btnClose.onClick.AddListener(Exit);
 
+        Debug.LogError ("start buy in hud");
         gameObject.SetActive(false);
     }
 
-    void SetMinMax()
+    private void SetMinMax()
     {
         minBuy = GlobalVariables.MinBetAmount * 10;
         //myMoney = DataManager.instance.ownedGold;

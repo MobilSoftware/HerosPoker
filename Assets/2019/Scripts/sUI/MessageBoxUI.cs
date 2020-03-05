@@ -54,14 +54,14 @@ public class MessageBoxUI : MonoBehaviour
         if (strBtnPositive != null)
             txtBtnPositive.SetText (strBtnPositive);
         else
-            txtBtnPositive.SetText ("ID_Ok");
+            txtBtnPositive.SetText ("OK");
 
         if (btnNegative.gameObject.activeSelf)
         {
             if (strBtnNegative != null)
                 txtBtnNegative.SetText (strBtnNegative);
             else
-                txtBtnNegative.SetText ("ID_Cancel");
+                txtBtnNegative.SetText ("Batal");
         }
     }
 

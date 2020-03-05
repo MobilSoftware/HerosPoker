@@ -13,7 +13,7 @@ public static class PlayerData
     public static void SetData (string _displayName)
     {
         proto_bet = "20";
-        owned_gold = 50000;
+        owned_gold = 40000;
 
         id = Random.Range (1, 10000);
         display_name = id + "_" + _displayName;
@@ -22,8 +22,6 @@ public static class PlayerData
             display_name = display_name.Substring (0, 7);
             display_name = display_name + "...";
         }
-
-        owned_gold = 50000;
         PhotonNetwork.player.NickName = id.ToString ();
     }
 }

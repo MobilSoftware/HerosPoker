@@ -280,7 +280,6 @@ public class RoomInfoManager : MonoBehaviour
                 long lCredit = PlayerData.owned_gold;
                 if (lCredit < GlobalVariables.MinBetAmount)
                 {
-                    string strTitle = LocalisationManager.instance.GetText("ID_Warning");
                     string strDesc = string.Format("Koin tidak cukup untuk masuk ke ruangan. Anda butuh minimum {0} koin untuk bermain di room ini.", GlobalVariables.MinBetAmount.toShortCurrency());
                     PokerManager.instance.uiMessageBox.Show(gameObject, strDesc, MessageBoxType.OK);
 

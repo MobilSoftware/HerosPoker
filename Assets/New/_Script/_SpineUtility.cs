@@ -8,12 +8,18 @@ public class _SpineUtility
     {
         ExposedList<Spine.Animation> anims = sa.skeleton.Data.Animations;
 
+        string strCurrAnimation = string.Empty;
+        if (trackIndex == 0)
+            strCurrAnimation = sa.AnimationState.GetCurrent (0).Animation.Name;
+
         for (int i = 0; i < anims.Count; i++)
         {
             if (anims.Items[i].Name.Equals (animName))
             {
                 TrackEntry entry = sa.AnimationState.SetAnimation (trackIndex, animName, isLoop);
                 entry.TimeScale = speed;
+                if (!isLoop && trackIndex == 0 && !strCurrAnimation.Equals (string.Empty))
+                    sa.AnimationState.AddAnimation (0, strCurrAnimation, true, 0);
                 break;
             }
         }

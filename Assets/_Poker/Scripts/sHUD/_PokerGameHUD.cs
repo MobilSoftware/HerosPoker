@@ -48,8 +48,8 @@ public class _PokerGameHUD : MonoBehaviour
 
             if (GlobalVariables.bInGame)
             {
-                SceneManager.LoadScene("Menu");
-                PokerManager.instance.uiMessageBox.Show(null, "ID_PhotonDisconnectedMessage");
+                //SceneManager.LoadScene("Menu");
+                PokerManager.instance.uiMessageBox.Show(this.gameObject, "Terputus dari server", MessageBoxType.OK, 1);
 
                 //int widthR = HomeSceneManager.Instance.fsResolution.width;
                 //int heightR = HomeSceneManager.Instance.fsResolution.height;
@@ -177,6 +177,15 @@ public class _PokerGameHUD : MonoBehaviour
     private void onChat()
     {
 
+    }
+
+    private void onMessageBoxOKClicked (int returnedCode )
+    {
+        if (returnedCode == 1)
+        {
+            PokerManager.instance.uiMessageBox.Hide ();
+            PokerManager.instance.uiPause.LoadMenu ();
+        }
     }
 
     public void OnMission ()

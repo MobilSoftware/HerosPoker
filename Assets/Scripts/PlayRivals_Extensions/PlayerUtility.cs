@@ -16,7 +16,7 @@ public class PlayerUtility{
         if (GlobalVariables.bIsCoins)
         {
             //DataManager.instance.ownedGold = GetPlayerCreditsLeft () - val;
-            PlayerData.owned_gold = GetPlayerCreditsLeft () - val;
+            PlayerData.owned_gold -= val;
         }
     }
 }

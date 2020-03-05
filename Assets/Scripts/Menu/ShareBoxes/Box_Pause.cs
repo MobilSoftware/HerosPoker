@@ -47,7 +47,7 @@ public class Box_Pause : MonoBehaviour
                 {
 
                     Debug.LogError ("Quit Game55");
-                    PokerManager.instance.uiMessageBox.Show (this.gameObject, "ID_QuitRoom", MessageBoxType.OK_CANCEL, 1, true);
+                    PokerManager.instance.uiMessageBox.Show (this.gameObject, "Keluar Ruangan", MessageBoxType.OK_CANCEL, 1, true);
                 }
                 else
                 {
@@ -81,7 +81,7 @@ public class Box_Pause : MonoBehaviour
                     LoadSwitchTable ();
                 }
                 else if (PhotonTexasPokerManager.instance != null && PhotonTexasPokerManager.instance.GetNumActivePlayers() > 1)
-                    PokerManager.instance.uiMessageBox.Show(gameObject, "ID_ConfirmSwitchTable", MessageBoxType.OK_CANCEL, 2, true);
+                    PokerManager.instance.uiMessageBox.Show(gameObject, "Apakah kamu yakin ingin pindah ke meja lain?", MessageBoxType.OK_CANCEL, 2, true);
                 else
                 {
                     GlobalVariables.bSwitchTableNextRound = false;
@@ -126,6 +126,7 @@ public class Box_Pause : MonoBehaviour
         PokerManager.instance.uiRoundRestart.Hide ();
         PokerManager.instance.uiWaitingPlayers.Hide ();
         PokerManager.instance.uiWaitingNextRound.Hide ();
+        PokerManager.instance.uiMessageBox.Hide ();
 
         if (PhotonNetwork.room != null)
         {

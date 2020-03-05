@@ -51,7 +51,6 @@ public class PhotonTexasPokerManager : PunBehaviour
     #region photon
     public void PrepareGame ()
     {
-        Screen.fullScreen = false;
         _PokerGameManager.startBet = GlobalVariables.MinBetAmount;
         InitialPlayerProperties (PhotonNetwork.player);
 
@@ -401,7 +400,7 @@ public class PhotonTexasPokerManager : PunBehaviour
 
         properties[PhotonEnums.Player.SlotIndex] = -1;
 
-        long _money = (long) PlayerUtility.GetPlayerCreditsLeft ();
+        long _money = PlayerData.owned_gold;
         long _buyIn = _money > GlobalVariables.MinBetAmount * 200 ? GlobalVariables.MinBetAmount * 200 : _money;
         PlayerUtility.BuyInFromBankAccount (_buyIn);
 
@@ -733,12 +732,27 @@ public class PhotonTexasPokerManager : PunBehaviour
             PokerManager.instance.uiPause.LoadMenu ();
             yield break;
         }
-        else if (bMoneyEnuf <= _PokerGameManager.startBet)
+
+        if (bMoneyEnuf <= _PokerGameManager.startBet)
         {
-            if (PlayerUtility.GetPlayerCreditsLeft () > _PokerGameManager.startBet * 10)
+            Debug.LogError ("inside money enough: " + PlayerData.owned_gold);
+            if (PlayerData.owned_gold > _PokerGameManager.startBet * 10)
+            {
+                Debug.LogError ("inside bankrupt");
                 Bankrupt ();
+            }
+            else if (PlayerData.owned_gold == 0)
+            {
+                //auto sedekah 2M
+                Debug.LogError ("inside sedekah");
+                PokerManager.instance.uiMessageBox.Show (this.gameObject, "Kamu mendapatkan sedekah sebesar 2M Koin!");
+                PlayerData.owned_gold += 2000;
+
+                _PokerGameHUD.instance.buyInHUD.AutoBuyIn ();
+            }
             else
             {
+                Debug.LogError ("inside else");
                 GlobalVariables.bQuitOnNextRound = false;
                 ImLeaving ();
                 //StartCoroutine (PokerManager.instance.uiPause._LoadMenu ());
@@ -1458,7 +1472,7 @@ public class PhotonTexasPokerManager : PunBehaviour
     {
         //If the player's in game then quit message
         if (PhotonNetwork.room != null)
-            PokerManager.instance.uiMessageBox.Show(gameObject, "ID_ConnectionError", MessageBoxType.OK, 2, true);
+            PokerManager.instance.uiMessageBox.Show(gameObject, "Koneksi bermasalah", MessageBoxType.OK, 2, true);
     }
 
     public override void OnMasterClientSwitched(PhotonPlayer newMasterClient)
@@ -1476,7 +1490,7 @@ public class PhotonTexasPokerManager : PunBehaviour
         Logger.D (codeAndMsg[0] + " OnPhotonRandomJoinFailed : " + codeAndMsg[1]);
         //LoginSceneManager.Instance.uiBusyIndicator.Hide ();
 
-        PokerManager.instance.uiMessageBox.Show (null, codeAndMsg[0].ToString () == "32765" ? "ID_GameFull" : "ID_GameClosed");
+        PokerManager.instance.uiMessageBox.Show (null, codeAndMsg[0].ToString () == "32765" ? "Ruangan sudah penuh" : "Permainan sudah selesai");
         //32758 Game Doesn't exist
         //32765 Game Full
     }
@@ -1674,7 +1688,7 @@ public class PhotonTexasPokerManager : PunBehaviour
 
             if (diffVal > _timeLeftforPause)
             {
-                PokerManager.instance.uiMessageBox.Show (gameObject, "ID_ConnectionError", MessageBoxType.OK, 2, true);
+                PokerManager.instance.uiMessageBox.Show (gameObject, "Koneksi terputus", MessageBoxType.OK, 2, true);
             }
         }
     }
@@ -1682,23 +1696,20 @@ public class PhotonTexasPokerManager : PunBehaviour
     [PunRPC]
     void RPC_ForceQuitMatch()
     {
-        PokerManager.instance.uiMessageBox.Show (gameObject, "ID_Timeout", MessageBoxType.OK, 1, true);        
+        PokerManager.instance.uiMessageBox.Show (gameObject, "Kamu dikeluarkan karena tidak aktif", MessageBoxType.OK, 1, true);        
     }
 
     private void onMessageBoxOKClicked(int returnedCode)
     {
         if (returnedCode == 1)
         {
-
-            Debug.LogError ("Quit Game 99");
             GlobalVariables.bQuitOnNextRound = false;
             ImLeaving ();
             //StartCoroutine (PokerManager.instance.uiPause._LoadMenu ());
             PokerManager.instance.uiPause.LoadMenu ();
         }
         else if (returnedCode == 2)
-            SceneManager.LoadScene ("Menu");
-            //Application.LoadLevel("Menu");
+            PokerManager.instance.uiPause.LoadMenu ();
     }
 
     #endregion
