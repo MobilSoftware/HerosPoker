@@ -9,6 +9,7 @@ public static class PlayerData
     public static string display_name;
     public static long owned_gold;
     public static int hero_id;
+    public static int charityCount;
 
     public static void SetData (string _displayName)
     {
@@ -23,5 +24,6 @@ public static class PlayerData
             display_name = display_name + "...";
         }
         PhotonNetwork.player.NickName = id.ToString ();
+        charityCount = 3;
     }
 }

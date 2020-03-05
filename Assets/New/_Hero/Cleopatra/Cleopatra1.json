@@ -1,6 +1,6 @@
 {
 "skeleton": {
-	"hash": "Ccylb4YEqDlpkIyVnzOS+kpjhN4",
+	"hash": "4RvXH/6SBAAwcXZHd6mMYwXl0PU",
 	"spine": "3.8.84",
 	"x": 1041.35,
 	"y": -3766,
@@ -12,7 +12,15 @@
 "bones": [
 	{ "name": "root" },
 	{ "name": "Hip", "parent": "root", "length": 729.89, "rotation": 93.27, "x": 2069.76, "y": -3736.28 },
-	{ "name": "Chest", "parent": "Hip", "length": 857.91, "rotation": -2.3, "x": 730.01, "y": 2.08 },
+	{
+		"name": "Chest",
+		"parent": "Hip",
+		"length": 857.91,
+		"rotation": -2.3,
+		"x": 730.01,
+		"y": 2.08,
+		"color": "abe323ff"
+	},
 	{ "name": "Neck", "parent": "root", "length": 360.91, "rotation": 86.62, "x": 2017.71, "y": -2143.55 },
 	{ "name": "Face", "parent": "Neck", "length": 752.17, "rotation": 1.42, "x": 360.91 },
 	{ "name": "ShoulderBase", "parent": "root", "rotation": 90.97, "x": 2080.26, "y": -2157.15 },
@@ -141,6 +149,30 @@
 		"order": 1,
 		"bones": [ "UpperArm.R", "LowerArm.R" ],
 		"target": "IK.R"
+	}
+],
+"transform": [
+	{
+		"name": "Chest",
+		"order": 2,
+		"bones": [ "Neck" ],
+		"target": "Chest",
+		"rotation": -4.35,
+		"x": 864.05,
+		"y": -6.35,
+		"shearY": 360,
+		"scaleMix": 0,
+		"shearMix": 0
+	},
+	{
+		"name": "Chest2",
+		"order": 3,
+		"bones": [ "ShoulderBase" ],
+		"target": "Chest",
+		"x": 849.39,
+		"y": -68.66,
+		"scaleMix": 0,
+		"shearMix": 0
 	}
 ],
 "skins": [
@@ -678,6 +710,14 @@
 		}
 	},
 	"Call": {
+		"slots": {
+			"HandGrip.R": {
+				"attachment": [
+					{ "name": null },
+					{ "time": 0.6667, "name": null }
+				]
+			}
+		},
 		"bones": {
 			"Chest": {
 				"rotate": [
@@ -1315,6 +1355,15 @@
 					{ "time": 0.6667 }
 				]
 			}
+		},
+		"deform": {
+			"default": {
+				"HandGrip.R": {
+					"HandGrip.R": [
+						{}
+					]
+				}
+			}
 		}
 	},
 	"Check": {
@@ -1682,6 +1731,14 @@
 		}
 	},
 	"Fold": {
+		"slots": {
+			"HandGrip.R": {
+				"attachment": [
+					{ "name": null },
+					{ "time": 1, "name": null }
+				]
+			}
+		},
 		"bones": {
 			"IK.R": {
 				"rotate": [
@@ -2275,6 +2332,15 @@
 				]
 			}
 		},
+		"deform": {
+			"default": {
+				"HandGrip.R": {
+					"HandGrip.R": [
+						{}
+					]
+				}
+			}
+		},
 		"drawOrder": [
 			{},
 			{
@@ -2292,6 +2358,13 @@
 		]
 	},
 	"Idle": {
+		"slots": {
+			"HandGrip.R": {
+				"attachment": [
+					{ "name": null }
+				]
+			}
+		},
 		"bones": {
 			"Hip": {
 				"rotate": [

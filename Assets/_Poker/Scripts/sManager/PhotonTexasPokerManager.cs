@@ -741,7 +741,7 @@ public class PhotonTexasPokerManager : PunBehaviour
                 Debug.LogError ("inside bankrupt");
                 Bankrupt ();
             }
-            else if (PlayerData.owned_gold == 0)
+            else if (PlayerData.owned_gold == 0 && PlayerData.charityCount > 0)
             {
                 //auto sedekah 2M
                 Debug.LogError ("inside sedekah");
@@ -749,6 +749,7 @@ public class PhotonTexasPokerManager : PunBehaviour
                 PlayerData.owned_gold += 2000;
 
                 _PokerGameHUD.instance.buyInHUD.AutoBuyIn ();
+                PlayerData.charityCount--;
             }
             else
             {

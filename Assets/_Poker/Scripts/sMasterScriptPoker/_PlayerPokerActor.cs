@@ -641,7 +641,6 @@ public class _PlayerPokerActor : MonoBehaviour
 
 
         hero.FoldAction ();
-        hero.Black ();
         //avater3D.ChangeSkinColor(Color.gray);
         //avater3D.PlayAvaterExpression((int)AvaterAnimation.SitFold);
     }

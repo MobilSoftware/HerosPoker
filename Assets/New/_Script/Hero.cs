@@ -39,14 +39,10 @@ public class Hero : MonoBehaviour
         spineHero.StartRandomMove ();
     }
 
-    public void Black ()
-    {
-        _SpineUtility.SetColorTintObjects (spineHero.mySkelAnim, Color.black);
-    }
-
     public void FoldAction ()
     {
         spineHero.SetAction (SpineAnim.FOLD);
+        _SpineUtility.SetSkinColor (spineHero.mySkelAnim, Color.grey);
     }
 
     public void CallAction ()
