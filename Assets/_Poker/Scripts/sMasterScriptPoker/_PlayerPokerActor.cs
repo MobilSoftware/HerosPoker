@@ -45,6 +45,7 @@ public class _PlayerPokerActor : MonoBehaviour
     public ChipsDrop[] myChipsBet;
     public ChipFlow myChipsFlow;
     public CardBack myCardBack;
+    public GameObject objPlayerActive;
 
     [SerializeField] Image panelState;
 
@@ -255,6 +256,8 @@ public class _PlayerPokerActor : MonoBehaviour
         DeactiveChips();
 
         ClearPreAction();
+
+        hero.Revert ();
         //avater3D.ChangeSkinColor(Color.white);
     }
 
@@ -291,6 +294,7 @@ public class _PlayerPokerActor : MonoBehaviour
             return;
 
         doneAction = true;
+        objPlayerActive.SetActive (false);
 
         StopCoroutine("MyTurnStart");
 
@@ -378,6 +382,7 @@ public class _PlayerPokerActor : MonoBehaviour
             StartCoroutine("MyTurnStart");
 
             SetPanelAction();
+            objPlayerActive.SetActive (true);
 
             //_PokerGameManager.instance.fxTableSpotlite.ShowFxSpotlight(System.Array.IndexOf(_PokerGameManager.instance.unsortedPlayers, this));
         }

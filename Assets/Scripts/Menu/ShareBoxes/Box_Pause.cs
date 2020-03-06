@@ -45,9 +45,8 @@ public class Box_Pause : MonoBehaviour
                 }
                 else if (PhotonTexasPokerManager.instance != null && PhotonTexasPokerManager.instance.GetNumActivePlayers () > 1)
                 {
-
                     Debug.LogError ("Quit Game55");
-                    PokerManager.instance.uiMessageBox.Show (this.gameObject, "Keluar Ruangan", MessageBoxType.OK_CANCEL, 1, true);
+                    MessageManager.instance.Show (gameObject, "Keluar Ruangan", ButtonMode.OK_CANCEL, 1);
                 }
                 else
                 {
@@ -73,15 +72,15 @@ public class Box_Pause : MonoBehaviour
         {
             if (PhotonNetwork.room != null || PhotonTexasPokerManager.instance.GetNumActivePlayers() <= 1)
             {
-                if (!PhotonUtility.GetPlayerProperties<bool>(PhotonNetwork.player, PhotonEnums.Player.Active))
+                if (!PhotonUtility.GetPlayerProperties<bool> (PhotonNetwork.player, PhotonEnums.Player.Active))
                 {
                     GlobalVariables.bSwitchTableNextRound = false;
-                    PhotonTexasPokerManager.instance.ImLeaving();
+                    PhotonTexasPokerManager.instance.ImLeaving ();
                     //StartCoroutine(_LoadSwitchTable());
                     LoadSwitchTable ();
                 }
-                else if (PhotonTexasPokerManager.instance != null && PhotonTexasPokerManager.instance.GetNumActivePlayers() > 1)
-                    PokerManager.instance.uiMessageBox.Show(gameObject, "Apakah kamu yakin ingin pindah ke meja lain?", MessageBoxType.OK_CANCEL, 2, true);
+                else if (PhotonTexasPokerManager.instance != null && PhotonTexasPokerManager.instance.GetNumActivePlayers () > 1)
+                    MessageManager.instance.Show (gameObject, "Apakah kamu yakin ingin pindah ke meja lain?", ButtonMode.OK_CANCEL, 2);
                 else
                 {
                     GlobalVariables.bSwitchTableNextRound = false;
@@ -99,7 +98,8 @@ public class Box_Pause : MonoBehaviour
     {
         Logger.E ("start load menu");
 
-        _SceneManager.instance.SetActiveMenu ();
+        _SceneManager.instance.SetActiveScene (SceneType.HOME, true);
+        _SceneManager.instance.SetActiveScene (SceneType.POKER, false);
 
         Hide ();
 
@@ -126,7 +126,6 @@ public class Box_Pause : MonoBehaviour
         PokerManager.instance.uiRoundRestart.Hide ();
         PokerManager.instance.uiWaitingPlayers.Hide ();
         PokerManager.instance.uiWaitingNextRound.Hide ();
-        PokerManager.instance.uiMessageBox.Hide ();
 
         if (PhotonNetwork.room != null)
         {
@@ -141,9 +140,10 @@ public class Box_Pause : MonoBehaviour
     {
         Logger.E ("start load menu");
 
-        _SceneManager.instance.SetActiveMenu ();
+        _SceneManager.instance.SetActiveScene (SceneType.HOME, true);
+        _SceneManager.instance.SetActiveScene (SceneType.POKER, false);
 
-        Hide();
+        Hide ();
 
         GlobalVariables.bInGame = false;
         if (GlobalVariables.gameType == GameType.TexasPoker)
@@ -285,27 +285,20 @@ public class Box_Pause : MonoBehaviour
 
     }
 
-    private void onMessageBoxOKClicked(int returnedCode)
+    private void OnPositiveClicked (int returnCode )
     {
-        Debug.LogError ("Quit Game 100");
-        Debug.LogError (returnedCode);
-        if (returnedCode == 1)
+        switch (returnCode)
         {
-            GlobalVariables.bQuitOnNextRound = false;
-            PhotonTexasPokerManager.instance.ImLeavingInTheMiddleOfTheGame();
-            //StartCoroutine(_LoadMenu());
-            LoadMenu ();
-
-            Hide ();
-        }
-        else if (returnedCode == 2)
-        {
-            GlobalVariables.bSwitchTableNextRound = false;
-            PhotonTexasPokerManager.instance.ImLeavingInTheMiddleOfTheGame();
-            //StartCoroutine(_LoadSwitchTable());
-            LoadSwitchTable ();
-
-            Hide ();
+            case 1:
+                GlobalVariables.bQuitOnNextRound = false;
+                PhotonTexasPokerManager.instance.ImLeavingInTheMiddleOfTheGame ();
+                LoadMenu ();
+                break;
+            case 2:
+                GlobalVariables.bSwitchTableNextRound = false;
+                PhotonTexasPokerManager.instance.ImLeavingInTheMiddleOfTheGame ();
+                LoadSwitchTable ();
+                break;
         }
     }
 }

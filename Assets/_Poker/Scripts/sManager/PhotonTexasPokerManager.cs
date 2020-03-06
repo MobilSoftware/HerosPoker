@@ -745,7 +745,7 @@ public class PhotonTexasPokerManager : PunBehaviour
             {
                 //auto sedekah 2M
                 Debug.LogError ("inside sedekah");
-                PokerManager.instance.uiMessageBox.Show (this.gameObject, "Kamu mendapatkan sedekah sebesar 2M Koin!");
+                MessageManager.instance.Show (this.gameObject, "Kamu mendapatkan sedekah sebesar 2M Koin!");
                 PlayerData.owned_gold += 2000;
 
                 _PokerGameHUD.instance.buyInHUD.AutoBuyIn ();
@@ -1473,7 +1473,7 @@ public class PhotonTexasPokerManager : PunBehaviour
     {
         //If the player's in game then quit message
         if (PhotonNetwork.room != null)
-            PokerManager.instance.uiMessageBox.Show(gameObject, "Koneksi bermasalah", MessageBoxType.OK, 2, true);
+            MessageManager.instance.Show (gameObject, "Koneksi bermasalah", ButtonMode.OK, 2);
     }
 
     public override void OnMasterClientSwitched(PhotonPlayer newMasterClient)
@@ -1491,7 +1491,7 @@ public class PhotonTexasPokerManager : PunBehaviour
         Logger.D (codeAndMsg[0] + " OnPhotonRandomJoinFailed : " + codeAndMsg[1]);
         //LoginSceneManager.Instance.uiBusyIndicator.Hide ();
 
-        PokerManager.instance.uiMessageBox.Show (null, codeAndMsg[0].ToString () == "32765" ? "Ruangan sudah penuh" : "Permainan sudah selesai");
+        MessageManager.instance.Show (null, codeAndMsg[0].ToString () == "32765" ? "Ruangan sudah penuh" : "Permainan sudah selesai");
         //32758 Game Doesn't exist
         //32765 Game Full
     }
@@ -1688,16 +1688,29 @@ public class PhotonTexasPokerManager : PunBehaviour
             float diffVal = (float) Math.Floor (diff.TotalSeconds);
 
             if (diffVal > _timeLeftforPause)
-            {
-                PokerManager.instance.uiMessageBox.Show (gameObject, "Koneksi terputus", MessageBoxType.OK, 2, true);
-            }
+                MessageManager.instance.Show (gameObject, "Koneksi terputus", ButtonMode.OK, 2);
         }
     }
 
     [PunRPC]
     void RPC_ForceQuitMatch()
     {
-        PokerManager.instance.uiMessageBox.Show (gameObject, "Kamu dikeluarkan karena tidak aktif", MessageBoxType.OK, 1, true);        
+        MessageManager.instance.Show (gameObject, "Kamu dikeluarkan karena tidak aktif", ButtonMode.OK, 1);
+    }
+
+    private void OnPositiveClicked (int returnCode )
+    {
+        switch (returnCode)
+        {
+            case 1:
+                GlobalVariables.bQuitOnNextRound = false;
+                ImLeaving ();
+                PokerManager.instance.uiPause.LoadMenu ();
+                break;
+            case 2:
+                PokerManager.instance.uiPause.LoadMenu ();
+                break;
+        }
     }
 
     private void onMessageBoxOKClicked(int returnedCode)

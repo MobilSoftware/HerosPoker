@@ -104,13 +104,3 @@ public enum ScreenAspectRatio
     iPad_4x3,
     WP8_5x3,
 }
-
-public enum MessageBoxType
-{
-    OK,
-    ACCEPT,
-    OK_CANCEL,
-    ACCEPT_CANCEL,
-    NO_BUTTONS,
-
-}

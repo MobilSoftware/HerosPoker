@@ -28,14 +28,14 @@ public class PokerManager : MonoBehaviour
                 //  FindObjectOfType(...) returns the first MenuManager object in the scene.
                 s_Instance = FindObjectOfType (typeof (PokerManager)) as PokerManager;
                 if (s_Instance == null)
-                    Debug.Log ("Could not locate an SePokerManager object. \n You have to have exactly one SePokerManager in the scene.");
+                    Debug.Log ("Could not locate an PokerManager object. \n You have to have exactly one PokerManager in the scene.");
             }
             return s_Instance;
         }
     }
 
     public GameObject objPoker;
-    public MessageBoxUI uiMessageBox;
+    public Canvas canvas;
     public ThrowItemUI uiThrowItem;
     public Box_WaitingNextRound uiWaitingNextRound;
     public Box_RoundRestart uiRoundRestart;
@@ -47,8 +47,25 @@ public class PokerManager : MonoBehaviour
     public _SpineObject spLubu;
     public _SpineObject spCleo;
 
-    public void Init()
+    private bool isInit;
+
+    public void Show ()
     {
-        Debug.LogError ("init sepoker");
+        if (!isInit)
+        {
+            canvas.sortingOrder = (int) SceneType.POKER;
+            isInit = true;
+        }
+        objPoker.SetActive (true);
+        canvas.enabled = true;
+
+        PhotonRoomInfoManager.instance.InitialiseCardGameScripts ();
+        RoomInfoManager.instance.JoinRandomRoom ();
+    }
+
+    public void Hide ()
+    {
+        objPoker.SetActive (false);
+        canvas.enabled = false;
     }
 }

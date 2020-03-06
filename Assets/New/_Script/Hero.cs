@@ -39,6 +39,11 @@ public class Hero : MonoBehaviour
         spineHero.StartRandomMove ();
     }
 
+    public void Revert ()
+    {
+        _SpineUtility.SetSkinColor (spineHero.mySkelAnim, Color.white);
+    }
+
     public void FoldAction ()
     {
         spineHero.SetAction (SpineAnim.FOLD);

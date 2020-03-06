@@ -20,15 +20,10 @@ public class ThrowItemUI : MonoBehaviour
         btnClose.onClick.AddListener(Hide);
     }
 
-    public void Show()
-    {
-        gameObject.SetActive (true);
-    }
-
     public void SetupMenuPoker(Transform _to, int _target)
     {
         _gameRunning = GameType.TexasPoker;
-        Show();
+        gameObject.SetActive (true);
 
         transform.position = _to.position;
         targetParasite = _target;

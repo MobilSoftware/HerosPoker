@@ -6,8 +6,10 @@ using UnityEngine.SceneManagement;
 public enum SceneType
 {
     SPLASH,
-    MENU,
-    POKER
+    HOME,
+    BEGIN,
+    POKER,
+    MESSAGE
 }
 
 public class _SceneManager : MonoBehaviour
@@ -32,13 +34,19 @@ public class _SceneManager : MonoBehaviour
         }
     }
 
+    [HideInInspector]
+    public SceneType activeSceneType;
+
     private List<Scene> loadedScenes = new List<Scene> ();
-    private HomeManager menuManager;
+    private HomeManager homeManager;
     private PokerManager pokerManager;
+    private BeginManager beginManager;
+    private MessageManager msgManager;
 
     private void Start ()
     {
         DontDestroyOnLoad (this);
+        activeSceneType = SceneType.SPLASH;
         StartCoroutine (_LoadAllScenes ());
     }
 
@@ -55,25 +63,60 @@ public class _SceneManager : MonoBehaviour
             loadedScenes.Add (SceneManager.GetSceneByBuildIndex (i));
         }
         yield return new WaitForEndOfFrame ();
-        menuManager = HomeManager.instance;
+        homeManager = HomeManager.instance;
         pokerManager = PokerManager.instance;
-        SetActiveMenu ();
+        beginManager = BeginManager.instance;
+        msgManager = MessageManager.instance;
+        SetActiveBegin (true);
         SceneManager.UnloadSceneAsync ("SeSplash");
     }
 
-    public void SetActiveMenu ()
+    public void SetActiveScene (SceneType st, bool val )
     {
-        menuManager.objMenu.SetActive (true);
-        menuManager.Init ();
-        pokerManager.objPoker.SetActive (false);
+        switch (st)
+        {
+            case SceneType.BEGIN:
+                SetActiveBegin (val);
+                break;
+            case SceneType.HOME:
+                SetActiveHome (val);
+                break;
+            case SceneType.POKER:
+                SetActivePoker (val);
+                break;
+        }
     }
 
-    public void SetActivePoker ()
+    private void SetActiveHome (bool val)
     {
-        menuManager.objMenu.SetActive (false);
-        pokerManager.objPoker.SetActive (true);
+        if (val)
+        {
+            homeManager.Show ();
+            activeSceneType = SceneType.HOME;
+        }
+        else
+            homeManager.Hide ();
+    }
 
-        PhotonRoomInfoManager.instance.InitialiseCardGameScripts ();
-        RoomInfoManager.instance.JoinRandomRoom ();
+    private void SetActivePoker (bool val)
+    {
+        if (val)
+        {
+            pokerManager.Show ();
+            activeSceneType = SceneType.POKER;
+        }
+        else
+            pokerManager.Hide ();
+    }
+
+    private void SetActiveBegin (bool val )
+    {
+        if (val)
+        {
+            beginManager.Show ();
+            activeSceneType = SceneType.BEGIN;
+        }
+        else
+            beginManager.Hide ();
     }
 }

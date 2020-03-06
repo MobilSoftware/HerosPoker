@@ -1,37 +1,53 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class HomeManager : MonoBehaviour
 {
     private static HomeManager s_Instance = null;
-
-    // This defines a static instance property that attempts to find the manager object in the scene and
-    // returns it to the caller.
     public static HomeManager instance
     {
         get
         {
             if (s_Instance == null)
             {
-                // This is where the magic happens.
-                //  FindObjectOfType(...) returns the first MenuManager object in the scene.
                 s_Instance = FindObjectOfType (typeof (HomeManager)) as HomeManager;
                 if (s_Instance == null)
-                    Debug.Log ("Could not locate an SeMenuManager object. \n You have to have exactly one SeMenuManager in the scene.");
+                    Debug.Log ("Could not locate an HomeManager object. \n You have to have exactly one HomeManager in the scene.");
             }
             return s_Instance;
         }
     }
 
-    public GameObject objMenu;
+    public Canvas canvas;
+    public Button btnPoker;
+
     private bool isInit;
 
-    public void Init ()
+    private void Start ()
     {
-        Debug.LogError ("init semenu");
+        btnPoker.onClick.AddListener (OnPoker);
+    }
 
+    private void OnPoker ()
+    {
+        _SceneManager.instance.SetActiveScene (SceneType.POKER, true);
+        _SceneManager.instance.SetActiveScene (SceneType.HOME, false);
+    }
+
+    public void Show ()
+    {
         if (!isInit)
+        {
             PhotonNetwork.ConnectUsingSettings ("v1.0");
+            canvas.sortingOrder = (int) SceneType.HOME;
+            isInit = true;
+        }
 
-        isInit = true;
+        canvas.enabled = true;
+    }
+
+    public void Hide ()
+    {
+        canvas.enabled = false;
     }
 }

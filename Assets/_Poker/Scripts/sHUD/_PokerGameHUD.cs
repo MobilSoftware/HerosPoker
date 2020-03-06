@@ -8,7 +8,6 @@ public class _PokerGameHUD : MonoBehaviour
     public _BuyInHUD buyInHUD;
     public ThrowItemUI boxThrow;
 
-    public Text bidTxt;
     public Sprite coinSprite, gemSprite;
 
     //public Button[] inviteButtons = new Button[6];
@@ -16,7 +15,7 @@ public class _PokerGameHUD : MonoBehaviour
     public Sprite sprClosed;
     public Sprite sprOpened;
 
-    public Image imgConnection, iconCoin;
+    public Image imgConnection;
     public Sprite connGood, connNormal, connLow, connVeryLow;
     public Text txtSpeed;
 
@@ -25,7 +24,7 @@ public class _PokerGameHUD : MonoBehaviour
 
     private MenuOrBoxType prevMenuOrBox;
 
-    public Text locationTxt, _roomText;
+    public Text _roomText;
 
     private void Awake()
     {
@@ -49,11 +48,8 @@ public class _PokerGameHUD : MonoBehaviour
             if (GlobalVariables.bInGame)
             {
                 //SceneManager.LoadScene("Menu");
-                PokerManager.instance.uiMessageBox.Show(this.gameObject, "Terputus dari server", MessageBoxType.OK, 1);
-
-                //int widthR = HomeSceneManager.Instance.fsResolution.width;
-                //int heightR = HomeSceneManager.Instance.fsResolution.height;
-                //Screen.SetResolution (widthR, heightR, true);
+                PokerManager.instance.uiPause.LoadMenu ();
+                MessageManager.instance.Show (gameObject, "Terputus dari server", ButtonMode.OK, 1);
             }
 
             CancelInvoke("CheckConnection");
@@ -132,26 +128,20 @@ public class _PokerGameHUD : MonoBehaviour
         _PokerGameManager.instance.chipD.SetActive(false);
 
         //HomeSceneManager.Instance.myHomeMenuReference.uiMyCouponPoker.SetMinimumValue ();
-        SoundManager.instance.ChangeBackgroundMusic(1);
+        //SoundManager.instance.ChangeBackgroundMusic(1);
     }
 
     public void Hide()
     {
         CancelInvoke("CheckConnection");
         gameObject.SetActive(false);
-        SoundManager.instance.ChangeBackgroundMusic(0);
+        //SoundManager.instance.ChangeBackgroundMusic(0);
     }
 
     public void SetupMenu()
     {
 
-        //imgLocation.sprite = RoomInfoManager.instance.spriteCity[(int)GlobalVariables.environment];
-        locationTxt.text = "PROTOTYPE";
-
         _roomText.text = "#" + PhotonNetwork.room.Name;
-        bidTxt.text = GlobalVariables.bIsCoins ? GlobalVariables.MinBetAmount.toShortCurrency() : GlobalVariables.MinBetAmount.toGemShortCurrency();
-
-        iconCoin.sprite = GlobalVariables.bIsCoins ? coinSprite : gemSprite;
 
         InvokeRepeating("CheckConnection", 0.0f, 2.0f);
     }
@@ -179,30 +169,18 @@ public class _PokerGameHUD : MonoBehaviour
 
     }
 
-    private void onMessageBoxOKClicked (int returnedCode )
+    private void OnPositiveClicked (int returnCode )
     {
-        if (returnedCode == 1)
+        switch (returnCode)
         {
-            PokerManager.instance.uiMessageBox.Hide ();
-            PokerManager.instance.uiPause.LoadMenu ();
+            case 1:
+                PokerManager.instance.uiPause.LoadMenu ();
+                break;
         }
-    }
-
-    public void OnMission ()
-    {
-        //if (HomeSceneManager.Instance.myHomeMenuReference.uiMyCouponPoker.gameObject.activeSelf)
-        //{
-        //    HomeSceneManager.Instance.myHomeMenuReference.uiMyCouponPoker.Hide ();
-        //}
-        //else
-        //{
-        //    HomeSceneManager.Instance.myHomeMenuReference.uiMyCouponPoker.Show ();
-        //    imgBgMission.sprite = sprOpened;
-        //}
     }
 
     public void ShowPanelThrow(Transform _to, _PlayerPokerActor _target)
     {
-        boxThrow.SetupMenuPoker(_to, _target._myParasitePlayer.IDX_READONLY);
+        //boxThrow.SetupMenuPoker(_to, _target._myParasitePlayer.IDX_READONLY);
     }
 }

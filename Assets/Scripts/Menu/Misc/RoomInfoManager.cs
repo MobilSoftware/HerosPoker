@@ -36,23 +36,6 @@ public class RoomInfoManager : MonoBehaviour
     #endregion
 
     public string curRoomName = "";
-    public MeshRenderer tableMat;
-    public MeshRenderer backdropMat;
-
-    [SerializeField] List<Transform> chairParents;
-
-    public List<GameObject> chairRanks;
-    public List<Texture2D> tableRanks;
-    public List<Texture2D> backdropRanks;
-    public Sprite[] spriteCity;
-
-    [SerializeField] Transform[] chairsPoker;
-    [SerializeField] Transform[] chairsCapsa;
-
-    [SerializeField] GameObject[] gameEnvi;
-    [SerializeField] MeshRenderer[] gameTable;
-    [SerializeField] MeshRenderer[] gameBackdrop;
-    [SerializeField] GameObject[] gameCanvas;
 
     protected void OnEnable()
     {
@@ -281,7 +264,7 @@ public class RoomInfoManager : MonoBehaviour
                 if (lCredit < GlobalVariables.MinBetAmount)
                 {
                     string strDesc = string.Format("Koin tidak cukup untuk masuk ke ruangan. Anda butuh minimum {0} koin untuk bermain di room ini.", GlobalVariables.MinBetAmount.toShortCurrency());
-                    PokerManager.instance.uiMessageBox.Show(gameObject, strDesc, MessageBoxType.OK);
+                    MessageManager.instance.Show (null, strDesc, ButtonMode.OK);
 
                     //DisconnectFromSwitchRoom();
                     PokerManager.instance.uiPause.LoadMenu ();

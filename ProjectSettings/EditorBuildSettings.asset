@@ -12,6 +12,12 @@ EditorBuildSettings:
     path: Assets/New/_Scene/SeHome.unity
     guid: c8ef76df76d3d478baace90696d5b49e
   - enabled: 1
+    path: Assets/New/_Scene/SeBegin.unity
+    guid: edc8b0952e7394abbb34e73e139ea9d9
+  - enabled: 1
     path: Assets/New/_Scene/SePoker.unity
     guid: 93a15bb5f5b1947e3a9008a67f94e141
+  - enabled: 1
+    path: Assets/New/_Scene/SeMessage.unity
+    guid: e36e6536cee3248238bd17638eb16e66
   m_configObjects: {}
