@@ -9,6 +9,7 @@ public enum SceneType
     HOME,
     BEGIN,
     POKER,
+    SLOTO,
     MESSAGE
 }
 
@@ -40,6 +41,7 @@ public class _SceneManager : MonoBehaviour
     private List<Scene> loadedScenes = new List<Scene> ();
     private HomeManager homeManager;
     private PokerManager pokerManager;
+    private SlotoManagerScript slotoManager;
     private BeginManager beginManager;
     private MessageManager msgManager;
 
@@ -67,6 +69,8 @@ public class _SceneManager : MonoBehaviour
         pokerManager = PokerManager.instance;
         beginManager = BeginManager.instance;
         msgManager = MessageManager.instance;
+        slotoManager = FindObjectOfType<SlotoManagerScript> ();
+        //SetActiveSloto (true);
         SetActiveBegin (true);
         SceneManager.UnloadSceneAsync ("SeSplash");
     }
@@ -83,6 +87,9 @@ public class _SceneManager : MonoBehaviour
                 break;
             case SceneType.POKER:
                 SetActivePoker (val);
+                break;
+            case SceneType.SLOTO:
+                SetActiveSloto (val);
                 break;
         }
     }
@@ -107,6 +114,17 @@ public class _SceneManager : MonoBehaviour
         }
         else
             pokerManager.Hide ();
+    }
+
+    private void SetActiveSloto (bool val )
+    {
+        if (val)
+        {
+            slotoManager.Show ();
+            activeSceneType = SceneType.SLOTO;
+        }
+        else
+            slotoManager.Hide ();
     }
 
     private void SetActiveBegin (bool val )

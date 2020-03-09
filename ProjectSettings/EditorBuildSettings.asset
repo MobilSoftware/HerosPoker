@@ -18,6 +18,9 @@ EditorBuildSettings:
     path: Assets/New/_Scene/SePoker.unity
     guid: 93a15bb5f5b1947e3a9008a67f94e141
   - enabled: 1
+    path: Assets/SlotoScenes/SlotoScene.unity
+    guid: 6ba6e830a7236408cb12ba5f1468d902
+  - enabled: 1
     path: Assets/New/_Scene/SeMessage.unity
     guid: e36e6536cee3248238bd17638eb16e66
   m_configObjects: {}

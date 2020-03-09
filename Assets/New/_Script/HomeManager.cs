@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class HomeManager : MonoBehaviour
 {
@@ -19,19 +20,33 @@ public class HomeManager : MonoBehaviour
     }
 
     public Canvas canvas;
-    public Button btnPoker;
+    public Button btnQuickPlay;
+    public Button btnSloto;
+    public TextMeshProUGUI tmpDisplayName;
+    public TextMeshProUGUI tmpCoin;
+    public Image imgHero;
+
+    public Sprite sprCleo;
+    public Sprite sprLubu;
 
     private bool isInit;
 
     private void Start ()
     {
-        btnPoker.onClick.AddListener (OnPoker);
+        btnQuickPlay.onClick.AddListener (OnQuickPlay);
+        btnSloto.onClick.AddListener (OnSloto);
     }
 
-    private void OnPoker ()
+    private void OnQuickPlay ()
     {
         _SceneManager.instance.SetActiveScene (SceneType.POKER, true);
-        _SceneManager.instance.SetActiveScene (SceneType.HOME, false);
+        Hide ();
+    }
+
+    private void OnSloto ()
+    {
+        _SceneManager.instance.SetActiveScene (SceneType.SLOTO, true);
+        Hide ();
     }
 
     public void Show ()
@@ -40,8 +55,15 @@ public class HomeManager : MonoBehaviour
         {
             PhotonNetwork.ConnectUsingSettings ("v1.0");
             canvas.sortingOrder = (int) SceneType.HOME;
+            tmpDisplayName.text = PlayerData.display_name;
+            if (PlayerData.hero_id == 100)
+                imgHero.sprite = sprLubu;
+            else if (PlayerData.hero_id == 200)
+                imgHero.sprite = sprCleo;
             isInit = true;
         }
+
+        tmpCoin.text = PlayerData.owned_gold.toShortCurrency ();
 
         canvas.enabled = true;
     }

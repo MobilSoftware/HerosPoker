@@ -61,7 +61,7 @@ public class BeginManager : MonoBehaviour
             displayName = ipfDisplayName.text;
         }
 
-        PlayerData.hero_id = 100;
+        PlayerData.hero_id = 200;       //lubu = 100, cleo = 200
         PlayerData.SetData (displayName);
         _SceneManager.instance.SetActiveScene (SceneType.HOME, true);
         Hide ();

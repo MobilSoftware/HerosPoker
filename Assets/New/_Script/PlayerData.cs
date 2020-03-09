@@ -17,7 +17,8 @@ public static class PlayerData
         owned_gold = 40000;
 
         id = Random.Range (1, 10000);
-        display_name = id + "_" + _displayName;
+        //display_name = id + "_" + _displayName;
+        display_name = _displayName;
         if (display_name.Length > 9)
         {
             display_name = display_name.Substring (0, 7);
