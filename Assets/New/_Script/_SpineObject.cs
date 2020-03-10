@@ -12,6 +12,7 @@ public enum SpineAnim
 public class _SpineObject : MonoBehaviour
 {
     public SkeletonAnimation mySkelAnim;
+    public SkeletonPartsRenderer partBack;
 
     private Coroutine crRandomBlink;
     private string strBlink = "Blink";  //90%

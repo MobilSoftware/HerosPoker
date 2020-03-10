@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class ReelScript : MonoBehaviour
 {
+    public SlotoManagerScript slotoManager;
     public IconScript[] icons;
 
+    private Sprite[] tileSprite;
     private Sprite[] iconSprite;
 
     public int spin;
@@ -13,30 +15,32 @@ public class ReelScript : MonoBehaviour
     private float speed;
     private int speedBlur;
     private float gear;
-    private readonly int maxIconType = 8;
-    public readonly int maxIconBlur = 5;
+    public readonly int maxIconType = 14;
+    public readonly int maxIconBlur = 2;
     private readonly float upSpeed = 50.0f;
     private readonly float downSpeed = 25.0f;
     private readonly float maxSpeed = -25.0f;
+    private readonly float iconWidth = 2.075f;
 
     // Start is called before the first frame update
     void Start()
     {
     }
 
-    public void Init(Sprite[] iconS)
+    public void Init(Sprite[] tileS, Sprite[] iconS)
     {
         spin = 0;
         speed = 0.0f;
         speedBlur = 0;
         gear = Mathf.Floor(maxSpeed / maxIconBlur-1);
 
+        tileSprite = tileS;
         iconSprite = iconS;
         for (int i = 0; i < icons.Length; i++)
         {
             icons[i].Init();
             int tempValue = Random.Range(0, maxIconType);
-            icons[i].SetIconValue(tempValue, iconSprite[tempValue * maxIconBlur + speedBlur]);
+            icons[i].SetIconValue(tempValue, iconSprite[tempValue * maxIconBlur + 0], tileSprite[0]);
         }
     }
 
@@ -56,7 +60,7 @@ public class ReelScript : MonoBehaviour
     {
         int i = 0;
         int tempMoveIcon = -1;
-        if (spin == 1 || spin == 2)
+        if (spin == 1 || spin == 2) //1. Accelerate, 2. Steady
         {
             for (i = 0; i < icons.Length; i++)
             {
@@ -64,11 +68,11 @@ public class ReelScript : MonoBehaviour
             }
             if (tempMoveIcon >= 0)
             {
-                icons[tempMoveIcon].transform.localPosition += new Vector3(0.0f, icons.Length * 1.5f, 0.0f);
+                icons[tempMoveIcon].transform.localPosition += new Vector3(0.0f, icons.Length * iconWidth, 0.0f);
                 if (!icons[tempMoveIcon].fixedValue)
                 {
                     int tempValue = Random.Range(0, maxIconType);
-                    icons[tempMoveIcon].SetIconValue(tempValue, iconSprite[tempValue * maxIconBlur + speedBlur]);
+                    icons[tempMoveIcon].SetIconValue(tempValue, iconSprite[tempValue * maxIconBlur + speedBlur], tileSprite[(speedBlur==0?0:1)]);
                 }
             }
             if(speed != maxSpeed)
@@ -80,7 +84,7 @@ public class ReelScript : MonoBehaviour
                     speedBlur = tempSpeedBlur;
                     for (i = 0; i < icons.Length; i++)
                     {
-                        icons[i].SetSpriteRenderer(iconSprite[icons[i].GetIconValue() * maxIconBlur + speedBlur]);
+                        icons[i].SetSpriteRenderer(iconSprite[icons[i].GetIconValue() * maxIconBlur + speedBlur], tileSprite[(speedBlur == 0 ? 0 : 1)]);
                     }
                 }
             }
@@ -89,7 +93,7 @@ public class ReelScript : MonoBehaviour
                 spin = 2;
             }
         }
-        else if (spin == 3)
+        else if (spin == 3) //3. Set to Stop
         {
             for (i = 0; i < icons.Length; i++)
             {
@@ -97,11 +101,11 @@ public class ReelScript : MonoBehaviour
             }
             if (tempMoveIcon >= 0)
             {
-                icons[tempMoveIcon].transform.localPosition += new Vector3(0.0f, icons.Length * 1.5f, 0.0f);
+                icons[tempMoveIcon].transform.localPosition += new Vector3(0.0f, icons.Length * iconWidth, 0.0f);
                 if (tempMoveIcon == 0) spin = 4;
             }
         }
-        else if (spin == 4)
+        else if (spin == 4) //4. Icon position correct
         {
             for (i = 0; i < icons.Length; i++)
             {
@@ -109,7 +113,7 @@ public class ReelScript : MonoBehaviour
             }
             if (icons[0].transform.localPosition.y <= Random.Range(-0.30f, -0.70f)) spin = 5;
         }
-        else if (spin == 5)
+        else if (spin == 5) //5. Stop position is over and need correction
         {
             for (i = 0; i < icons.Length; i++)
             {
@@ -123,14 +127,15 @@ public class ReelScript : MonoBehaviour
                 }
             }
         }
-        else if (spin == 6)
+        else if (spin == 6) //6. Stop position is correct
         {
             for (i = 0; i < icons.Length; i++)
             {
-                icons[i].transform.localPosition = new Vector3(0.0f, i * -1.5f, 0.0f);
-                icons[i].SetSpriteRenderer(iconSprite[icons[i].GetIconValue() * maxIconBlur + 0]);
+                icons[i].transform.localPosition = new Vector3(0.0f, i * -iconWidth, 0.0f);
+                icons[i].SetSpriteRenderer(iconSprite[icons[i].GetIconValue() * maxIconBlur + 0], tileSprite[0]);
             }
             spin = 0;
+            slotoManager.UpdateSlotSpin();
         }
     }
 }

@@ -44,7 +44,7 @@ public class SoundManager : MonoBehaviour
     // Use this for initialization
     void Awake()
     {
-        //LoadAudioClips();
+        LoadAudioClips();
 
         //Sound Mute or not
         //MuteSound(PlayerProfile.MuteMusic);
@@ -73,46 +73,46 @@ public class SoundManager : MonoBehaviour
 
     public void PlaySFX(SFXType type, Vector3 position, bool isFirst = false, int channel = 1)
     {
-        //float volume = PlayerPrefs.GetFloat (PrefKey.VolSFX.ToString(), 0.8f);
-        //if (isFirst)
-        //    return;
-        //if (SFXs == null)
-        //    return;
-        //if (SFXs[(int)type] == null)
-        //    return;
+        float volume = PlayerPrefs.GetFloat (PrefKey.VolSFX.ToString(), 0.8f);
+        if (isFirst)
+            return;
+        if (SFXs == null)
+            return;
+        if (SFXs[(int)type] == null)
+            return;
 
-        //AudioClip clip = SFXs[(int)type];
-        //if (channel == 1)
-        //{
-        //    sfxSource.Stop();
-        //    sfxSource.clip = clip;
-        //    sfxSource.volume = volume;
-        //    sfxSource.PlayOneShot(clip, volume);
-        //}
-        //else
-        //{
-        //    sfxSource2.clip = clip;
-        //    sfxSource2.volume = volume;
-        //    sfxSource2.PlayOneShot(clip, volume);
-        //}
+        AudioClip clip = SFXs[(int)type];
+        if (channel == 1)
+        {
+            sfxSource.Stop();
+            sfxSource.clip = clip;
+            sfxSource.volume = volume;
+            sfxSource.PlayOneShot(clip, volume);
+        }
+        else
+        {
+            sfxSource2.clip = clip;
+            sfxSource2.volume = volume;
+            sfxSource2.PlayOneShot(clip, volume);
+        }
 
     }
 
     public void PlaySFX2Loop (SFXType type )
     {
-        //float volume = PlayerPrefs.GetFloat (PrefKey.VolSFX.ToString (), 0.8f);
+        float volume = PlayerPrefs.GetFloat (PrefKey.VolSFX.ToString (), 0.8f);
 
-        //if (SFXs == null)
-        //    return;
-        //if (SFXs[(int) type] == null)
-        //    return;
+        if (SFXs == null)
+            return;
+        if (SFXs[(int) type] == null)
+            return;
 
-        //AudioClip clip = SFXs[(int) type];
-        //sfxSource2.clip = clip;
-        //sfxSource2.volume = volume;
-        //sfxSource2.loop = true;
-        ////sfxSource2.PlayOneShot (clip, volume);
-        //sfxSource2.Play ();
+        AudioClip clip = SFXs[(int) type];
+        sfxSource2.clip = clip;
+        sfxSource2.volume = volume;
+        sfxSource2.loop = true;
+        //sfxSource2.PlayOneShot (clip, volume);
+        sfxSource2.Play ();
     }
 
 

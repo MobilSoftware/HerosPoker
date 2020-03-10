@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class _PokerGameHUD : MonoBehaviour
 {
@@ -35,7 +34,7 @@ public class _PokerGameHUD : MonoBehaviour
     private void Start()
     {
         //transform.parent.gameObject.SetActive(false);
-        Hide();
+        //Hide();
     }
 
     public void CheckConnection()
@@ -146,7 +145,14 @@ public class _PokerGameHUD : MonoBehaviour
         InvokeRepeating("CheckConnection", 0.0f, 2.0f);
     }
 
-    public void onPause() { PokerManager.instance.uiPause.Show(); }
+    public void onPause() 
+    {
+        Box_Pause uiPause = PokerManager.instance.uiPause;
+        if (uiPause.gameObject.activeSelf)
+            uiPause.Hide ();
+        else
+            uiPause.Show ();
+    }
 
     public void onInvite()
     {

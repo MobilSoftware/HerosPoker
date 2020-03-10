@@ -22,15 +22,20 @@ public class BeginManager : MonoBehaviour
     }
 
     public Canvas canvas;
-
+    public GameObject objDisplayName;
+    public GameObject objPickHero;
     public TMP_InputField ipfDisplayName;
-    public Button btnSet;
+    public Button btnOK;
+    public Button btnLuBu;
+    public Button btnCleopatra;
 
     private bool isInit;
 
     private void Start ()
     {
-        btnSet.onClick.AddListener (OnSet);
+        btnOK.onClick.AddListener (OnOK);
+        btnLuBu.onClick.AddListener (OnLuBu);
+        btnCleopatra.onClick.AddListener (OnCleopatra);
     }
 
     public void Show ()
@@ -41,15 +46,18 @@ public class BeginManager : MonoBehaviour
             isInit = true;
         }
         canvas.enabled = true;
+        objPickHero.SetActive (false);
+        objDisplayName.SetActive (true);
     }
 
     public void Hide ()
     {
         ipfDisplayName.text = string.Empty;
+        HomeManager.instance.Init ();
         canvas.enabled = false;
     }
 
-    private void OnSet ()
+    private void OnOK ()
     {
         string displayName = string.Empty;
         if (ipfDisplayName.text == string.Empty)
@@ -61,9 +69,22 @@ public class BeginManager : MonoBehaviour
             displayName = ipfDisplayName.text;
         }
 
-        PlayerData.hero_id = 200;       //lubu = 100, cleo = 200
         PlayerData.SetData (displayName);
-        _SceneManager.instance.SetActiveScene (SceneType.HOME, true);
+
+        ipfDisplayName.text = string.Empty;
+        objDisplayName.SetActive (false);
+        objPickHero.SetActive (true);
+    }
+
+    private void OnLuBu ()
+    {
+        PlayerData.hero_id = 100;
+        Hide ();
+    }
+
+    private void OnCleopatra ()
+    {
+        PlayerData.hero_id = 200;
         Hide ();
     }
 }

@@ -38,6 +38,8 @@ public class _SceneManager : MonoBehaviour
     [HideInInspector]
     public SceneType activeSceneType;
 
+    public Camera mainCamera;
+
     private List<Scene> loadedScenes = new List<Scene> ();
     private HomeManager homeManager;
     private PokerManager pokerManager;
@@ -70,7 +72,8 @@ public class _SceneManager : MonoBehaviour
         beginManager = BeginManager.instance;
         msgManager = MessageManager.instance;
         slotoManager = FindObjectOfType<SlotoManagerScript> ();
-        //SetActiveSloto (true);
+        SetActiveSloto (false);
+        SetActiveHome (true);
         SetActiveBegin (true);
         SceneManager.UnloadSceneAsync ("SeSplash");
     }
@@ -120,11 +123,18 @@ public class _SceneManager : MonoBehaviour
     {
         if (val)
         {
-            slotoManager.Show ();
+            //slotoManager.Show ();
+            slotoManager.gameObject.SetActive (true);
+            mainCamera.gameObject.SetActive (false);
             activeSceneType = SceneType.SLOTO;
+            slotoManager.btnClose.SetActive (true);
         }
         else
-            slotoManager.Hide ();
+        {
+            slotoManager.gameObject.SetActive (false);
+            mainCamera.gameObject.SetActive (true);
+            slotoManager.btnClose.SetActive (false);
+        }
     }
 
     private void SetActiveBegin (bool val )

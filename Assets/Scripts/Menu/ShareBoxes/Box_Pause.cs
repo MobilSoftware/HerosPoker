@@ -4,7 +4,6 @@ using System.Collections;
 
 public class Box_Pause : MonoBehaviour 
 {
-    public Text txtRoomTitle;
     public Button btnQuitGame, btnForceQuit, btnSwitchTable;
     private bool isFirst = true;
 
@@ -21,8 +20,6 @@ public class Box_Pause : MonoBehaviour
         SoundManager.instance.PlaySFX(SFXType.SFX_PopupOpen, Vector3.zero);
         PokerManager.instance.uiThrowItem.Hide();
 
-        //if (PhotonNetwork.room != null)
-        //    txtRoomTitle.SetText(PhotonNetwork.room.Name, false);
         btnForceQuit.gameObject.SetActive(GlobalVariables.gameType == GameType.TexasPoker);
     }
 

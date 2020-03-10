@@ -41,10 +41,22 @@ public class PokerManager : MonoBehaviour
     public Box_RoundRestart uiRoundRestart;
     public Box_Pause uiPause;
     public Box_WaitingPlayers uiWaitingPlayers;
+    public GameObject uiInject;
+
+    public Sprite sprHighCard;
+    public Sprite sprOnePair;
+    public Sprite sprTwoPair;
+    public Sprite sprThrice;
+    public Sprite sprQuad;
+    public Sprite sprStraight;
+    public Sprite sprFlush;
+    public Sprite sprFullHouse;
+    public Sprite sprStraightFlush;
+    public Sprite sprRoyalFlush;
 
     //for proto only
     public Sprite sprCoin;
-    public _SpineObject spLubu;
+    public _SpineObject spLuBu;
     public _SpineObject spCleo;
 
     private bool isInit;

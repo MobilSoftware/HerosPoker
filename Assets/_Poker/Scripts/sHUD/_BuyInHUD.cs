@@ -48,7 +48,8 @@ public class _BuyInHUD : MonoBehaviour
         SetMinMax();
         
         gameObject.SetActive(true);
-        myAcc.text = "Bank Account : <color=yellow>" + myMoney.toShortCurrency() + "</color>";
+        //myAcc.text = "Bank Account : <color=yellow>" + myMoney.toShortCurrency() + "</color>";
+        myAcc.text = myMoney.toShortCurrency ();
 
         txtMin.text = minBuy.toShortCurrency();
         txtMax.text = maxBuy.toShortCurrency();

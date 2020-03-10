@@ -243,6 +243,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mySkelAnim: {fileID: 7082129231485757433}
+  partBack: {fileID: 7082129231573292838}
 --- !u!1 &7082129231573292833
 GameObject:
   m_ObjectHideFlags: 0

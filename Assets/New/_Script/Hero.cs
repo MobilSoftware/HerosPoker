@@ -8,6 +8,9 @@ public class Hero : MonoBehaviour
     public int id;
     private _SpineObject spineHero;
 
+    private Vector3 posLuBu = new Vector3 (20f, -33f, 0f);
+    private Vector3 scaleLuBu = new Vector3 (2f, 2f, 1f);
+
     public void Reset ()
     {
         if (spineHero != null)
@@ -17,12 +20,12 @@ public class Hero : MonoBehaviour
         }
     }
 
-    public void LoadSpine ()
+    public void LoadSpine (int heroUsed, bool isMine)
     {
-        StartCoroutine (_LoadSpine ());
+        StartCoroutine (_LoadSpine (heroUsed, isMine));
     }
 
-    IEnumerator _LoadSpine ()
+    IEnumerator _LoadSpine (int heroUsed, bool isMine)
     {
         if (spineHero != null)
         {
@@ -30,13 +33,35 @@ public class Hero : MonoBehaviour
             yield return null;
         }
 
-        spineHero = Instantiate (PokerManager.instance.spCleo, this.transform);
+        id = heroUsed;
+        _SpineObject spHero = null;
+        if (id == 100)
+            spHero = PokerManager.instance.spLuBu;
+        else if (id == 200)
+            spHero = PokerManager.instance.spCleo;
+
+        spineHero = Instantiate (spHero, this.transform);
+        if (isMine)
+            SetMyPartBack ();
         yield return null;
 
-        spineHero.transform.localPosition = Vector3.zero;
         spineHero.transform.localEulerAngles = Vector3.zero;
-        spineHero.transform.localScale = Vector3.one;
+        if (id == 100)
+        {
+            spineHero.transform.localPosition = posLuBu;
+            spineHero.transform.localScale = scaleLuBu;
+        }
+        else if (id == 200)
+        {
+            spineHero.transform.localPosition = Vector3.zero;
+            spineHero.transform.localScale = Vector3.one;
+        }
         spineHero.StartRandomMove ();
+    }
+
+    public void SetMyPartBack ()
+    {
+        spineHero.partBack.MeshRenderer.sortingOrder = 0;
     }
 
     public void Revert ()

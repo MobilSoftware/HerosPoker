@@ -21,6 +21,7 @@ public class HomeManager : MonoBehaviour
 
     public Canvas canvas;
     public Button btnQuickPlay;
+    public Button btnPoker;
     public Button btnSloto;
     public TextMeshProUGUI tmpDisplayName;
     public TextMeshProUGUI tmpCoin;
@@ -29,11 +30,10 @@ public class HomeManager : MonoBehaviour
     public Sprite sprCleo;
     public Sprite sprLubu;
 
-    private bool isInit;
-
     private void Start ()
     {
         btnQuickPlay.onClick.AddListener (OnQuickPlay);
+        btnPoker.onClick.AddListener (OnQuickPlay);
         btnSloto.onClick.AddListener (OnSloto);
     }
 
@@ -51,21 +51,22 @@ public class HomeManager : MonoBehaviour
 
     public void Show ()
     {
-        if (!isInit)
-        {
-            PhotonNetwork.ConnectUsingSettings ("v1.0");
-            canvas.sortingOrder = (int) SceneType.HOME;
-            tmpDisplayName.text = PlayerData.display_name;
-            if (PlayerData.hero_id == 100)
-                imgHero.sprite = sprLubu;
-            else if (PlayerData.hero_id == 200)
-                imgHero.sprite = sprCleo;
-            isInit = true;
-        }
+        tmpCoin.text = PlayerData.owned_gold.toShortCurrency ();
+        canvas.enabled = true;
+    }
 
+    public void Init ()
+    {
+        PhotonNetwork.ConnectUsingSettings ("v1.0");
+        canvas.sortingOrder = (int) SceneType.HOME;
+        tmpDisplayName.text = PlayerData.display_name;
         tmpCoin.text = PlayerData.owned_gold.toShortCurrency ();
 
-        canvas.enabled = true;
+        if (PlayerData.hero_id == 100)
+            imgHero.sprite = sprLubu;
+        else if (PlayerData.hero_id == 200)
+            imgHero.sprite = sprCleo;
+        imgHero.gameObject.SetActive (true);
     }
 
     public void Hide ()

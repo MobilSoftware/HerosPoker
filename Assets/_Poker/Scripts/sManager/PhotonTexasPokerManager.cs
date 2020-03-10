@@ -386,9 +386,12 @@ public class PhotonTexasPokerManager : PunBehaviour
     {
         botCount = 0;
 
-        foreach (_PlayerPokerActor pa in _PokerGameManager.instance.stockPlayers)
-            if (pa.isBot)
-                botCount++;
+        if (_PokerGameManager.instance.stockPlayers.Length > 0)
+        {
+            foreach (_PlayerPokerActor pa in _PokerGameManager.instance.stockPlayers)
+                if (pa.isBot)
+                    botCount++;
+        }
     }
 
     public void InitialPlayerProperties ( PhotonPlayer player ) //Only Initialize First Time
@@ -745,7 +748,8 @@ public class PhotonTexasPokerManager : PunBehaviour
             {
                 //auto sedekah 2M
                 Debug.LogError ("inside sedekah");
-                MessageManager.instance.Show (this.gameObject, "Kamu mendapatkan sedekah sebesar 2M Koin!");
+                //MessageManager.instance.Show (this.gameObject, "Kamu mendapatkan sedekah sebesar 2M Koin!");
+                PokerManager.instance.uiInject.SetActive (true);
                 PlayerData.owned_gold += 2000;
 
                 _PokerGameHUD.instance.buyInHUD.AutoBuyIn ();
@@ -1371,7 +1375,7 @@ public class PhotonTexasPokerManager : PunBehaviour
         photonView.RPC (PhotonEnums.RPC.QuitGameRPC, PhotonTargets.Others);
 
         bots.Clear ();
-        SyncBot ();
+        //SyncBot ();
     }
 
     public void ImLeavingInTheMiddleOfTheGame ()
@@ -1380,7 +1384,7 @@ public class PhotonTexasPokerManager : PunBehaviour
         photonView.RPC (PhotonEnums.RPC.QuitInTheMiddleRPC, PhotonTargets.Others);
 
         bots.Clear ();
-        SyncBot ();
+        //SyncBot ();
     }
 
     public void Bankrupt ()

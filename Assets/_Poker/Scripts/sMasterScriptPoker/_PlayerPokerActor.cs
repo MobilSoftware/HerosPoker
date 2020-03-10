@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System;
 
 public class _PlayerPokerActor : MonoBehaviour
 {
@@ -29,6 +30,7 @@ public class _PlayerPokerActor : MonoBehaviour
     public Text txtChatMessage;
     public Text txtName;
     public Text txtHandRank;
+    public Image imgHandRank;
 
     public GameObject allINobj;
     public GameObject objCD;
@@ -112,10 +114,19 @@ public class _PlayerPokerActor : MonoBehaviour
     public int slotIndex = -1;
     public int _kicker, valueHand, secondValueHand, secondKicker; //Properties
     public int RANK; //Properties
-    public int avatarEquiped;
+    public int heroUsed;
 
     public long chipsBet; //Properties
     public long totalBet; //Properties
+
+    public Text txtInsta1;
+    public Text txtInsta2;
+    public Text txtInsta3;
+
+    public Button instaButton1;
+    public Button instaButton2;
+    public Button instaButton3;
+    public Button instaAllIn;
     void SyncBet(long _chipsBet, long _totalBet)
     {
         myMoney = PhotonUtility.GetPlayerProperties<long>(myPlayer, PhotonEnums.Player.Money);
@@ -155,6 +166,13 @@ public class _PlayerPokerActor : MonoBehaviour
     {
         sliderTools = new _SliderValue();
         InitializeActor();
+        if (instaButton1 != null)
+        {
+            instaButton1.onClick.AddListener (FirstInstaRaise);
+            instaButton2.onClick.AddListener (SecondInstaRaise);
+            instaButton3.onClick.AddListener (ThirdInstaRaise);
+            instaAllIn.onClick.AddListener (InstaAllIn);
+        }
     }
 
     public void SetMyRole(_GameRoleEnums _role)
@@ -221,6 +239,8 @@ public class _PlayerPokerActor : MonoBehaviour
         panelState.gameObject.SetActive(false);
         panelBet.SetActive(false);
         panelTxtRankHand.SetActive(false);
+        if (imgHandRank != null)
+            imgHandRank.gameObject.SetActive (false);
     }
 
     public void ResetProperties()
@@ -233,6 +253,8 @@ public class _PlayerPokerActor : MonoBehaviour
         panelState.gameObject.SetActive(false);
         panelBet.SetActive(false);
         panelTxtRankHand.SetActive(false);
+        if (imgHandRank != null)
+            imgHandRank.gameObject.SetActive (false);
 
         forceFold = false;
         isFolded = false;
@@ -331,10 +353,13 @@ public class _PlayerPokerActor : MonoBehaviour
         //Debug.LogError(name + " get : " +chips);
         AnimationFlowChips(chipsBet, true);
 
-        myMoney += chips;;
+        //myMoney += chips;       //pajak
+        float tax = chips * 0.1f;
+        long chipsAfterTax = chips - Convert.ToInt64 (tax);
+        myMoney += chipsAfterTax;
 
         if (isMine && !isBot)
-            StartCoroutine (_UpdateMyUIPlayer (chips));
+            StartCoroutine (_UpdateMyUIPlayer (chipsAfterTax));
         else
             UpdateUIPlayer();
 
@@ -350,16 +375,16 @@ public class _PlayerPokerActor : MonoBehaviour
     {
         CancelInvoke("DeactiveCardWinner");
 
-        for (int x = 0; x < _myHighlightedCard.Length; x++)
-            if(_myHighlightedCard[x] != null)
-                _myHighlightedCard[x].objFxCard.SetActive(true);
+        //for (int x = 0; x < _myHighlightedCard.Length; x++)
+            //if(_myHighlightedCard[x] != null)
+                //_myHighlightedCard[x].objFxCard.SetActive(true);
     }
 
     public void DeactiveCardWinner()
     {
-        for (int x = 0; x < _myHighlightedCard.Length; x++)
-            if (_myHighlightedCard[x] != null)
-                _myHighlightedCard[x].objFxCard.SetActive(false);
+        //for (int x = 0; x < _myHighlightedCard.Length; x++)
+            //if (_myHighlightedCard[x] != null)
+                //_myHighlightedCard[x].objFxCard.SetActive(false);
     }
 
     public void MyTurn()
@@ -482,7 +507,7 @@ public class _PlayerPokerActor : MonoBehaviour
         int batasActionRemote = 0;
 
         if (PhotonNetwork.isMasterClient && isBot)
-            batasActionRemote = Random.Range(8, 14);
+            batasActionRemote = UnityEngine.Random.Range(8, 14);
 
         if (isMine & !isBot)
             PhotonTexasPokerManager.myBackgroundTimeOut = 8f;
@@ -514,7 +539,6 @@ public class _PlayerPokerActor : MonoBehaviour
         if (isMine && !isBot)
             S_FoldAction ();
 
-        Debug.LogError ("before tolerant");
 
         #region force Fold by Master
         int tolerantTime = 3;
@@ -612,6 +636,57 @@ public class _PlayerPokerActor : MonoBehaviour
         txtValueRaise2.text = txtValueRaise.text;
     }
 
+    private void SetInstaButtons ()
+    {
+        if (_PokerGameManager.lastBet == 0 || _PokerGameManager.lastBet == _PokerGameManager.startBet)
+        {
+            instaButton3.gameObject.SetActive (true);
+            txtInsta1.text = (3 * _PokerGameManager.startBet).toFlexibleCurrency();
+            txtInsta2.text = (4 * _PokerGameManager.startBet).toFlexibleCurrency ();
+            txtInsta3.text = (5 * _PokerGameManager.startBet).toFlexibleCurrency ();
+        }
+        else
+        {
+            instaButton3.gameObject.SetActive (false);
+            txtInsta1.text = Convert.ToInt64 (0.5f * _PokerGameManager.biggestBet).toFlexibleCurrency ();
+            txtInsta2.text = Convert.ToInt64 (0.7f * _PokerGameManager.biggestBet).toFlexibleCurrency ();
+        }
+    }
+
+    private void FirstInstaRaise ()
+    {
+        if (_PokerGameManager.lastBet == 0)
+            lastSliderBet = 3 * _PokerGameManager.startBet;
+        else
+            lastSliderBet = Convert.ToInt64 (0.5f * _PokerGameManager.biggestBet);
+        S_Raise ();
+    }
+
+    private void SecondInstaRaise ()
+    {
+        if (_PokerGameManager.lastBet == 0)
+            lastSliderBet = 4 * _PokerGameManager.startBet;
+        else
+            lastSliderBet = Convert.ToInt64 (0.7f * _PokerGameManager.biggestBet);
+        S_Raise ();
+        txtInsta2.text = lastSliderBet.toFlexibleCurrency ();
+    }
+
+    private void ThirdInstaRaise()
+    {
+        if (_PokerGameManager.lastBet == 0)
+        {
+            lastSliderBet = 5 * _PokerGameManager.startBet;
+            S_Raise ();
+        }
+    }
+
+    private void InstaAllIn ()
+    {
+        lastSliderBet = _PokerGameManager.biggestBet;
+        S_Raise ();
+    }
+
     void OpenPanelRaise(bool flag)
     {
         uiSlider.gameObject.SetActive(flag);
@@ -620,6 +695,9 @@ public class _PlayerPokerActor : MonoBehaviour
 
         uiSlider.value = 0;
         ReturnScrollValue(0);
+        if (isMine && !isBot)
+            SetInstaButtons ();
+        //add instant buttons here
     }
     #endregion
 
@@ -744,6 +822,8 @@ public class _PlayerPokerActor : MonoBehaviour
 
         ClearPreAction();
         panelPreAction.SetActive(false);
+        if (imgHandRank != null)
+            imgHandRank.gameObject.SetActive (false);
         panelState.gameObject.SetActive(false);
         panelBet.SetActive(false);
         panelTxtRankHand.SetActive(false);
@@ -777,7 +857,7 @@ public class _PlayerPokerActor : MonoBehaviour
         isBot = false;
         slotIndex = -1;
         RANK = 10;
-        avatarEquiped = 0;
+        heroUsed = 0;
         myMoney = 0;
         forceFold = false;
 
@@ -806,15 +886,15 @@ public class _PlayerPokerActor : MonoBehaviour
 
         txtName.text = _myName;
         txtMyMoney.text = myMoney.toFlexibleCurrency();
-
+        
         //Load Avatar 3D
         if (isMine && !isBot)
             //avatarEquiped = DataManager.instance.hero.id;
-            avatarEquiped = PlayerData.hero_id;
+            heroUsed = PlayerData.hero_id;
         else
-            avatarEquiped = PhotonUtility.GetPlayerProperties<int> (myPlayer, PhotonEnums.Player.ContentURL);
+            heroUsed = PhotonUtility.GetPlayerProperties<int> (myPlayer, PhotonEnums.Player.ContentURL);
 
-        hero.LoadSpine ();
+        hero.LoadSpine (heroUsed, isMine && !isBot);
         //avater3D.LoadAvatar(avatarEquiped, true, true);
         #endregion
 
@@ -849,7 +929,7 @@ public class _PlayerPokerActor : MonoBehaviour
     #region Remote
     void RemoteActionbyMaster()
     {
-        int randomRange = Random.Range(1, RANK * 10);
+        int randomRange = UnityEngine.Random.Range(1, RANK * 10);
 
         if (RANK == 1)
             randomRange = 0;
@@ -862,7 +942,7 @@ public class _PlayerPokerActor : MonoBehaviour
                 CallAny();
             else
             {
-                int r = Random.Range(1, 10);
+                int r = UnityEngine.Random.Range(1, 10);
                 if (r < 5)
                     RemoteRaise();
                 else
@@ -880,7 +960,7 @@ public class _PlayerPokerActor : MonoBehaviour
 
     void RemoteRaise()
     {
-        lastSliderBet = sliderTools.CalculateScore(_PokerGameManager.biggestBet, _PokerGameManager.lastBet, Random.Range(0, 1f));
+        lastSliderBet = sliderTools.CalculateScore(_PokerGameManager.biggestBet, _PokerGameManager.lastBet, UnityEngine.Random.Range(0, 1f));
         S_Raise();
     }
 
@@ -916,8 +996,48 @@ public class _PlayerPokerActor : MonoBehaviour
             for (int x = 0; x < _myHandCard.Length; x++)
                 _myHandCard[x].gameObject.SetActive(true);
 
-            panelTxtRankHand.SetActive(true);
-            txtHandRank.text = _playerHandRank.ToString();
+            if (imgHandRank == null)
+            {
+                panelTxtRankHand.SetActive (true);
+                txtHandRank.text = _playerHandRank.ToString ();
+            }
+            else
+            {
+                imgHandRank.gameObject.SetActive (true);
+                switch (_playerHandRank)
+                {
+                    case HandRankPoker.highCard:
+                        imgHandRank.sprite = PokerManager.instance.sprHighCard;
+                        break;
+                    case HandRankPoker.onePair:
+                        imgHandRank.sprite = PokerManager.instance.sprOnePair;
+                        break;
+                    case HandRankPoker.twoPairs:
+                        imgHandRank.sprite = PokerManager.instance.sprTwoPair;
+                        break;
+                    case HandRankPoker.threeOfaKind:
+                        imgHandRank.sprite = PokerManager.instance.sprThrice;
+                        break;
+                    case HandRankPoker.fourOfAKind:
+                        imgHandRank.sprite = PokerManager.instance.sprQuad;
+                        break;
+                    case HandRankPoker.straight:
+                        imgHandRank.sprite = PokerManager.instance.sprStraight;
+                        break;
+                    case HandRankPoker.flush:
+                        imgHandRank.sprite = PokerManager.instance.sprFlush;
+                        break;
+                    case HandRankPoker.fullHouse:
+                        imgHandRank.sprite = PokerManager.instance.sprFullHouse;
+                        break;
+                    case HandRankPoker.straightFlush:
+                        imgHandRank.sprite = PokerManager.instance.sprStraightFlush;
+                        break;
+                    case HandRankPoker.royalFlush:
+                        imgHandRank.sprite = PokerManager.instance.sprRoyalFlush;
+                        break;
+                }
+            }
         }
         else
         {
@@ -925,6 +1045,8 @@ public class _PlayerPokerActor : MonoBehaviour
                 _myHandCard[x].FlipCardDown();
 
             panelTxtRankHand.SetActive(false);
+            if (imgHandRank != null)
+                imgHandRank.gameObject.SetActive (false);
         }
     }
 
@@ -959,15 +1081,58 @@ public class _PlayerPokerActor : MonoBehaviour
         if (!PhotonUtility.GetPlayerProperties<bool>(myPlayer, PhotonEnums.Player.Active))
             return;
 
-        panelTxtRankHand.SetActive(true);
+        if (imgHandRank == null)
+            panelTxtRankHand.SetActive (true);
+        else
+            imgHandRank.gameObject.SetActive (true);
         System.Collections.Generic.List<_CardActor> a = new System.Collections.Generic.List<_CardActor>();
 
         foreach (_CardActor ca in _PokerGameManager.instance.tableCard)
             if (ca.gameObject.activeSelf)
                 a.Add(ca);
 
-        if(a.Count>=2)
-            txtHandRank.text = _PokerGameManager.cardManager.EvaluatPlayerHand(a.ToArray(), _myHandCard).ToString();
+        if (a.Count >= 2)
+        {
+            HandRankPoker hrp = _PokerGameManager.cardManager.EvaluatPlayerHand (a.ToArray (), _myHandCard);
+            if (imgHandRank == null)
+                txtHandRank.text = hrp.ToString ();
+            else
+            {
+                switch (hrp)
+                {
+                    case HandRankPoker.highCard:
+                        imgHandRank.sprite = PokerManager.instance.sprHighCard;
+                        break;
+                    case HandRankPoker.onePair:
+                        imgHandRank.sprite = PokerManager.instance.sprOnePair;
+                        break;
+                    case HandRankPoker.twoPairs:
+                        imgHandRank.sprite = PokerManager.instance.sprTwoPair;
+                        break;
+                    case HandRankPoker.threeOfaKind:
+                        imgHandRank.sprite = PokerManager.instance.sprThrice;
+                        break;
+                    case HandRankPoker.fourOfAKind:
+                        imgHandRank.sprite = PokerManager.instance.sprQuad;
+                        break;
+                    case HandRankPoker.straight:
+                        imgHandRank.sprite = PokerManager.instance.sprStraight;
+                        break;
+                    case HandRankPoker.flush:
+                        imgHandRank.sprite = PokerManager.instance.sprFlush;
+                        break;
+                    case HandRankPoker.fullHouse:
+                        imgHandRank.sprite = PokerManager.instance.sprFullHouse;
+                        break;
+                    case HandRankPoker.straightFlush:
+                        imgHandRank.sprite = PokerManager.instance.sprStraightFlush;
+                        break;
+                    case HandRankPoker.royalFlush:
+                        imgHandRank.sprite = PokerManager.instance.sprRoyalFlush;
+                        break;
+                }
+            }
+        }
 
     }
 

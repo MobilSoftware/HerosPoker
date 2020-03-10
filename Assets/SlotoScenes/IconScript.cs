@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class IconScript : MonoBehaviour
 {
+    public SpriteRenderer tileSR;
+    public SpriteRenderer faceSR;
     public bool fixedValue;
 
-    private SpriteRenderer iconSR;
     private int iconValue;
 
     // Start is called before the first frame update
@@ -17,13 +18,13 @@ public class IconScript : MonoBehaviour
 
     public void Init()
     {
-        iconSR = GetComponent<SpriteRenderer>();
+        //iconSR = GetComponent<SpriteRenderer>();
     }
 
-    public void SetIconValue(int value, Sprite iconSprite)
+    public void SetIconValue(int value, Sprite iconSprite, Sprite tileSprite)
     {
         iconValue = value;
-        if (iconSprite) SetSpriteRenderer(iconSprite);
+        if (iconSprite) SetSpriteRenderer(iconSprite, tileSprite);
     }
 
     public int GetIconValue()
@@ -31,15 +32,16 @@ public class IconScript : MonoBehaviour
         return iconValue;
     }
 
-    public void SetSpriteRenderer(Sprite iconSprite)
+    public void SetSpriteRenderer(Sprite iconSprite, Sprite tileSprite)
     {
-        if (iconSR) iconSR.sprite = iconSprite;
+        if (faceSR) faceSR.sprite = iconSprite;
+        if (tileSR) tileSR.sprite = tileSprite;
     }
 
     public bool Spin(float speed)
     {
         transform.position += new Vector3(0.0f, speed, 0.0f);
-        return (transform.localPosition.y <= -9.0f ? true : false);
+        return (transform.localPosition.y <= -12.45f ? true : false);
     }
 
     // Update is called once per frame

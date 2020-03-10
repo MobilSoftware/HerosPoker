@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ButtonScript : MonoBehaviour
 {
-    public enum ButtonType {Spin, Stop};
+    public enum ButtonType {Spin, Stop, Max, Up, Down};
 
     public ButtonType type;
 
@@ -27,8 +27,14 @@ public class ButtonScript : MonoBehaviour
         
     }
 
+    void OnMouseDown()
+    {
+        transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
+    }
+
     void OnMouseUp()
     {
-        if(managerScript) managerScript.OnMouseUp(type);
+        transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+        if (managerScript) managerScript.OnMouseUp(type);
     }
 }
