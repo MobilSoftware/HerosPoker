@@ -37,10 +37,10 @@ public class PokerManager : MonoBehaviour
     public GameObject objPoker;
     public Canvas canvas;
     public ThrowItemUI uiThrowItem;
-    public Box_WaitingNextRound uiWaitingNextRound;
-    public Box_RoundRestart uiRoundRestart;
-    public Box_Pause uiPause;
-    public Box_WaitingPlayers uiWaitingPlayers;
+    public WaitingNextRoundUI uiWaitingNextRound;
+    public RoundRestartUI uiRoundRestart;
+    public PokerOthersUI uiPause;
+    public WaitingPlayersUI uiWaitingPlayers;
     public GameObject uiInject;
 
     public Sprite sprHighCard;

@@ -147,7 +147,7 @@ public class _PokerGameHUD : MonoBehaviour
 
     public void onPause() 
     {
-        Box_Pause uiPause = PokerManager.instance.uiPause;
+        PokerOthersUI uiPause = PokerManager.instance.uiPause;
         if (uiPause.gameObject.activeSelf)
             uiPause.Hide ();
         else

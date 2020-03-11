@@ -11,8 +11,6 @@ public class BeginManager : MonoBehaviour
         {
             if (s_Instance == null)
             {
-                // This is where the magic happens.
-                //  FindObjectOfType(...) returns the first MenuManager object in the scene.
                 s_Instance = FindObjectOfType (typeof (BeginManager)) as BeginManager;
                 if (s_Instance == null)
                     Debug.Log ("Could not locate an BeginManager object. \n You have to have exactly one BeginManager in the scene.");
@@ -22,10 +20,6 @@ public class BeginManager : MonoBehaviour
     }
 
     public Canvas canvas;
-    public GameObject objDisplayName;
-    public GameObject objPickHero;
-    public TMP_InputField ipfDisplayName;
-    public Button btnOK;
     public Button btnLuBu;
     public Button btnCleopatra;
 
@@ -33,7 +27,6 @@ public class BeginManager : MonoBehaviour
 
     private void Start ()
     {
-        btnOK.onClick.AddListener (OnOK);
         btnLuBu.onClick.AddListener (OnLuBu);
         btnCleopatra.onClick.AddListener (OnCleopatra);
     }
@@ -45,45 +38,28 @@ public class BeginManager : MonoBehaviour
             canvas.sortingOrder = (int) SceneType.BEGIN;
             isInit = true;
         }
+
+        PhotonNetwork.ConnectUsingSettings ("v1.0");
         canvas.enabled = true;
-        objPickHero.SetActive (false);
-        objDisplayName.SetActive (true);
     }
 
     public void Hide ()
     {
-        ipfDisplayName.text = string.Empty;
+        _SceneManager.instance.SetActiveScene (SceneType.HOME, true);
         HomeManager.instance.Init ();
         canvas.enabled = false;
     }
 
-    private void OnOK ()
-    {
-        string displayName = string.Empty;
-        if (ipfDisplayName.text == string.Empty)
-        {
-            displayName = "NoName";
-        }
-        else
-        {
-            displayName = ipfDisplayName.text;
-        }
-
-        PlayerData.SetData (displayName);
-
-        ipfDisplayName.text = string.Empty;
-        objDisplayName.SetActive (false);
-        objPickHero.SetActive (true);
-    }
-
     private void OnLuBu ()
     {
+        PlayerData.SetData ("Proto");
         PlayerData.hero_id = 100;
         Hide ();
     }
 
     private void OnCleopatra ()
     {
+        PlayerData.SetData ("Proto");
         PlayerData.hero_id = 200;
         Hide ();
     }

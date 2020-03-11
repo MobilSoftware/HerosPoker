@@ -57,7 +57,6 @@ public class HomeManager : MonoBehaviour
 
     public void Init ()
     {
-        PhotonNetwork.ConnectUsingSettings ("v1.0");
         canvas.sortingOrder = (int) SceneType.HOME;
         tmpDisplayName.text = PlayerData.display_name;
         tmpCoin.text = PlayerData.owned_gold.toShortCurrency ();
