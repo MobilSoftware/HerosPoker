@@ -4,7 +4,6 @@ using UnityEngine;
 public class Hero : MonoBehaviour
 {
     //equivalent of GenericAvater
-    public string strCodeName;
     public int id;
     private _SpineObject spineHero;
 

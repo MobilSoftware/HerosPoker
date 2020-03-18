@@ -118,17 +118,15 @@ public class _SceneManager : MonoBehaviour
     {
         if (val)
         {
-            //slotoManager.Show ();
             slotoManager.gameObject.SetActive (true);
+            slotoManager.SetMoney ();
             mainCamera.gameObject.SetActive (false);
             activeSceneType = SceneType.SLOTO;
-            slotoManager.btnClose.SetActive (true);
         }
         else
         {
             slotoManager.gameObject.SetActive (false);
             mainCamera.gameObject.SetActive (true);
-            slotoManager.btnClose.SetActive (false);
         }
     }
 

@@ -25,10 +25,10 @@ public class HomeManager : MonoBehaviour
     public Button btnSloto;
     public TextMeshProUGUI tmpDisplayName;
     public TextMeshProUGUI tmpCoin;
-    public Image imgHero;
+    public StandHero standHero;
 
-    public Sprite sprCleo;
-    public Sprite sprLubu;
+    public _SpineObject spStandCleo;
+    public _SpineObject spStandLubu;
 
     private void Start ()
     {
@@ -61,11 +61,7 @@ public class HomeManager : MonoBehaviour
         tmpDisplayName.text = PlayerData.display_name;
         tmpCoin.text = PlayerData.owned_gold.toShortCurrency ();
 
-        if (PlayerData.hero_id == 100)
-            imgHero.sprite = sprLubu;
-        else if (PlayerData.hero_id == 200)
-            imgHero.sprite = sprCleo;
-        imgHero.gameObject.SetActive (true);
+        standHero.LoadSpine (PlayerData.hero_id);
     }
 
     public void Hide ()

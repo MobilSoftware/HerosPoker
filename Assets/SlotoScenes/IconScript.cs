@@ -41,7 +41,7 @@ public class IconScript : MonoBehaviour
     public bool Spin(float speed)
     {
         transform.position += new Vector3(0.0f, speed, 0.0f);
-        return (transform.localPosition.y <= -12.45f ? true : false);
+        return (transform.localPosition.y <= -10.0f ? true : false);
     }
 
     // Update is called once per frame

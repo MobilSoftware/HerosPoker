@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: CleopatraStand_SkeletonData
   m_EditorClassIdentifier: 
   atlasAssets:
-  - {fileID: 11400000, guid: c5daad722b3e44c0a97cc3af00c0b576, type: 2}
+  - {fileID: 11400000, guid: 4bd3c0f24dc07466da740bddfa6be2b1, type: 2}
   scale: 0.01
-  skeletonJSON: {fileID: 4900000, guid: bb044304a9de34e3eb462a5ef2d9d26b, type: 3}
+  skeletonJSON: {fileID: 4900000, guid: d7557aa0f550146dc877b912e3b100a9, type: 3}
   skeletonDataModifiers: []
   fromAnimation: []
   toAnimation: []

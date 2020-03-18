@@ -20,7 +20,7 @@ public class ReelScript : MonoBehaviour
     private readonly float upSpeed = 50.0f;
     private readonly float downSpeed = 25.0f;
     private readonly float maxSpeed = -25.0f;
-    private readonly float iconWidth = 2.075f;
+    private readonly float iconWidth = 1.88f;
 
     // Start is called before the first frame update
     void Start()
@@ -111,7 +111,7 @@ public class ReelScript : MonoBehaviour
             {
                 icons[i].Spin(speed * Time.deltaTime);
             }
-            if (icons[0].transform.localPosition.y <= Random.Range(-0.30f, -0.70f)) spin = 5;
+            if (icons[0].transform.localPosition.y < Random.Range(-0.3f, -0.6f)) spin = 5;
         }
         else if (spin == 5) //5. Stop position is over and need correction
         {

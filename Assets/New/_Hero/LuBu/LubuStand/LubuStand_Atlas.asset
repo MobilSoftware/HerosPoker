@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a6b194f808b1af6499c93410e504af42, type: 3}
-  m_Name: CleopatraStand_Atlas
+  m_Name: LubuStand_Atlas
   m_EditorClassIdentifier: 
-  atlasFile: {fileID: 4900000, guid: 6b35642a085054f0f9a03f9cf1e0e56f, type: 3}
+  atlasFile: {fileID: 4900000, guid: 332f14fd3ea974c9bbbe93ab76958b29, type: 3}
   materials:
-  - {fileID: 2100000, guid: 66e7fecd5af824eccb646b7a3d49fdd1, type: 2}
+  - {fileID: 2100000, guid: f49fc84410564449baaebfce0e7cd60b, type: 2}

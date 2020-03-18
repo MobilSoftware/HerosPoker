@@ -25,6 +25,27 @@ public class _SpineUtility
         }
     }
 
+    public static void PlayAnimation ( SkeletonGraphic sg, int trackIndex, string animName, bool isLoop, float speed = 1f )
+    {
+        ExposedList<Spine.Animation> anims = sg.Skeleton.Data.Animations;
+
+        string strCurrAnimation = string.Empty;
+        if (trackIndex == 0)
+            strCurrAnimation = sg.AnimationState.GetCurrent (0).Animation.Name;
+
+        for (int i = 0; i < anims.Count; i++)
+        {
+            if (anims.Items[i].Name.Equals (animName))
+            {
+                TrackEntry entry = sg.AnimationState.SetAnimation (trackIndex, animName, isLoop);
+                entry.TimeScale = speed;
+                if (!isLoop && trackIndex == 0 && !strCurrAnimation.Equals (string.Empty))
+                    sg.AnimationState.AddAnimation (0, strCurrAnimation, true, 0);
+                break;
+            }
+        }
+    }
+
     public static void SetSkinColor (SkeletonAnimation sa, Color c )
     {
         sa.skeleton.SetColor (c);

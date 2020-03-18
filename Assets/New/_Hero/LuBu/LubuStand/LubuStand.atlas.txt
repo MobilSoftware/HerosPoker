@@ -1,0 +1,181 @@
+
+LubuStand.png
+size: 439,1033
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+BackSkirt
+  rotate: true
+  xy: 233, 406
+  size: 117, 143
+  orig: 117, 143
+  offset: 0, 0
+  index: -1
+BeltBack
+  rotate: true
+  xy: 370, 627
+  size: 108, 38
+  orig: 108, 38
+  offset: 0, 0
+  index: -1
+BeltFront
+  rotate: false
+  xy: 83, 15
+  size: 129, 81
+  orig: 129, 81
+  offset: 0, 0
+  index: -1
+BlinkA
+  rotate: true
+  xy: 412, 803
+  size: 72, 18
+  orig: 72, 18
+  offset: 0, 0
+  index: -1
+BlinkB
+  rotate: false
+  xy: 214, 2
+  size: 72, 19
+  orig: 72, 19
+  offset: 0, 0
+  index: -1
+Body
+  rotate: false
+  xy: 2, 702
+  size: 358, 329
+  orig: 358, 329
+  offset: 0, 0
+  index: -1
+ChestBack
+  rotate: true
+  xy: 218, 241
+  size: 163, 130
+  orig: 163, 130
+  offset: 0, 0
+  index: -1
+ChestFront
+  rotate: true
+  xy: 233, 525
+  size: 175, 135
+  orig: 175, 135
+  offset: 0, 0
+  index: -1
+Face
+  rotate: false
+  xy: 91, 222
+  size: 125, 172
+  orig: 125, 172
+  offset: 0, 0
+  index: -1
+Feather.L
+  rotate: false
+  xy: 2, 118
+  size: 87, 276
+  orig: 87, 276
+  offset: 0, 0
+  index: -1
+Feather.R
+  rotate: false
+  xy: 145, 424
+  size: 86, 276
+  orig: 86, 276
+  offset: 0, 0
+  index: -1
+FrontSkirt
+  rotate: false
+  xy: 2, 3
+  size: 79, 113
+  orig: 79, 113
+  offset: 0, 0
+  index: -1
+Leg
+  rotate: false
+  xy: 2, 396
+  size: 141, 304
+  orig: 141, 304
+  offset: 0, 0
+  index: -1
+Neck
+  rotate: true
+  xy: 378, 430
+  size: 96, 58
+  orig: 96, 58
+  offset: 0, 0
+  index: -1
+NeckBack
+  rotate: true
+  xy: 390, 59
+  size: 69, 31
+  orig: 69, 31
+  offset: 0, 0
+  index: -1
+ShoulderA.L
+  rotate: false
+  xy: 327, 19
+  size: 61, 103
+  orig: 61, 103
+  offset: 0, 0
+  index: -1
+ShoulderA.R
+  rotate: true
+  xy: 216, 23
+  size: 99, 109
+  orig: 99, 109
+  offset: 0, 0
+  index: -1
+ShoulderABack.L
+  rotate: false
+  xy: 145, 401
+  size: 32, 21
+  orig: 32, 21
+  offset: 0, 0
+  index: -1
+ShoulderABack.R
+  rotate: false
+  xy: 370, 528
+  size: 62, 97
+  orig: 62, 97
+  offset: 0, 0
+  index: -1
+ShoulderB.L
+  rotate: false
+  xy: 218, 124
+  size: 117, 115
+  orig: 117, 115
+  offset: 0, 0
+  index: -1
+ShoulderB.R
+  rotate: true
+  xy: 91, 98
+  size: 122, 123
+  orig: 122, 123
+  offset: 0, 0
+  index: -1
+ShoulderBBack.L
+  rotate: true
+  xy: 337, 130
+  size: 109, 100
+  orig: 109, 100
+  offset: 0, 0
+  index: -1
+SideSKirt.L
+  rotate: false
+  xy: 362, 737
+  size: 48, 138
+  orig: 48, 138
+  offset: 0, 0
+  index: -1
+SideSkirt.R
+  rotate: false
+  xy: 362, 877
+  size: 72, 154
+  orig: 72, 154
+  offset: 0, 0
+  index: -1
+SideSkirtBack.L
+  rotate: false
+  xy: 350, 268
+  size: 50, 136
+  orig: 50, 136
+  offset: 0, 0
+  index: -1

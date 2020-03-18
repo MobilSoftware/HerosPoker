@@ -1,27 +1,27 @@
 
 CleopatraStand.png
-size: 1302,345
+size: 1318,345
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 BackNeck
-  rotate: true
-  xy: 1263, 182
+  rotate: false
+  xy: 948, 38
   size: 56, 15
   orig: 56, 15
   offset: 0, 0
   index: -1
 BlinkA
-  rotate: false
-  xy: 966, 7
+  rotate: true
+  xy: 799, 44
   size: 102, 52
   orig: 102, 52
   offset: 0, 0
   index: -1
 BlinkB
-  rotate: false
-  xy: 1070, 12
-  size: 102, 52
+  rotate: true
+  xy: 1258, 241
+  size: 102, 55
   orig: 102, 55
   offset: 0, 0
   index: -1
@@ -34,127 +34,127 @@ Body
   index: -1
 Chest
   rotate: false
-  xy: 1024, 66
+  xy: 1074, 3
   size: 151, 98
   orig: 151, 98
   offset: 0, 0
   index: -1
 EyeShade
   rotate: false
-  xy: 754, 47
+  xy: 751, 18
   size: 87, 23
   orig: 87, 23
   offset: 0, 0
   index: -1
 EyeWhite
-  rotate: false
-  xy: 754, 72
+  rotate: true
+  xy: 853, 59
   size: 87, 24
   orig: 87, 24
   offset: 0, 0
   index: -1
 Eyeball.L
   rotate: false
-  xy: 1280, 180
+  xy: 1298, 114
   size: 18, 18
   orig: 18, 18
   offset: 0, 0
   index: -1
 Eyeball.R
   rotate: false
-  xy: 1259, 118
+  xy: 646, 12
   size: 18, 18
   orig: 18, 18
   offset: 0, 0
   index: -1
 Eyebrow.L
-  rotate: true
-  xy: 1259, 138
+  rotate: false
+  xy: 666, 13
   size: 26, 17
   orig: 26, 17
   offset: 0, 0
   index: -1
 Eyebrow.R
-  rotate: true
-  xy: 1280, 200
+  rotate: false
+  xy: 1258, 112
   size: 38, 20
   orig: 38, 20
   offset: 0, 0
   index: -1
 Eyelash
-  rotate: true
-  xy: 1271, 240
+  rotate: false
+  xy: 646, 32
   size: 103, 27
   orig: 103, 27
   offset: 0, 0
   index: -1
 EyelashSkin
   rotate: false
-  xy: 1174, 8
+  xy: 853, 6
   size: 93, 47
   orig: 93, 47
   offset: 0, 0
   index: -1
 Face
   rotate: true
-  xy: 843, 61
-  size: 115, 179
+  xy: 893, 55
+  size: 121, 179
   orig: 121, 179
   offset: 0, 0
   index: -1
 HairBack
   rotate: false
-  xy: 843, 178
+  xy: 893, 178
   size: 184, 165
   orig: 184, 165
   offset: 0, 0
   index: -1
 HairFront
-  rotate: false
-  xy: 646, 98
+  rotate: true
+  xy: 646, 148
   size: 195, 245
   orig: 195, 245
   offset: 0, 0
   index: -1
 HairFront.L
-  rotate: true
-  xy: 754, 2
+  rotate: false
+  xy: 754, 43
   size: 43, 103
   orig: 43, 103
   offset: 0, 0
   index: -1
 HairFront.R
-  rotate: true
-  xy: 859, 6
+  rotate: false
+  xy: 1258, 134
   size: 53, 105
   orig: 53, 105
   offset: 0, 0
   index: -1
 LowerArmFront
-  rotate: false
-  xy: 1029, 166
+  rotate: true
+  xy: 1171, 111
   size: 232, 85
   orig: 232, 85
   offset: 0, 0
   index: -1
 Shoulder
-  rotate: false
-  xy: 1029, 253
+  rotate: true
+  xy: 1079, 103
   size: 240, 90
   orig: 240, 90
   offset: 0, 0
   index: -1
 UpperArm.L
   rotate: true
-  xy: 646, 11
+  xy: 646, 61
   size: 85, 106
   orig: 85, 106
   offset: 0, 0
   index: -1
 UpperArm.R
   rotate: false
-  xy: 1177, 57
-  size: 80, 107
+  xy: 1227, 2
+  size: 81, 107
   orig: 81, 107
   offset: 0, 0
   index: -1

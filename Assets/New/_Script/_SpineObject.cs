@@ -12,9 +12,11 @@ public enum SpineAnim
 public class _SpineObject : MonoBehaviour
 {
     public SkeletonAnimation mySkelAnim;
+    public SkeletonGraphic mySkelGraphic;
     public SkeletonPartsRenderer partBack;
 
-    private Coroutine crRandomBlink;
+    private Coroutine crRandomMove;
+    private Coroutine crStandRandomMove;
     private string strBlink = "Blink";  //90%
     private string strNod = "Nod";      //5%
     private string strEye = "Eye";      //5%
@@ -23,7 +25,8 @@ public class _SpineObject : MonoBehaviour
 
     public void StartRandomMove ()
     {
-        crRandomBlink = StartCoroutine (_StartRandomMove ());
+        StopRandomMove ();
+        crRandomMove = StartCoroutine (_StartRandomMove ());
     }
 
     private IEnumerator _StartRandomMove ()
@@ -33,7 +36,6 @@ public class _SpineObject : MonoBehaviour
             int randWaitTime = Random.Range (5, 16);
             yield return new WaitForSeconds (randWaitTime);
             int randLuckyNumber = Random.Range (1, 101);
-            //int randLuckyNumber = luckyNod - 1;
             if (randLuckyNumber < luckyEye)
                 _SpineUtility.PlayAnimation (mySkelAnim, 1, strEye, false);
             else if (randLuckyNumber < luckyNod)
@@ -45,8 +47,8 @@ public class _SpineObject : MonoBehaviour
 
     public void StopRandomMove()
     {
-        if (crRandomBlink != null)
-            StopCoroutine (crRandomBlink);
+        if (crRandomMove != null)
+            StopCoroutine (crRandomMove);
     }
 
     public void SetAction (SpineAnim action )
@@ -67,6 +69,28 @@ public class _SpineObject : MonoBehaviour
 
         if (!strActionName.Equals (string.Empty))
             _SpineUtility.PlayAnimation (mySkelAnim, 0, strActionName, false);
+    }
+
+    public void StartStandRandomMove ()
+    {
+        StopStandRandomMove ();
+        crStandRandomMove = StartCoroutine (_StartStandRandomMove ());
+    }
+
+    IEnumerator _StartStandRandomMove ()
+    {
+        while (gameObject.activeSelf)
+        {
+            int randWaitTime = Random.Range (5, 16);
+            yield return new WaitForSeconds (randWaitTime);
+            _SpineUtility.PlayAnimation (mySkelGraphic, 1, strBlink, false);
+        }
+    }
+
+    public void StopStandRandomMove()
+    {
+        if (crStandRandomMove != null)
+            StopCoroutine (crStandRandomMove);
     }
 
 }

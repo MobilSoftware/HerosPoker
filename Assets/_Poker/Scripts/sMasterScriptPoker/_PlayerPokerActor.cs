@@ -1178,14 +1178,14 @@ public class _PlayerPokerActor : MonoBehaviour
 
     public void AnimationFlowChips(long val, bool pull)
     {
-        FlowType flowT = FlowType.Ten;
+        //FlowType flowT = FlowType.Ten;
 
-        if (val < 1000)
-            flowT = FlowType.Ten;
-        else if (val < 10000)
-            flowT = FlowType.HundredAndThousand;
-        else
-            flowT = FlowType.All;
+        //if (val < 1000)
+        //    flowT = FlowType.Ten;
+        //else if (val < 10000)
+        //    flowT = FlowType.HundredAndThousand;
+        //else
+            //flowT = FlowType.All;
 
         //myChipsFlow.SetFlowType(flowT);
 

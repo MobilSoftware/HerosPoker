@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ButtonScript : MonoBehaviour
 {
-    public enum ButtonType {Spin, Stop, Max, Up, Down};
+    public enum ButtonType {Spin, Stop, Max, Up, Down, Back};
 
     public ButtonType type;
 
