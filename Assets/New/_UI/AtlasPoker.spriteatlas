@@ -1,0 +1,168 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: AtlasPoker
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: Android
+      m_MaxTextureSize: 1024
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: 29
+      m_TextureCompression: 1
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 1
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 0
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: cbb8fa05e7ace4e0b83eb2fb97a2a247, type: 3}
+    totalSpriteSurfaceArea: 2636219
+    bindAsDefault: 1
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 2a305dd0ece9e4061a65e22ef7bb3f85, type: 3}
+  - {fileID: 21300000, guid: fd8708f06047145f18d4ab5055bb588f, type: 3}
+  - {fileID: 21300000, guid: 1510a10193537834abfe1dc334d7a84b, type: 3}
+  - {fileID: 21300000, guid: 5fb442017aca74bdbac93e00e78ef5f3, type: 3}
+  - {fileID: 21300000, guid: 5b383f01717d2924f9997079346e3392, type: 3}
+  - {fileID: 21300000, guid: 1d514a216718155409f1fff94b6d8764, type: 3}
+  - {fileID: 21300000, guid: 9c1fc731808dc41928c92a1e002683e1, type: 3}
+  - {fileID: 21300000, guid: f5b46d719e8854ac0b5a586485f266d1, type: 3}
+  - {fileID: 21300000, guid: 5d19a9d1627a672469c1541b893f8fe6, type: 3}
+  - {fileID: 21300000, guid: ddfd141231d6f0d4ab04ec59cde22c5f, type: 3}
+  - {fileID: 21300000, guid: 18bff912307b54d5a89ffcf78865526b, type: 3}
+  - {fileID: 21300000, guid: b42c80225a61d7448bb8de330d271992, type: 3}
+  - {fileID: 21300000, guid: a20bc5222b947314baea0d58e6c7b0a4, type: 3}
+  - {fileID: 21300000, guid: aaa52832636f143df896c5af0d43ba2f, type: 3}
+  - {fileID: 21300000, guid: 72df54e26e7776d4b942e9de56014921, type: 3}
+  - {fileID: 21300000, guid: f46b67e28a28a46698ca9c6bd53c6156, type: 3}
+  - {fileID: 21300000, guid: bef6a8e2f94dd42d383755514d297d81, type: 3}
+  - {fileID: 21300000, guid: 0f95174388a5949da930f5a4db561d5e, type: 3}
+  - {fileID: 21300000, guid: b6eb8693bb220b741a45ff92f9907930, type: 3}
+  - {fileID: 21300000, guid: ceb289d354e542a4e85e206342048ce0, type: 3}
+  - {fileID: 21300000, guid: 70986ae4bf3a74466975afc8ee0b95f7, type: 3}
+  - {fileID: 21300000, guid: d1dce80582e5248ac8e1ec6c4a36d5f2, type: 3}
+  - {fileID: 21300000, guid: b73fdb855ff69f644afdff823ede7138, type: 3}
+  - {fileID: 21300000, guid: 45c85ec59eda3454c9ab40c9078fda0c, type: 3}
+  - {fileID: 21300000, guid: 9457a83643642f046b46f0a086defda2, type: 3}
+  - {fileID: 21300000, guid: d7076fc6e10f54cfcacde480ac7b0cce, type: 3}
+  - {fileID: 21300000, guid: 84d39be6f81ba4dd1949512a3f38dc91, type: 3}
+  - {fileID: 21300000, guid: 8bf5b5175f56249d6ab48d64f988eabe, type: 3}
+  - {fileID: 21300000, guid: 7639d6471447c0446bc50bc97c280c3e, type: 3}
+  - {fileID: 21300000, guid: 7eeaa367caeff46eaacaa375448fb815, type: 3}
+  - {fileID: 21300000, guid: c5aef9779f54543a19a2cfaf291bad7e, type: 3}
+  - {fileID: 21300000, guid: b0246bc79883346ae8b51105b2dd81e5, type: 3}
+  - {fileID: 21300000, guid: d176331839f424f94a65507e259648a6, type: 3}
+  - {fileID: 21300000, guid: b39ab638a3c984186ac15dfc78f5f64c, type: 3}
+  - {fileID: 21300000, guid: 097ddbd85e2c743c9abbc98fac9e545a, type: 3}
+  - {fileID: 21300000, guid: 57b8fb19fef22f24d9486305130cac31, type: 3}
+  - {fileID: 21300000, guid: d7253549e198144aa991a945e25d15e1, type: 3}
+  - {fileID: 21300000, guid: ef35b48a964741c49a93300690424bb1, type: 3}
+  - {fileID: 21300000, guid: 635a668a8b97f45b198a0a97292d64f6, type: 3}
+  - {fileID: 21300000, guid: 1264b39a7c61a4542bf2c763eb586327, type: 3}
+  - {fileID: 21300000, guid: 997b0cfaadba24f718f075cfe081cf43, type: 3}
+  - {fileID: 21300000, guid: 65a1da4b1ba7542918572bbc46ecbbea, type: 3}
+  - {fileID: 21300000, guid: 0ffe759bf67d8684a9ed46a08f275162, type: 3}
+  - {fileID: 21300000, guid: 8656badbe8695c84996ae778fa3171c4, type: 3}
+  - {fileID: 21300000, guid: 7c14c1ebf4e18764bbb212b2d73c3e2d, type: 3}
+  - {fileID: 21300000, guid: 4e5c44ac490a446b9b15717389411f27, type: 3}
+  - {fileID: 21300000, guid: 69bbe8dc90804324e8f1b49920d6e5f3, type: 3}
+  - {fileID: 21300000, guid: e89c580d4501e4a41b1f529a64e5b2f4, type: 3}
+  - {fileID: 21300000, guid: 367b173d7b7662f42b74401bd9465867, type: 3}
+  - {fileID: 21300000, guid: f373b8dd6b14ccc499b0f68dd18b114f, type: 3}
+  - {fileID: 21300000, guid: e67fc6ed61bf7466daebe99b4296efbe, type: 3}
+  - {fileID: 21300000, guid: fb00bf0ec52134e8f8d7b38def14aa2b, type: 3}
+  - {fileID: 21300000, guid: 2e7d04ceaea1543c7830f716b707cd97, type: 3}
+  - {fileID: 21300000, guid: 345f779fd99d6489a822b9f786869460, type: 3}
+  - {fileID: 21300000, guid: 0b3fa2af259aa435fb4ca0df793e34b5, type: 3}
+  - {fileID: 21300000, guid: 934e5ddf9ce6649e39de066c293ca317, type: 3}
+  - {fileID: 21300000, guid: 6973afef8283343a3b8b989fa9503925, type: 3}
+  - {fileID: 21300000, guid: 91494cffae2b24cbfb60a5e57d063c4d, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - twopair
+  - frame1_9slice
+  - frame_white
+  - check_empty
+  - btn_slider
+  - ThrowDynamite_0
+  - btn_blueL
+  - btn_emote
+  - signal_03
+  - slider
+  - straigh
+  - ingame_message
+  - ThrowFlipFlop_0
+  - timer_bar
+  - Throw Rose_0
+  - straigh flush
+  - royalflush
+  - btn_menu
+  - flush
+  - GUI_9slice_chat_bubble 1_0
+  - highcard
+  - IC_M
+  - square_bottun_red
+  - btn_quest
+  - signal_01
+  - frame_chips
+  - PlayerActive
+  - btn_red
+  - ThrowMoney_0
+  - full house
+  - IC_modelkartu
+  - ChecklistOff
+  - threeofakind
+  - timer_frame
+  - Frame_black
+  - bubble
+  - ChecklistOn
+  - signal_02
+  - frame_mainbtn
+  - rise_btn
+  - IC_berdiri
+  - IC_lobi
+  - bubble left
+  - ThrowBrick_0
+  - ThrowEgg_0
+  - Frame_paper_blue
+  - IC_poker
+  - fourofakind
+  - signal_04
+  - square_bottun_blue
+  - rise_frametotal
+  - IC_gantimeja
+  - btn_bluegrey
+  - btn_green
+  - rise_btnslidebar
+  - rise_frame
+  - onepair
+  - check_fill
+  m_Tag: AtlasPoker
+  m_IsVariant: 0

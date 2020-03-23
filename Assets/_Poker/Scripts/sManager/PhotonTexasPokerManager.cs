@@ -1717,18 +1717,5 @@ public class PhotonTexasPokerManager : PunBehaviour
         }
     }
 
-    private void onMessageBoxOKClicked(int returnedCode)
-    {
-        if (returnedCode == 1)
-        {
-            GlobalVariables.bQuitOnNextRound = false;
-            ImLeaving ();
-            //StartCoroutine (PokerManager.instance.uiPause._LoadMenu ());
-            PokerManager.instance.uiPause.LoadMenu ();
-        }
-        else if (returnedCode == 2)
-            PokerManager.instance.uiPause.LoadMenu ();
-    }
-
     #endregion
 }
