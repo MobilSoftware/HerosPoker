@@ -117,6 +117,11 @@ public class _PokerGameManager : MonoBehaviour
             tableCard[a].RefreshCard (idx[a]);
     }
 
+    public long GetPotValue ()
+    {
+        return potOnTable[lastPotIndex].GetMoney;
+    }
+
     public void CatchUpPot ( int idx, long _money, string[] slotsOwner )
     {
         _PlayerPokerActor[] _owners = new _PlayerPokerActor[slotsOwner.Length];
@@ -553,6 +558,7 @@ public class _PokerGameManager : MonoBehaviour
                         break;
 
                     instance.tableCard[t].gameObject.SetActive (true);
+                    Debug.LogError ("opening card: " + t);
                 }
             }
         }

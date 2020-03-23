@@ -45,6 +45,7 @@ public class _SceneManager : MonoBehaviour
 
     private void Start ()
     {
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
         DontDestroyOnLoad (this);
         activeSceneType = SceneType.SPLASH;
         StartCoroutine (_LoadAllScenes ());

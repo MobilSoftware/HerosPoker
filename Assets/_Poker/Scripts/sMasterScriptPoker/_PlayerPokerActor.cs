@@ -55,6 +55,9 @@ public class _PlayerPokerActor : MonoBehaviour
     [SerializeField] Color checkColor;
     [SerializeField] Color callColor;
     [SerializeField] Color foldColor;
+
+    private long val;
+    private bool isOpen;
     #endregion
 
     [Space(20)]
@@ -638,45 +641,48 @@ public class _PlayerPokerActor : MonoBehaviour
 
     private void SetInstaButtons ()
     {
-        if (_PokerGameManager.lastBet == 0 || _PokerGameManager.lastBet == _PokerGameManager.startBet)
+        val = _PokerGameManager.instance.GetPotValue ();
+        if (val == 0)
+            val = _PokerGameManager.startBet;
+        isOpen = _PokerGameManager.instance.tableCard[2].gameObject.activeSelf;
+        if (!isOpen)
         {
             instaButton3.gameObject.SetActive (true);
-            txtInsta1.text = (3 * _PokerGameManager.startBet).toFlexibleCurrency();
-            txtInsta2.text = (4 * _PokerGameManager.startBet).toFlexibleCurrency ();
-            txtInsta3.text = (5 * _PokerGameManager.startBet).toFlexibleCurrency ();
+            txtInsta1.text = (3 * val).toFlexibleCurrency();
+            txtInsta2.text = (4 * val).toFlexibleCurrency ();
+            txtInsta3.text = (5 * val).toFlexibleCurrency ();
         }
         else
         {
             instaButton3.gameObject.SetActive (false);
-            txtInsta1.text = Convert.ToInt64 (0.5f * _PokerGameManager.biggestBet).toFlexibleCurrency ();
-            txtInsta2.text = Convert.ToInt64 (0.7f * _PokerGameManager.biggestBet).toFlexibleCurrency ();
+            txtInsta1.text = Convert.ToInt64 (0.5f * val).toFlexibleCurrency ();
+            txtInsta2.text = Convert.ToInt64 (0.7f * val).toFlexibleCurrency ();
         }
     }
 
     private void FirstInstaRaise ()
     {
-        if (_PokerGameManager.lastBet == 0)
-            lastSliderBet = 3 * _PokerGameManager.startBet;
+        if (!isOpen)
+            lastSliderBet = 3 * val;
         else
-            lastSliderBet = Convert.ToInt64 (0.5f * _PokerGameManager.biggestBet);
+            lastSliderBet = Convert.ToInt64 (0.5f * val);
         S_Raise ();
     }
 
     private void SecondInstaRaise ()
     {
-        if (_PokerGameManager.lastBet == 0)
-            lastSliderBet = 4 * _PokerGameManager.startBet;
+        if (!isOpen)
+            lastSliderBet = 4 * val;
         else
-            lastSliderBet = Convert.ToInt64 (0.7f * _PokerGameManager.biggestBet);
+            lastSliderBet = Convert.ToInt64 (0.7f * val);
         S_Raise ();
-        txtInsta2.text = lastSliderBet.toFlexibleCurrency ();
     }
 
     private void ThirdInstaRaise()
     {
-        if (_PokerGameManager.lastBet == 0)
+        if (!isOpen)
         {
-            lastSliderBet = 5 * _PokerGameManager.startBet;
+            lastSliderBet = 5 * val;
             S_Raise ();
         }
     }
