@@ -11,8 +11,6 @@ public class _PokerGameHUD : MonoBehaviour
 
     //public Button[] inviteButtons = new Button[6];
     public Button btnChat;
-    public Sprite sprClosed;
-    public Sprite sprOpened;
 
     public Image imgConnection;
     public Sprite connGood, connNormal, connLow, connVeryLow;

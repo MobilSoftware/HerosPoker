@@ -38,7 +38,6 @@ public class CardsManager : MonoBehaviour
 
     public SpriteAtlas cardsAtlas;
     public Sprite[] cardsClub, cardsDiamond, cardsHeart, cardsSpade;
-    public Sprite[] rankSprite;
 
     public bool bOfflineMode, bResettingCards = false;
     protected Hashtable playerCardIndexes = new Hashtable();
