@@ -169,7 +169,7 @@ public class SlotoManagerScript : MonoBehaviour
         {
             tempValue[i] = Random.Range(0, reels[0].maxIconType);
         }
-        yield return new WaitForSeconds(Random.Range(3.0f, 5.0f));
+        yield return new WaitForSeconds(Random.Range(0.5f, 1.5f));
         for (i = 0; i < slotIcons.Length; i++)
         {
             slotIcons[i].SetIconValue(tempValue[i], iconSprite[tempValue[i] * reels[0].maxIconBlur + 0], tileSprite[0]);
