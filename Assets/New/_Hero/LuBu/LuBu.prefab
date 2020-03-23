@@ -234,7 +234,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7724881188194207594}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -302,7 +302,7 @@ MonoBehaviour:
   disableRenderingOnOverride: 1
   _animationName: Idle
   loop: 1
-  timeScale: 1
+  timeScale: 0.6
 --- !u!114 &6259166330024159122
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -334,4 +334,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mySkelAnim: {fileID: 2755066545477047194}
+  mySkelGraphic: {fileID: 0}
   partBack: {fileID: 8487663447066705778}
