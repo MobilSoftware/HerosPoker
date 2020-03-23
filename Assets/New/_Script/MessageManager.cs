@@ -6,8 +6,7 @@ public enum ButtonMode
 {
     OK,
     CANCEL,
-    OK_CANCEL,
-    NONE
+    OK_CANCEL
 }
 
 public class MessageManager : MonoBehaviour
@@ -81,10 +80,6 @@ public class MessageManager : MonoBehaviour
             case ButtonMode.OK_CANCEL:
                 btnNegative.gameObject.SetActive (true);
                 btnPositive.gameObject.SetActive (true);
-                break;
-            case ButtonMode.NONE:
-                btnNegative.gameObject.SetActive (false);
-                btnPositive.gameObject.SetActive (false);
                 break;
         }
 
