@@ -28,6 +28,8 @@ public class SlotoManagerScript : MonoBehaviour
     private int[] showLine = new int[5];
     private int updateSlotSpin;
 
+    private int[] betArray = new int[] {100, 200, 500, 700, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000, 15000, 20000};
+
     void Start()
     {
         Init();
@@ -39,7 +41,7 @@ public class SlotoManagerScript : MonoBehaviour
         bet = 100;
         betWinning = 0;
         currBetWinning = 0;
-        betLabelTM.text = bet.ToString("N0");
+        betLabelTM.text = bet.ToString("N0") + ".000";
         currBet = bet;
         winningBetAnimTM.gameObject.SetActive(false);
         for (int i = 0; i < reels.Length; i++)
@@ -69,7 +71,7 @@ public class SlotoManagerScript : MonoBehaviour
         {
             int temp = Mathf.CeilToInt(Mathf.Abs(betWinning - currBetWinning) / 10.0f);
             currBetWinning += (currBetWinning < betWinning ? temp : -temp);
-            currBetLabelTM.text = currBetWinning.ToString("N0");
+            currBetLabelTM.text = currBetWinning.ToString("N0") + ".000";
             winningBetAnimTM.text = currBetLabelTM.text;
             if (currBetWinning == betWinning) StartBlink(currBetLabelTM.gameObject);
         }
@@ -79,9 +81,13 @@ public class SlotoManagerScript : MonoBehaviour
     {
         if(type == ButtonScript.ButtonType.Spin)
         {
-            if(money >= bet)
+            if (money >= bet)
             {
                 StartCoroutine(StartSpin());
+            }
+            else
+            {
+                MessageManager.instance.Show(gameObject, "Uang tak cukup", ButtonMode.OK, -1);
             }
         } else if (type == ButtonScript.ButtonType.Stop)
         {
@@ -89,18 +95,36 @@ public class SlotoManagerScript : MonoBehaviour
         }
         else if (type == ButtonScript.ButtonType.Max)
         {
-            bet = 10000;
-            betLabelTM.text = bet.ToString("N0");
+            bet = betArray[betArray.Length-1];
+            betLabelTM.text = bet.ToString("N0") + ".000";
         }
         else if (type == ButtonScript.ButtonType.Up)
         {
-            bet = Mathf.Clamp(bet + 100, 100, 10000);
-            betLabelTM.text = bet.ToString("N0");
+            int betIndex = 0;
+            for (int i=0; i< betArray.Length; i++)
+            {
+                if(bet == betArray[i])
+                {
+                    betIndex = i;
+                    break;
+                }
+            }
+            if(betIndex+1 < betArray.Length) bet = betArray[betIndex + 1];
+            betLabelTM.text = bet.ToString("N0") + ".000";
         }
         else if (type == ButtonScript.ButtonType.Down)
         {
-            bet = Mathf.Clamp(bet - 100, 100, 10000);
-            betLabelTM.text = bet.ToString("N0");
+            int betIndex = 0;
+            for (int i = 0; i < betArray.Length; i++)
+            {
+                if (bet == betArray[i])
+                {
+                    betIndex = i;
+                    break;
+                }
+            }
+            if (betIndex - 1 >= 0) bet = betArray[betIndex - 1];
+            betLabelTM.text = bet.ToString("N0") + ".000";
         }
         else if (type == ButtonScript.ButtonType.Back)
         {
@@ -169,7 +193,7 @@ public class SlotoManagerScript : MonoBehaviour
         {
             tempValue[i] = Random.Range(0, reels[0].maxIconType);
         }
-        yield return new WaitForSeconds(Random.Range(3.0f, 5.0f));
+        yield return new WaitForSeconds(Random.Range(1.0f, 2.0f));
         for (i = 0; i < slotIcons.Length; i++)
         {
             slotIcons[i].SetIconValue(tempValue[i], iconSprite[tempValue[i] * reels[0].maxIconBlur + 0], tileSprite[0]);
@@ -214,7 +238,7 @@ public class SlotoManagerScript : MonoBehaviour
     private string ToShortCurrency(int value)
     {
         return value.toShortCurrency();
-        //return value.ToString("N0");
+        //return value.ToString("N0") + ".000";
     }
 
     private void StartBlink(GameObject go)
