@@ -260,4 +260,9 @@ public class SlotoManagerScript : MonoBehaviour
         yield return new WaitForSeconds(1.0f);
         winningBetAnimTM.gameObject.SetActive(false);
     }
+
+    private void OnPositiveClicked(int returnedCode)
+    {
+        Debug.Log("returnedCode = "+returnedCode);
+    }
 }
