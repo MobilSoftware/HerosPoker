@@ -15,4 +15,5 @@ public struct _WFSUtility
     public static readonly WaitForSeconds wfs3 = new WaitForSeconds(3f);
     public static readonly WaitForSeconds wfs4 = new WaitForSeconds(4f);
     public static readonly WaitForSeconds wfs5 = new WaitForSeconds(5f);
+    public static readonly WaitForEndOfFrame wef = new WaitForEndOfFrame ();
 }

@@ -20,6 +20,7 @@ public class HomeManager : MonoBehaviour
     }
 
     public Canvas canvas;
+    public Button btnProfile;
     public Button btnQuickPlay;
     public Button btnPoker;
     public Button btnSloto;
@@ -32,9 +33,15 @@ public class HomeManager : MonoBehaviour
 
     private void Start ()
     {
+        btnProfile.onClick.AddListener (OnProfile);
         btnQuickPlay.onClick.AddListener (OnQuickPlay);
         btnPoker.onClick.AddListener (OnQuickPlay);
         btnSloto.onClick.AddListener (OnSloto);
+    }
+
+    private void OnProfile ()
+    {
+        _SceneManager.instance.SetActiveScene (SceneType.PROFILE, true);
     }
 
     private void OnQuickPlay ()
@@ -49,17 +56,25 @@ public class HomeManager : MonoBehaviour
         Hide ();
     }
 
+    public void SetCanvas (bool val )
+    {
+        if (val)
+            Show ();
+        else
+            Hide ();
+    }
+
     public void Show ()
     {
         tmpCoin.text = PlayerData.owned_gold.toShortCurrency ();
         canvas.enabled = true;
+        _SceneManager.instance.activeSceneType = SceneType.HOME;
     }
 
     public void Init ()
     {
         canvas.sortingOrder = (int) SceneType.HOME;
         tmpDisplayName.text = PlayerData.display_name;
-        tmpCoin.text = PlayerData.owned_gold.toShortCurrency ();
 
         standHero.LoadSpine (PlayerData.hero_id);
     }

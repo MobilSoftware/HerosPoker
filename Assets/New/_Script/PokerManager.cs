@@ -59,7 +59,16 @@ public class PokerManager : MonoBehaviour
     public _SpineObject spLuBu;
     public _SpineObject spCleo;
 
+    private SceneType prevSceneType;
     private bool isInit;
+
+    public void SetCanvas ( bool val )
+    {
+        if (val)
+            Show ();
+        else
+            Hide ();
+    }
 
     public void Show ()
     {
@@ -73,11 +82,15 @@ public class PokerManager : MonoBehaviour
 
         PhotonRoomInfoManager.instance.InitialiseCardGameScripts ();
         RoomInfoManager.instance.JoinRandomRoom ();
+
+        prevSceneType = _SceneManager.instance.activeSceneType;
+        _SceneManager.instance.activeSceneType = SceneType.POKER;
     }
 
     public void Hide ()
     {
         objPoker.SetActive (false);
         canvas.enabled = false;
+        _SceneManager.instance.activeSceneType = prevSceneType;
     }
 }

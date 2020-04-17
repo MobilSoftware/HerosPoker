@@ -8,6 +8,9 @@ public enum SceneType
     SPLASH,
     HOME,
     BEGIN,
+    PROFILE,
+    VERIFY,
+    VIP,
     POKER,
     SLOTO,
     MESSAGE
@@ -38,6 +41,9 @@ public class _SceneManager : MonoBehaviour
 
     private List<Scene> loadedScenes = new List<Scene> ();
     private HomeManager homeManager;
+    private ProfileManager profileManager;
+    private VerifyManager verifyManager;
+    private VipManager vipManager;
     private PokerManager pokerManager;
     private SlotoManagerScript slotoManager;
     private BeginManager beginManager;
@@ -58,19 +64,22 @@ public class _SceneManager : MonoBehaviour
         {
             async = SceneManager.LoadSceneAsync (i, LoadSceneMode.Additive);
             while (!async.isDone)
-            {
-                yield return new WaitForEndOfFrame ();
-            }
+                yield return _WFSUtility.wef;
+
             loadedScenes.Add (SceneManager.GetSceneByBuildIndex (i));
         }
-        yield return new WaitForEndOfFrame ();
+        yield return _WFSUtility.wef;
         homeManager = HomeManager.instance;
+        profileManager = ProfileManager.instance;
+        verifyManager = VerifyManager.instance;
+        vipManager = VipManager.instance;
+        yield return _WFSUtility.wef;
         pokerManager = PokerManager.instance;
         beginManager = BeginManager.instance;
         msgManager = MessageManager.instance;
         slotoManager = FindObjectOfType<SlotoManagerScript> ();
         SetActiveSloto (false);
-        SetActiveBegin (true);
+        SetActiveScene (SceneType.BEGIN, true);
         SceneManager.UnloadSceneAsync ("SeSplash");
     }
 
@@ -78,41 +87,14 @@ public class _SceneManager : MonoBehaviour
     {
         switch (st)
         {
-            case SceneType.BEGIN:
-                SetActiveBegin (val);
-                break;
-            case SceneType.HOME:
-                SetActiveHome (val);
-                break;
-            case SceneType.POKER:
-                SetActivePoker (val);
-                break;
-            case SceneType.SLOTO:
-                SetActiveSloto (val);
-                break;
+            case SceneType.BEGIN: beginManager.SetCanvas (val); break;
+            case SceneType.HOME: homeManager.SetCanvas (val); break;
+            case SceneType.PROFILE: profileManager.SetCanvas (val); break;
+            case SceneType.VERIFY: verifyManager.SetCanvas (val); break;
+            case SceneType.VIP: vipManager.SetCanvas (val); break;
+            case SceneType.POKER: pokerManager.SetCanvas (val); break;
+            case SceneType.SLOTO: SetActiveSloto (val); break;
         }
-    }
-
-    private void SetActiveHome (bool val)
-    {
-        if (val)
-        {
-            homeManager.Show ();
-            activeSceneType = SceneType.HOME;
-        }
-        else
-            homeManager.Hide ();
-    }
-
-    private void SetActivePoker (bool val)
-    {
-        if (val)
-        {
-            pokerManager.Show ();
-            activeSceneType = SceneType.POKER;
-        }
-        else
-            pokerManager.Hide ();
     }
 
     private void SetActiveSloto (bool val )
@@ -124,21 +106,44 @@ public class _SceneManager : MonoBehaviour
             mainCamera.gameObject.SetActive (false);
             activeSceneType = SceneType.SLOTO;
         }
-        else
+        else { slotoManager.gameObject.SetActive (false); mainCamera.gameObject.SetActive (true); }
+    }
+
+    private void OnEscape ()
+    {
+        switch (activeSceneType)
         {
-            slotoManager.gameObject.SetActive (false);
-            mainCamera.gameObject.SetActive (true);
+            case SceneType.BEGIN:
+            case SceneType.HOME:
+                MessageManager.instance.Show (gameObject, "Apakah kamu yakin ingin keluar?", ButtonMode.OK_CANCEL, -2);
+                break;
+            case SceneType.POKER:
+                Debug.Log ("Open Pause Menu");
+                //open pause menu
+                break;
+            case SceneType.SLOTO:
+            case SceneType.PROFILE:
+            case SceneType.VERIFY:
+            case SceneType.VIP:
+                SetActiveScene (activeSceneType, false);
+                SetActiveScene (SceneType.HOME, true);
+                break;
         }
     }
 
-    private void SetActiveBegin (bool val )
+    private void OnPositiveClicked ( int returnCode )
     {
-        if (val)
+        switch (returnCode)
         {
-            beginManager.Show ();
-            activeSceneType = SceneType.BEGIN;
+            case -2: Application.Quit (); break;
         }
-        else
-            beginManager.Hide ();
+    }
+
+    private void Update ()
+    {
+        if (Input.GetKeyDown (KeyCode.Escape))
+        {
+            OnEscape ();
+        }
     }
 }

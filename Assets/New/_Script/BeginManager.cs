@@ -31,6 +31,14 @@ public class BeginManager : MonoBehaviour
         btnCleopatra.onClick.AddListener (OnCleopatra);
     }
 
+    public void SetCanvas ( bool val )
+    {
+        if (val)
+            Show ();
+        else
+            Hide ();
+    }
+
     public void Show ()
     {
         if (!isInit)
@@ -41,6 +49,7 @@ public class BeginManager : MonoBehaviour
 
         PhotonNetwork.ConnectUsingSettings ("v1.0");
         canvas.enabled = true;
+        _SceneManager.instance.activeSceneType = SceneType.BEGIN;
     }
 
     public void Hide ()

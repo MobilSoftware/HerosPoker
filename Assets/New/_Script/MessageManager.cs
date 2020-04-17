@@ -34,6 +34,7 @@ public class MessageManager : MonoBehaviour
     public Button btnPositive;
     public Button btnNegative;
 
+    private SceneType prevSceneType;
     private GameObject objListener;
     private int returnCode;
     private bool isInit;
@@ -92,11 +93,13 @@ public class MessageManager : MonoBehaviour
             isInit = true;
         }
         canvas.enabled = true;
+        prevSceneType = _SceneManager.instance.activeSceneType;
         _SceneManager.instance.activeSceneType = SceneType.MESSAGE;
     }
 
     public void Hide ()
     {
         canvas.enabled = false;
+        _SceneManager.instance.activeSceneType = prevSceneType;
     }
 }
