@@ -5,7 +5,7 @@ using UnityEngine;
 public class Logger
 {
 
-	static bool isLogging = false;
+	static bool isLogging = true;
 
     /// <summary>
     /// Logger Debug

@@ -463,6 +463,8 @@ GameObject:
   - component: {fileID: 1524175548}
   - component: {fileID: 1524175547}
   - component: {fileID: 1524175549}
+  - component: {fileID: 1524175551}
+  - component: {fileID: 1524175550}
   m_Layer: 0
   m_Name: SceneManager
   m_TagString: Untagged
@@ -508,3 +510,28 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1524175546}
   m_Enabled: 1
+--- !u!114 &1524175550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1524175546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a92b1549c4a344d496ec50cfba03494, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1524175551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1524175546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17c6294e444794f6dbfa26e7cd916316, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  api: {fileID: 1524175550}

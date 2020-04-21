@@ -8,11 +8,11 @@ namespace Rays.Utilities
     {
         public const bool DEVELOPMENT = true;
 
-        public const string DOMAIN = "https://myplayvps.com/";
-        public const string APIVER = "v4.2";
+        public const string DOMAIN = "http://194.59.165.164/";
+        public const string APIVER = "v1.0";
         public const string APIURI = DOMAIN + (DEVELOPMENT ? "dev" : "api") + "/" + APIVER + "/";
-        public const string CHATURI = DOMAIN + "chat/" + (DEVELOPMENT ? "dev" : "api") + "/";
-        public const string STOREDOMAIN = "http://myplay.id/store_webview.php";
+        public const string CHATURI = DOMAIN + (DEVELOPMENT ? "dev" : "api") + "/temp/";
+        //public const string STOREDOMAIN = "http://myplay.id/store_webview.php";
 
         private static bool useNew = true;
 
@@ -24,7 +24,7 @@ namespace Rays.Utilities
             {
                 //Debug.Log("Masuk 1");
                 PlayerPrefs.SetInt (uri + "_time", curTime);
-                returnPost (PlayerPrefs.GetString (uri + "_value", ""));
+                returnPost (PlayerPrefs.GetString (uri + "_value", ""), uri);
             }
             else
             {
@@ -54,7 +54,7 @@ namespace Rays.Utilities
                             string[] tempError = ParseUnityError (www.error);
                             if (DEVELOPMENT) tempError[0] = uri + " = " + www.error;
                             if (DEVELOPMENT) Debug.Log (tempError[0]);
-                            if (returnError != null) returnError ((www.isNetworkError ? 500 : 501), new string[] { tempError[0], tempError[1] });
+                            if (returnError != null) returnError ((www.isNetworkError ? 500 : 501), new string[] { tempError[0], tempError[1] }, uri);
                         }
                         else
                         {
@@ -64,7 +64,7 @@ namespace Rays.Utilities
                                 curTime = (int) (System.DateTime.UtcNow - epochStart).TotalSeconds;
                                 PlayerPrefs.SetInt (uri + "_time", curTime);
                                 PlayerPrefs.SetString (uri + "_value", www.downloadHandler.text);
-                                returnPost (www.downloadHandler.text);
+                                returnPost (www.downloadHandler.text, uri);
                             }
                         }
                     }
@@ -79,7 +79,7 @@ namespace Rays.Utilities
                             string[] tempError = ParseUnityError (www.error);
                             if (DEVELOPMENT) tempError[0] = uri + " = " + www.error;
                             if (DEVELOPMENT) Debug.Log (tempError[0]);
-                            if (returnError != null) returnError (501, new string[] { tempError[0], tempError[1] });
+                            if (returnError != null) returnError (501, new string[] { tempError[0], tempError[1] }, uri);
                         }
                         else
                         {
@@ -89,7 +89,7 @@ namespace Rays.Utilities
                                 curTime = (int) (System.DateTime.UtcNow - epochStart).TotalSeconds;
                                 PlayerPrefs.SetInt (uri + "_time", curTime);
                                 PlayerPrefs.SetString (uri + "_value", www.text);
-                                returnPost (www.text);
+                                returnPost (www.text, uri);
                             }
                         }
                     }
@@ -110,17 +110,17 @@ namespace Rays.Utilities
                     {
                         if (www.isHttpError && !www.isNetworkError)
                         {
-                            returnPost (defaultNotFound);
+                            returnPost (defaultNotFound, uri);
                         }
                         else
                         {
                             string[] tempError = ParseUnityError (www.error);
-                            returnError ((www.isNetworkError ? 500 : 501), new string[] { tempError[0], tempError[1] });
+                            returnError ((www.isNetworkError ? 500 : 501), new string[] { tempError[0], tempError[1] }, uri);
                         }
                     }
                     else
                     {
-                        returnPost (www.downloadHandler.text);
+                        returnPost (www.downloadHandler.text, uri);
                     }
                 }
             }
@@ -134,16 +134,16 @@ namespace Rays.Utilities
                         if (www.error != "404 Not Found")
                         {
                             string[] tempError = ParseUnityError (www.error);
-                            returnError (501, new string[] { tempError[0], tempError[1] });
+                            returnError (501, new string[] { tempError[0], tempError[1] }, uri);
                         }
                         else
                         {
-                            returnPost (defaultNotFound);
+                            returnPost (defaultNotFound, uri);
                         }
                     }
                     else
                     {
-                        returnPost (www.text);
+                        returnPost (www.text, uri);
                     }
                 }
             }
