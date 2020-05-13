@@ -22,7 +22,7 @@ public class RoomInfoManager : MonoBehaviour
                 //  FindObjectOfType(...) returns the first RoomInfoManager object in the scene.
                 s_Instance = FindObjectOfType(typeof(RoomInfoManager)) as RoomInfoManager;
                 if (s_Instance == null)
-                    Debug.Log("Could not locate an RoomInfoManager object. \n You have to have exactly one RoomInfoManager in the scene.");
+                    Logger.D("Could not locate an RoomInfoManager object. \n You have to have exactly one RoomInfoManager in the scene.");
             }
             return s_Instance;
         }
@@ -55,10 +55,7 @@ public class RoomInfoManager : MonoBehaviour
 
     public void JoinRoom(string roomName)
     {
-        Debug.Log("Joining room");
-        //LoginSceneManager.Instance.uiBusyIndicator.Show(true);
-
-        Debug.Log("room : "+roomName);
+        Logger.E("joined room : "+roomName);
         PhotonNetwork.JoinRoom(roomName);
     }
 
@@ -172,8 +169,7 @@ public class RoomInfoManager : MonoBehaviour
 
     private void onFailedJoinRandomRoom(bool val)
     {
-        //LoginSceneManager.Instance.uiBusyIndicator.Hide ();
-        Debug.LogError ("failed room");
+        Logger.E ("failed room");
         string strPrefix = (int)GlobalVariables.gameType == 1 ? "PK_": "CS_";
         curRoomName = strPrefix + Random.Range(100, 9999) + "0" + PhotonNetwork.countOfRooms;
         PhotonNetwork.CreateRoom(curRoomName, GlobalVariables.roomOptions, GlobalVariables.sqlLobbyCapsaSusun);
@@ -181,9 +177,6 @@ public class RoomInfoManager : MonoBehaviour
 
     private void onSuccessJoinRoom(bool val)
     {
-        //HomeSceneManager.Instance.myHomeMenuReference.uiHome.myAvatar.HideAvatar();
-        Debug.LogError ("joined room");
-        //DataManager.instance.btnPlay.gameObject.SetActive (false);
         ExitGames.Client.Photon.Hashtable properties = PhotonNetwork.room.CustomProperties;
         if (!properties.ContainsKey(PhotonEnums.Room.Slots))
         {
@@ -224,7 +217,6 @@ public class RoomInfoManager : MonoBehaviour
 
     public IEnumerator _SwitchingRoom()
     {
-        Debug.LogError ("switching room");
         waitingSwitch = true;
         if (PhotonNetwork.room != null)
             PhotonNetwork.LeaveRoom();
@@ -232,7 +224,7 @@ public class RoomInfoManager : MonoBehaviour
         if (!PhotonNetwork.connected)
         {
             //DisconnectFromSwitchRoom();
-            Debug.LogError ("photon not connect");
+            Logger.E ("photon not connect");
             PokerManager.instance.uiPause.LoadMenu ();
             yield break;
         }
@@ -241,7 +233,6 @@ public class RoomInfoManager : MonoBehaviour
         while (cd >= 0)
         {
             yield return _WFSUtility.wfs1;
-            Debug.LogError ("waiting switch: " + cd);
             if (!waitingSwitch)
                 cd = -1;
 
@@ -252,15 +243,12 @@ public class RoomInfoManager : MonoBehaviour
         {
             //DisconnectFromSwitchRoom();
             PokerManager.instance.uiPause.LoadMenu ();
-            Debug.LogError ("inside waiting switch true");
         }
         else if(!waitingSwitch)
         {
             if (GlobalVariables.bIsCoins)
             {
-                Debug.LogError ("inside is coin");
-                //long lCredit = DataManager.instance.ownedGold;
-                long lCredit = PlayerData.owned_gold;
+                long lCredit = PlayerData.owned_coin;
                 if (lCredit < GlobalVariables.MinBetAmount)
                 {
                     string strDesc = string.Format("Koin tidak cukup untuk masuk ke ruangan. Anda butuh minimum {0} koin untuk bermain di room ini.", GlobalVariables.MinBetAmount.toShortCurrency());
@@ -268,13 +256,12 @@ public class RoomInfoManager : MonoBehaviour
 
                     //DisconnectFromSwitchRoom();
                     PokerManager.instance.uiPause.LoadMenu ();
-                    Debug.Log ("not enough coin");
+                    Logger.E ("not enough coin");
 
                     yield break;
                 }
             }
 
-            Debug.LogError ("creating private");
             CreatePrivateRoom(GlobalVariables.gameType, "");
         }
     }

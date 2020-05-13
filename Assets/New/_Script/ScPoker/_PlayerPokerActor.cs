@@ -896,12 +896,12 @@ public class _PlayerPokerActor : MonoBehaviour
         //Load Avatar 3D
         if (isMine && !isBot)
             //avatarEquiped = DataManager.instance.hero.id;
-            heroUsed = PlayerData.hero_id;
+            heroUsed = PlayerData.costume_id;
         else
             heroUsed = PhotonUtility.GetPlayerProperties<int> (myPlayer, PhotonEnums.Player.ContentURL);
 
-        hero.LoadSpine (heroUsed, isMine && !isBot);
-        //avater3D.LoadAvatar(avatarEquiped, true, true);
+        //hero.LoadSpine (heroUsed, isMine && !isBot);
+        hero.LoadFromBundle (heroUsed, isMine && !isBot);
         #endregion
 
         _playerHandRank = (HandRankPoker)((int)properties[PhotonEnums.Player.HandRank]);

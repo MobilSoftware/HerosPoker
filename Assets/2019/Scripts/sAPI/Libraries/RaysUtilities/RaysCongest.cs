@@ -14,84 +14,53 @@ namespace Rays.Utilities
         public const string CHATURI = DOMAIN + (DEVELOPMENT ? "dev" : "api") + "/temp/";
         //public const string STOREDOMAIN = "http://myplay.id/store_webview.php";
 
-        private static bool useNew = true;
-
-        public static IEnumerator SendPOST ( int cacheTime, ApiBridge.ErrorDelegate returnError, ApiBridge.ResponseDelegate returnPost, string uri, string jsonData = "", bool isDigested = false, string otp = "" )
+        public static IEnumerator SendPOST ( ApiBridge apiBridge, ApiBridge.API api )
         {
             System.DateTime epochStart = new System.DateTime (2019, 11, 1, 0, 0, 0, System.DateTimeKind.Utc);
             int curTime = (int) (System.DateTime.UtcNow - epochStart).TotalSeconds;
-            if (curTime - PlayerPrefs.GetInt (uri + "_time", 0) < cacheTime && PlayerPrefs.GetString (uri + "_value", "") != "")
+            if (curTime - PlayerPrefs.GetInt (api.uri + "_time", 0) < api.cacheTime && PlayerPrefs.GetString (api.uri + "_value", "") != "")
             {
-                //Debug.Log("Masuk 1");
-                PlayerPrefs.SetInt (uri + "_time", curTime);
-                returnPost (PlayerPrefs.GetString (uri + "_value", ""), uri);
+                PlayerPrefs.SetInt (api.uri + "_time", curTime);
+                api.jsonReturn = PlayerPrefs.GetString (api.uri + "_value", "");
+                apiBridge.GoodResponse (api);
             }
             else
             {
-                //Debug.Log("Masuk 2");
                 WWWForm form = new WWWForm ();
-                if (jsonData.Length > 0)
+                if (api.jsonData.Length > 0)
                 {
-                    if (isDigested)
+                    if (api.isDigested)
                     {
-                        string postid = (otp.Length == 0 ? Util.RandomChar (32) : otp);
+                        string postid = (api.otp.Length == 0 ? Util.RandomChar (32) : api.otp);
                         form.AddField ("post_id", postid.Trim ());
                         form.AddField ("post_time", System.DateTime.Now.ToString ("yyMMdd-HHmmss").Trim ());
-                        jsonData = Digest.Write (jsonData, postid);
+                        api.jsonData = Digest.Write (api.jsonData, postid);
                     }
-                    form.AddField ("post_data", jsonData.Trim ());
+                    form.AddField ("post_data", api.jsonData.Trim ());
                 }
 
-                if (useNew)
+                using (UnityWebRequest www = UnityWebRequest.Post (APIURI + api.uri, form))
                 {
-                    using (UnityWebRequest www = UnityWebRequest.Post (APIURI + uri, form))
+                    www.timeout = 30;
+                    www.chunkedTransfer = false;
+                    yield return www.SendWebRequest ();
+                    if (www.isNetworkError || www.isHttpError)
                     {
-                        www.timeout = 30;
-                        www.chunkedTransfer = false;
-                        yield return www.SendWebRequest ();
-                        if (www.isNetworkError || www.isHttpError)
-                        {
-                            string[] tempError = ParseUnityError (www.error);
-                            if (DEVELOPMENT) tempError[0] = uri + " = " + www.error;
-                            if (DEVELOPMENT) Debug.Log (tempError[0]);
-                            if (returnError != null) returnError ((www.isNetworkError ? 500 : 501), new string[] { tempError[0], tempError[1] }, uri);
-                        }
-                        else
-                        {
-                            if (DEVELOPMENT) Debug.Log (uri + " = " + www.downloadHandler.text);
-                            if (returnPost != null)
-                            {
-                                curTime = (int) (System.DateTime.UtcNow - epochStart).TotalSeconds;
-                                PlayerPrefs.SetInt (uri + "_time", curTime);
-                                PlayerPrefs.SetString (uri + "_value", www.downloadHandler.text);
-                                returnPost (www.downloadHandler.text, uri);
-                            }
-                        }
+                        string[] tempError = ParseUnityError (www.error);
+                        if (DEVELOPMENT) tempError[0] = api.uri + " = " + www.error;
+                        if (DEVELOPMENT) Debug.Log (tempError[0]);
+                        api.errorCode = (www.isNetworkError ? 500 : 501);
+                        api.errorMsg = new string[] { tempError[0], tempError[1] };
+                        apiBridge.ParseError (api);
                     }
-                }
-                else
-                {
-                    using (WWW www = new WWW (APIURI + uri, form))
+                    else
                     {
-                        yield return www;
-                        if (!string.IsNullOrEmpty (www.error))
-                        {
-                            string[] tempError = ParseUnityError (www.error);
-                            if (DEVELOPMENT) tempError[0] = uri + " = " + www.error;
-                            if (DEVELOPMENT) Debug.Log (tempError[0]);
-                            if (returnError != null) returnError (501, new string[] { tempError[0], tempError[1] }, uri);
-                        }
-                        else
-                        {
-                            if (DEVELOPMENT) Debug.Log (uri + " = " + www.text);
-                            if (returnPost != null)
-                            {
-                                curTime = (int) (System.DateTime.UtcNow - epochStart).TotalSeconds;
-                                PlayerPrefs.SetInt (uri + "_time", curTime);
-                                PlayerPrefs.SetString (uri + "_value", www.text);
-                                returnPost (www.text, uri);
-                            }
-                        }
+                        //if (DEVELOPMENT) Debug.Log(api.uri + " response return = " + www.downloadHandler.text);
+                        curTime = (int) (System.DateTime.UtcNow - epochStart).TotalSeconds;
+                        PlayerPrefs.SetInt (api.uri + "_time", curTime);
+                        PlayerPrefs.SetString (api.uri + "_value", www.downloadHandler.text);
+                        api.jsonReturn = www.downloadHandler.text;
+                        apiBridge.GoodResponse (api);
                     }
                 }
             }
@@ -99,52 +68,26 @@ namespace Rays.Utilities
 
         public static IEnumerator ReadChatText ( ApiBridge.ErrorDelegate returnError, ApiBridge.ResponseDelegate returnPost, string uri, string defaultNotFound = "" )
         {
-            if (useNew)
+            using (UnityWebRequest www = UnityWebRequest.Get (CHATURI + uri))
             {
-                using (UnityWebRequest www = UnityWebRequest.Get (CHATURI + uri))
+                www.timeout = 30;
+                www.chunkedTransfer = false;
+                yield return www.SendWebRequest ();
+                if (www.isNetworkError || www.isHttpError)
                 {
-                    www.timeout = 30;
-                    www.chunkedTransfer = false;
-                    yield return www.SendWebRequest ();
-                    if (www.isNetworkError || www.isHttpError)
+                    if (www.isHttpError && !www.isNetworkError)
                     {
-                        if (www.isHttpError && !www.isNetworkError)
-                        {
-                            returnPost (defaultNotFound, uri);
-                        }
-                        else
-                        {
-                            string[] tempError = ParseUnityError (www.error);
-                            returnError ((www.isNetworkError ? 500 : 501), new string[] { tempError[0], tempError[1] }, uri);
-                        }
+                        returnPost (defaultNotFound, uri);
                     }
                     else
                     {
-                        returnPost (www.downloadHandler.text, uri);
+                        string[] tempError = ParseUnityError (www.error);
+                        returnError ((www.isNetworkError ? 500 : 501), new string[] { tempError[0], tempError[1] }, uri);
                     }
                 }
-            }
-            else
-            {
-                using (WWW www = new WWW (CHATURI + uri))
+                else
                 {
-                    yield return www;
-                    if (!string.IsNullOrEmpty (www.error))
-                    {
-                        if (www.error != "404 Not Found")
-                        {
-                            string[] tempError = ParseUnityError (www.error);
-                            returnError (501, new string[] { tempError[0], tempError[1] }, uri);
-                        }
-                        else
-                        {
-                            returnPost (defaultNotFound, uri);
-                        }
-                    }
-                    else
-                    {
-                        returnPost (www.text, uri);
-                    }
+                    returnPost (www.downloadHandler.text, uri);
                 }
             }
         }

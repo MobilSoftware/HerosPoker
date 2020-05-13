@@ -6,7 +6,7 @@ public class PlayerUtility{
     public static long GetPlayerCreditsLeft()
     {
         //long playerCredits = DataManager.instance.ownedGold;
-        long playerCredits = PlayerData.owned_gold;
+        long playerCredits = PlayerData.owned_coin;
             
         return playerCredits;
     }
@@ -16,7 +16,7 @@ public class PlayerUtility{
         if (GlobalVariables.bIsCoins)
         {
             //DataManager.instance.ownedGold = GetPlayerCreditsLeft () - val;
-            PlayerData.owned_gold -= val;
+            PlayerData.owned_coin -= val;
         }
     }
 }

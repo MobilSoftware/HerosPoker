@@ -36,7 +36,7 @@ public class _BuyInHUD : MonoBehaviour
     {
         minBuy = GlobalVariables.MinBetAmount * 10;
         //myMoney = DataManager.instance.ownedGold;
-        myMoney = PlayerData.owned_gold;
+        myMoney = PlayerData.owned_coin;
         maxBuy = myMoney > minBuy * 20 ? minBuy * 20 : myMoney;
 
         if (myMoney < maxBuy)

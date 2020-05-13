@@ -166,7 +166,7 @@ public class PhotonTexasPokerManager : PunBehaviour
         //Check whether the game is already started
         ExitGames.Client.Photon.Hashtable playerProperties = PhotonNetwork.player.CustomProperties;
         //playerProperties[PhotonEnums.Player.ContentURL] = DataManager.instance.hero.id;
-        playerProperties[PhotonEnums.Player.ContentURL] = PlayerData.hero_id;
+        playerProperties[PhotonEnums.Player.ContentURL] = PlayerData.costume_id;
 
         //playerProperties[PhotonEnums.Player.PlayerID] = DataManager.instance.id;
         playerProperties[PhotonEnums.Player.PlayerID] = PlayerData.id;
@@ -403,7 +403,7 @@ public class PhotonTexasPokerManager : PunBehaviour
 
         properties[PhotonEnums.Player.SlotIndex] = -1;
 
-        long _money = PlayerData.owned_gold;
+        long _money = PlayerData.owned_coin;
         long _buyIn = _money > GlobalVariables.MinBetAmount * 200 ? GlobalVariables.MinBetAmount * 200 : _money;
         PlayerUtility.BuyInFromBankAccount (_buyIn);
 
@@ -738,19 +738,19 @@ public class PhotonTexasPokerManager : PunBehaviour
 
         if (bMoneyEnuf <= _PokerGameManager.startBet)
         {
-            Debug.LogError ("inside money enough: " + PlayerData.owned_gold);
-            if (PlayerData.owned_gold > _PokerGameManager.startBet * 10)
+            Debug.LogError ("inside money enough: " + PlayerData.owned_coin);
+            if (PlayerData.owned_coin > _PokerGameManager.startBet * 10)
             {
                 Debug.LogError ("inside bankrupt");
                 Bankrupt ();
             }
-            else if (PlayerData.owned_gold == 0 && PlayerData.charityCount > 0)
+            else if (PlayerData.owned_coin == 0 && PlayerData.charityCount > 0)
             {
                 //auto sedekah 2M
                 Debug.LogError ("inside sedekah");
                 //MessageManager.instance.Show (this.gameObject, "Kamu mendapatkan sedekah sebesar 2M Koin!");
                 PokerManager.instance.uiInject.SetActive (true);
-                PlayerData.owned_gold += 2000;
+                PlayerData.owned_coin += 2000;
 
                 _PokerGameHUD.instance.buyInHUD.AutoBuyIn ();
                 PlayerData.charityCount--;

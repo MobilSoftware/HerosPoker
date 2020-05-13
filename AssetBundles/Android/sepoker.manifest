@@ -1,0 +1,172 @@
+ManifestFileVersion: 0
+CRC: 2661641279
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 4782f634b7eb5347165b5c422de95a43
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 2ae426e6273167e0f09b89e57e156586
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 20
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 49
+  Script: {instanceID: 0}
+- Class: 74
+  Script: {instanceID: 0}
+- Class: 82
+  Script: {instanceID: 0}
+- Class: 83
+  Script: {instanceID: 0}
+- Class: 91
+  Script: {instanceID: 0}
+- Class: 95
+  Script: {instanceID: 0}
+- Class: 104
+  Script: {instanceID: 0}
+- Class: 111
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 4ded4e8159539854994b890ccc630a16, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 2ac09713f86d0468abeedc7f0d79a66d, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 0bcaf783097cec24087c3dbb25104981, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 5c70a5b35f6ff2541aed8e8346b7e4d5, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: e961355595fac4087beb0878e17ecf5f, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 938cd755374149542be4b0ccb6a9233b, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: bac3cec53a27c48cb85fa1d4308c3d92, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: aca77846e6e7b401b9980dbd885716de, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: c7e998a66225143d9ae5defb6c207233, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 1aa08ab6e0800fa44ae55d278d1423e3, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: d81aa0b8d55fd6a41adedd25cc66ca65, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: a6b194f808b1af6499c93410e504af42, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: f1b3b4b945939a54ea0b23d3396115fb, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 9e243ec908fe5422b9a97cf7d3255bb8, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 28961a0aa42f14002a0aaaa616c53555, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: c9b2ea6ab2f71ad43a297e3d0e15cc82, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: f7977a9a7bd295f4aa64f65c8999651e, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 6f2604fa8403844b998ed162c0f1c03c, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: b414df1ba55000f4ea883e2539a5b267, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 5b4b7e3c77c3b2b43ba9dcf8b2d65e4c, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 8f6810cc74c7dca46a9f685b9c161f36, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: d5ddafdc607f804488183cb6a85e97b4, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 9c69131d76da73e4d9f854aeaa5d9461, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: dc5e4f2dd50a37441a9e7c87ffb967fe, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 11ecb74dd8996344d882ef7adf168d57, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 5cb11f4dc857cec47ad6e0822ed3db4e, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 1c0b968d1e7333b499e347acb644f1c1, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 10af5ddd5103414448699e1a985293cc, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 5d37004f8f1414aed872dc073ca6141f, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 3152a14f37dc441d8b870c20da7acc6e, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 2fafe2cfe61f6974895a912c3755e8f1, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: ffd838df11a4a41e5af804bd509a28cc, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 128
+  Script: {instanceID: 0}
+- Class: 157
+  Script: {instanceID: 0}
+- Class: 198
+  Script: {instanceID: 0}
+- Class: 199
+  Script: {instanceID: 0}
+- Class: 212
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+- Class: 222
+  Script: {instanceID: 0}
+- Class: 223
+  Script: {instanceID: 0}
+- Class: 224
+  Script: {instanceID: 0}
+- Class: 687078895
+  Script: {instanceID: 0}
+Assets:
+- Assets/New/_Scene/SePoker.unity
+Dependencies:
+- /Users/michael/Unity Projects/Backup/PokerHeroes/AssetBundles/Android/lubu
+- /Users/michael/Unity Projects/Backup/PokerHeroes/AssetBundles/Android/cleopatra

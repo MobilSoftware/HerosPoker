@@ -52,7 +52,7 @@ public class SlotoManagerScript : MonoBehaviour
 
     public void SetMoney()
     {
-        int ownedGold = System.Convert.ToInt32 (PlayerData.owned_gold);
+        int ownedGold = System.Convert.ToInt32 (PlayerData.owned_coin);
         //int ownedGold = System.Convert.ToInt32(10000);
         money = ownedGold;
         currMoney = ownedGold;
@@ -61,20 +61,20 @@ public class SlotoManagerScript : MonoBehaviour
 
     void Update()
     {
-        if(currMoney != money)
-        {
-            int temp = Mathf.CeilToInt(Mathf.Abs(money - currMoney) / 10.0f);
-            currMoney += (currMoney < money ? temp : -temp);
-            currMoneyLabelTM.text = ToShortCurrency(currMoney);
-        }
-        if (currBetWinning != betWinning)
-        {
-            int temp = Mathf.CeilToInt(Mathf.Abs(betWinning - currBetWinning) / 10.0f);
-            currBetWinning += (currBetWinning < betWinning ? temp : -temp);
-            currBetLabelTM.text = currBetWinning.ToString("N0") + ".000";
-            winningBetAnimTM.text = currBetLabelTM.text;
-            if (currBetWinning == betWinning) StartBlink(currBetLabelTM.gameObject);
-        }
+        //if(currMoney != money)
+        //{
+        //    int temp = Mathf.CeilToInt(Mathf.Abs(money - currMoney) / 10.0f);
+        //    currMoney += (currMoney < money ? temp : -temp);
+        //    currMoneyLabelTM.text = ToShortCurrency(currMoney);
+        //}
+        //if (currBetWinning != betWinning)
+        //{
+        //    int temp = Mathf.CeilToInt(Mathf.Abs(betWinning - currBetWinning) / 10.0f);
+        //    currBetWinning += (currBetWinning < betWinning ? temp : -temp);
+        //    currBetLabelTM.text = currBetWinning.ToString("N0") + ".000";
+        //    winningBetAnimTM.text = currBetLabelTM.text;
+        //    if (currBetWinning == betWinning) StartBlink(currBetLabelTM.gameObject);
+        //}
     }
 
     public void OnMouseUp(ButtonScript.ButtonType type)
@@ -128,7 +128,7 @@ public class SlotoManagerScript : MonoBehaviour
         }
         else if (type == ButtonScript.ButtonType.Back)
         {
-            PlayerData.owned_gold = System.Convert.ToInt32 (money);
+            PlayerData.owned_coin = System.Convert.ToInt32 (money);
             _SceneManager.instance.SetActiveScene (SceneType.HOME, true);
             _SceneManager.instance.SetActiveScene (SceneType.SLOTO, false);
         }

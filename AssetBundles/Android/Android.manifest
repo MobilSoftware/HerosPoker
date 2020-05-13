@@ -1,0 +1,38 @@
+ManifestFileVersion: 0
+CRC: 3696267315
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: sebegin
+      Dependencies: {}
+    Info_1:
+      Name: sehome
+      Dependencies:
+        Dependency_0: lubu
+        Dependency_1: cleopatra
+    Info_2:
+      Name: selogin
+      Dependencies: {}
+    Info_3:
+      Name: sepoker
+      Dependencies:
+        Dependency_0: lubu
+        Dependency_1: cleopatra
+    Info_4:
+      Name: seprofile
+      Dependencies: {}
+    Info_5:
+      Name: severify
+      Dependencies: {}
+    Info_6:
+      Name: sevip
+      Dependencies: {}
+    Info_7:
+      Name: slotoscene
+      Dependencies: {}
+    Info_8:
+      Name: lubu
+      Dependencies: {}
+    Info_9:
+      Name: cleopatra
+      Dependencies: {}

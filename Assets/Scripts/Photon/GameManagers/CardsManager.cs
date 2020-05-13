@@ -23,7 +23,7 @@ public class CardsManager : MonoBehaviour
                 //  FindObjectOfType(...) returns the first CardsManager object in the scene.
                 s_Instance = FindObjectOfType(typeof(CardsManager)) as CardsManager;
                 if (s_Instance == null)
-                    Debug.Log("Could not locate an CardsManager object. \n You have to have exactly one CardsManager in the scene.");
+                    Logger.D("Could not locate an CardsManager object. \n You have to have exactly one CardsManager in the scene.");
             }
             return s_Instance;
         }

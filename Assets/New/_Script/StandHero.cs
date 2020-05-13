@@ -17,6 +17,33 @@ public class StandHero : MonoBehaviour
         }
     }
 
+    public void LoadFromBundle (int _costumeID )
+    {
+        StartCoroutine (_LoadFromBundle (_costumeID));
+    }
+
+    IEnumerator _LoadFromBundle (int _costumeID )
+    {
+        AssetBundle ab = AssetBundle.LoadFromFile (BundleManager.instance.GetItemLoadPath (DownloadType.ASSET, 6, _costumeID));
+        Logger.E (BundleManager.instance.GetItemLoadPath (DownloadType.ASSET, 6, _costumeID));
+        Logger.E (_costumeID + "_0");
+        GameObject objHero = (GameObject) ab.LoadAsset (_costumeID + "_0", typeof (GameObject));
+        _SpineObject hero = objHero.GetComponent<_SpineObject> ();
+        if (hero)
+        {
+            spineHero = Instantiate (hero, this.transform);
+            yield return _WFSUtility.wef;
+            spineHero.transform.localEulerAngles = Vector3.zero;
+            spineHero.transform.localPosition = Vector3.one;
+            if (_costumeID == 3)
+                spineHero.transform.localScale = scaleLubu;
+            else if (_costumeID == 7)
+                spineHero.transform.localScale = Vector3.one;
+            spineHero.StartStandRandomMove ();
+        }
+        ab.Unload (false);
+    }
+
     public void LoadSpine ( int heroUsed )
     {
         StartCoroutine (_LoadSpine (heroUsed));
