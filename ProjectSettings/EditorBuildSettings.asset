@@ -11,28 +11,28 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/New/_Scene/SeMessage.unity
     guid: e36e6536cee3248238bd17638eb16e66
-  - enabled: 0
+  - enabled: 1
     path: Assets/New/_Scene/SeHome.unity
     guid: c8ef76df76d3d478baace90696d5b49e
-  - enabled: 0
+  - enabled: 1
     path: Assets/New/_Scene/SeProfile.unity
     guid: 7c810d3366b2f4e3fb00fee1de5410e3
-  - enabled: 0
+  - enabled: 1
     path: Assets/New/_Scene/SeVerify.unity
     guid: 51e150ac08e7d4d99853778e2475851b
-  - enabled: 0
+  - enabled: 1
     path: Assets/New/_Scene/SeVIP.unity
     guid: ea5220d90719e444287b5d926fb2e6a3
-  - enabled: 0
+  - enabled: 1
     path: Assets/New/_Scene/SeBegin.unity
     guid: edc8b0952e7394abbb34e73e139ea9d9
-  - enabled: 0
+  - enabled: 1
     path: Assets/New/_Scene/SeLogin.unity
     guid: e0dc47a134d51434a9d85421b691059f
-  - enabled: 0
+  - enabled: 1
     path: Assets/New/_Scene/SePoker.unity
     guid: 93a15bb5f5b1947e3a9008a67f94e141
-  - enabled: 0
+  - enabled: 1
     path: Assets/SlotoScenes/SlotoScene.unity
     guid: 6ba6e830a7236408cb12ba5f1468d902
   m_configObjects: {}

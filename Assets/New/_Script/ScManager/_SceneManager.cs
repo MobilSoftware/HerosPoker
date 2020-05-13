@@ -95,7 +95,58 @@ public class _SceneManager : MonoBehaviour
 
     public void LoadAllScenes()
     {
-        StartCoroutine (_LoadAllScenes ());
+        //StartCoroutine (_LoadAllScenes ());
+        StartCoroutine (_LoadLocalScenes ());
+    }
+
+    IEnumerator _LoadLocalScenes ()
+    {
+        AsyncOperation async;
+        for (int i = 2; i < SceneManager.sceneCountInBuildSettings; i++)
+        {
+            async = SceneManager.LoadSceneAsync (i, LoadSceneMode.Additive);
+            while (!async.isDone)
+                yield return _WFSUtility.wef;
+        }
+
+        yield return _WFSUtility.wef;
+        Logger.E ("1");
+        homeM = HomeManager.instance;
+        yield return _WFSUtility.wef;
+        Logger.E ("2");
+        profileM = ProfileManager.instance;
+        yield return _WFSUtility.wef;
+        Logger.E ("3");
+        verifyM = VerifyManager.instance;
+        yield return _WFSUtility.wef;
+        Logger.E ("4");
+        vipM = VipManager.instance;
+        Logger.E ("5");
+        yield return _WFSUtility.wef;
+        Logger.E ("6");
+        pokerM = PokerManager.instance;
+        yield return _WFSUtility.wef;
+        Logger.E ("7");
+        beginM = BeginManager.instance;
+        yield return _WFSUtility.wef;
+        Logger.E ("8");
+        loginM = LoginManager.instance;
+        yield return _WFSUtility.wef;
+        Logger.E ("9");
+        slotoM = FindObjectOfType<SlotoManagerScript> ();
+        yield return _WFSUtility.wef;
+        Logger.E ("10");
+        SetActiveSloto (false);
+        yield return _WFSUtility.wef;
+        Logger.E ("11");
+        //SetActiveScene (SceneType.BEGIN, true);
+        SetActiveScene (SceneType.LOGIN, true);
+        yield return _WFSUtility.wef;
+        Logger.E ("12");
+        BundleManager.instance.bLoadingScenes = true;
+        yield return _WFSUtility.wef;
+        Logger.E ("13");
+        SceneManager.UnloadSceneAsync ("SeSplash");
     }
 
     IEnumerator _LoadAllScenes ()
