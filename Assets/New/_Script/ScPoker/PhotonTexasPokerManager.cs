@@ -499,12 +499,10 @@ public class PhotonTexasPokerManager : PunBehaviour
 
         if (counter >= 5)
         {
-            int[] playerIDs = GetOtherPlayerID (PhotonEnums.Player.Active);
+            int[] playerIDs = GetPlayerIDs (PhotonEnums.Player.Active);
 
-            //DataManager.instance.pokerHandler.Generate ();
-            PokerData.Generate ();
-            //HomeSceneManager.Instance.StartPoker(PhotonNetwork.room.Name, GlobalVariables.bIsCoins ? GlobalVariables.MinBetAmount : 0, GlobalVariables.bIsCoins ? 0 : GlobalVariables.MinBetAmount, playerIDs[0], playerIDs[1], playerIDs[2], playerIDs[3], playerIDs[4], playerIDs[5], playerIDs[6], 0, 0, 0, HomeSceneManager.Instance.myPlayerData.player.player_id);
-
+            ApiManager.instance.pokerPlayers = GetPokerPlayers (PhotonEnums.Player.Active);
+            ApiManager.instance.StartPoker (PhotonNetwork.room.Name, GlobalVariables.MinBetAmount);
             yield return _WFSUtility.wfs3;
 
             counter = 0;
@@ -715,7 +713,7 @@ public class PhotonTexasPokerManager : PunBehaviour
             GlobalVariables.bQuitOnNextRound = false;
             ImLeaving();
             //StartCoroutine(PokerManager.instance.uiPause._LoadMenu ());
-            PokerManager.instance.uiPause.LoadMenu ();
+            PokerManager.instance.uiOthers.LoadMenu ();
             yield break;
         }
         else if (GlobalVariables.bSwitchTableNextRound)
@@ -723,7 +721,7 @@ public class PhotonTexasPokerManager : PunBehaviour
             GlobalVariables.bSwitchTableNextRound = false;
             ImLeaving();
             //StartCoroutine(PokerManager.instance.uiPause._LoadSwitchTable());
-            PokerManager.instance.uiPause.LoadSwitchTable ();
+            PokerManager.instance.uiOthers.LoadSwitchTable ();
             yield break;
         }
 
@@ -732,7 +730,7 @@ public class PhotonTexasPokerManager : PunBehaviour
             GlobalVariables.bQuitOnNextRound = false;
             ImLeaving ();
             //StartCoroutine (PokerManager.instance.uiPause._LoadMenu ());
-            PokerManager.instance.uiPause.LoadMenu ();
+            PokerManager.instance.uiOthers.LoadMenu ();
             yield break;
         }
 
@@ -761,7 +759,7 @@ public class PhotonTexasPokerManager : PunBehaviour
                 GlobalVariables.bQuitOnNextRound = false;
                 ImLeaving ();
                 //StartCoroutine (PokerManager.instance.uiPause._LoadMenu ());
-                PokerManager.instance.uiPause.LoadMenu ();
+                PokerManager.instance.uiOthers.LoadMenu ();
 
                 //PhotonNetwork.Disconnect();
                 //Application.LoadLevel("Menu");
@@ -1015,7 +1013,7 @@ public class PhotonTexasPokerManager : PunBehaviour
         pWithBot.AddRange (bots);
     }
 
-    public int[] GetOtherPlayerID (string varFilter = "")
+    public int[] GetPlayerIDs (string varFilter = "")
     {
         int idx = 0;
 
@@ -1034,6 +1032,25 @@ public class PhotonTexasPokerManager : PunBehaviour
         }
 
         return IDs;
+    }
+
+    public ApiBridge.PokerPlayer[] GetPokerPlayers (string varFilter = "" )
+    {
+        ApiBridge.PokerPlayer[] apiPlayers = new ApiBridge.PokerPlayer[8];
+        int count = 0;
+
+        for (int i = 0; i < pWithBot.Count; i++)
+        {
+            bool bActive = PhotonUtility.GetPlayerProperties<bool> (pWithBot[i], varFilter);
+            if (bActive)
+            {
+                long coin = PhotonUtility.GetPlayerProperties<long> (pWithBot[i], PhotonEnums.Player.Money);
+                apiPlayers[count] = new ApiBridge.PokerPlayer ();
+                apiPlayers[count].Start (count, int.Parse (pWithBot[i].NickName), coin);
+                count++;
+            }
+        }
+        return apiPlayers;
     }
 
     public int[] GetIndexesInMatch () //Get Slot Index Player In Match
@@ -1118,16 +1135,16 @@ public class PhotonTexasPokerManager : PunBehaviour
     }
     #endregion
 
-    public void SetMyStartPoker ( int roundId, string roomBet, string strCards )
+    public void SetOthersPokerData ( string jStartPoker )
     {
-        photonView.RPC (PhotonEnums.RPC.SetMyStartPokerRPC, PhotonTargets.Others, roundId, roomBet, strCards);
+        photonView.RPC (PhotonEnums.RPC.SetOthersPokerData, PhotonTargets.Others, jStartPoker);
     }
 
     [PunRPC]
-    protected virtual void SetMyStartPokerRPC ( int roundID, string roomBet, string strCards)
+    protected virtual void RPC_SetOthersPokerData ( string jStartPoker)
     {
-        //DataManager.instance.pokerHandler.Setup (roundID, roomBet, strCards);
-        PokerData.Setup (roundID, roomBet, strCards);
+        ApiManager.instance.SetPokerData (jStartPoker);
+        Logger.E ("setting poker data from master");
     }
 
 
@@ -1367,6 +1384,21 @@ public class PhotonTexasPokerManager : PunBehaviour
                 _PokerGameManager.turnManager.GetTurnNow.S_FoldAction ();
                 break;
         }
+    }
+
+    public void KickFromServer ()
+    {
+        GlobalVariables.bQuitOnNextRound = false;
+        GlobalVariables.bSwitchTableNextRound = false;
+        ImLeaving ();
+
+        Logger.E ("kick from server");
+        PokerManager.instance.uiOthers.LoadMenu ();
+    }
+
+    public void SyncCoinFromServer (long _coin)
+    {
+        PhotonUtility.SetPlayerProperties (PhotonNetwork.player, PhotonEnums.Player.Money, _coin);
     }
 
     public void ImLeaving ()
@@ -1709,10 +1741,10 @@ public class PhotonTexasPokerManager : PunBehaviour
             case 1:
                 GlobalVariables.bQuitOnNextRound = false;
                 ImLeaving ();
-                PokerManager.instance.uiPause.LoadMenu ();
+                PokerManager.instance.uiOthers.LoadMenu ();
                 break;
             case 2:
-                PokerManager.instance.uiPause.LoadMenu ();
+                PokerManager.instance.uiOthers.LoadMenu ();
                 break;
         }
     }

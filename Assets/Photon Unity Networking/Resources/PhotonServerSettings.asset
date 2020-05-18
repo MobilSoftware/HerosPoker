@@ -65,4 +65,5 @@ MonoBehaviour:
   - RPC_SyncNextTurn
   - RPC_TakeYourPotTogether
   - SetMyStartPokerRPC
+  - RPC_SetOthersPokerData
   DisableAutoOpenWizard: 1

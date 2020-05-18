@@ -1,0 +1,265 @@
+
+MusashiSit.png
+size: 992,614
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Belt
+  rotate: true
+  xy: 2, 13
+  size: 165, 187
+  orig: 165, 187
+  offset: 0, 0
+  index: -1
+BlinkA
+  rotate: true
+  xy: 953, 335
+  size: 93, 35
+  orig: 93, 35
+  offset: 0, 0
+  index: -1
+BlinkB
+  rotate: true
+  xy: 953, 240
+  size: 93, 35
+  orig: 93, 35
+  offset: 0, 0
+  index: -1
+Body
+  rotate: false
+  xy: 649, 8
+  size: 257, 230
+  orig: 257, 230
+  offset: 0, 0
+  index: -1
+Coat
+  rotate: false
+  xy: 2, 180
+  size: 254, 432
+  orig: 254, 432
+  offset: 0, 0
+  index: -1
+CoatBack2
+  rotate: false
+  xy: 258, 258
+  size: 254, 354
+  orig: 254, 354
+  offset: 0, 0
+  index: -1
+CoatKnot
+  rotate: false
+  xy: 738, 242
+  size: 125, 86
+  orig: 125, 86
+  offset: 0, 0
+  index: -1
+EyeBack
+  rotate: true
+  xy: 957, 430
+  size: 87, 30
+  orig: 87, 30
+  offset: 0, 0
+  index: -1
+EyeBrowL
+  rotate: false
+  xy: 924, 299
+  size: 27, 29
+  orig: 27, 29
+  offset: 0, 0
+  index: -1
+EyeBrowR
+  rotate: false
+  xy: 957, 519
+  size: 32, 28
+  orig: 32, 28
+  offset: 0, 0
+  index: -1
+EyeL
+  rotate: false
+  xy: 191, 2
+  size: 17, 18
+  orig: 17, 18
+  offset: 0, 0
+  index: -1
+EyeR
+  rotate: false
+  xy: 210, 3
+  size: 17, 17
+  orig: 17, 17
+  offset: 0, 0
+  index: -1
+HairStrandA
+  rotate: true
+  xy: 957, 549
+  size: 31, 32
+  orig: 31, 32
+  offset: 0, 0
+  index: -1
+HairStrandB
+  rotate: false
+  xy: 913, 276
+  size: 28, 21
+  orig: 28, 21
+  offset: 0, 0
+  index: -1
+HairStrandC
+  rotate: true
+  xy: 865, 259
+  size: 39, 46
+  orig: 39, 46
+  offset: 0, 0
+  index: -1
+HairStrandD
+  rotate: true
+  xy: 865, 300
+  size: 28, 57
+  orig: 28, 57
+  offset: 0, 0
+  index: -1
+HairStrandE
+  rotate: true
+  xy: 265, 10
+  size: 10, 66
+  orig: 10, 66
+  offset: 0, 0
+  index: -1
+HairStrandF
+  rotate: true
+  xy: 908, 134
+  size: 24, 61
+  orig: 24, 61
+  offset: 0, 0
+  index: -1
+HairStrandG
+  rotate: false
+  xy: 418, 194
+  size: 36, 62
+  orig: 36, 62
+  offset: 0, 0
+  index: -1
+HairStrandH
+  rotate: false
+  xy: 258, 183
+  size: 26, 73
+  orig: 26, 73
+  offset: 0, 0
+  index: -1
+HairStrandI
+  rotate: true
+  xy: 908, 9
+  size: 25, 59
+  orig: 25, 59
+  offset: 0, 0
+  index: -1
+HairStrandJ
+  rotate: false
+  xy: 456, 185
+  size: 22, 48
+  orig: 22, 48
+  offset: 0, 0
+  index: -1
+HairStrandK
+  rotate: false
+  xy: 229, 9
+  size: 34, 11
+  orig: 34, 11
+  offset: 0, 0
+  index: -1
+HairStrandL
+  rotate: false
+  xy: 456, 235
+  size: 36, 21
+  orig: 36, 21
+  offset: 0, 0
+  index: -1
+HairStrandM
+  rotate: true
+  xy: 957, 582
+  size: 30, 33
+  orig: 30, 33
+  offset: 0, 0
+  index: -1
+HandGripL
+  rotate: false
+  xy: 908, 160
+  size: 80, 78
+  orig: 80, 78
+  offset: 0, 0
+  index: -1
+HandGripR
+  rotate: true
+  xy: 908, 36
+  size: 96, 59
+  orig: 96, 59
+  offset: 0, 0
+  index: -1
+HandOpenL
+  rotate: false
+  xy: 649, 240
+  size: 87, 88
+  orig: 87, 88
+  offset: 0, 0
+  index: -1
+HandOpenR
+  rotate: false
+  xy: 286, 189
+  size: 130, 67
+  orig: 130, 67
+  offset: 0, 0
+  index: -1
+Head
+  rotate: true
+  xy: 649, 478
+  size: 134, 306
+  orig: 134, 306
+  offset: 0, 0
+  index: -1
+HeadL
+  rotate: true
+  xy: 649, 330
+  size: 146, 302
+  orig: 146, 302
+  offset: 0, 0
+  index: -1
+HeadR
+  rotate: true
+  xy: 191, 22
+  size: 156, 303
+  orig: 156, 303
+  offset: 0, 0
+  index: -1
+Pants
+  rotate: true
+  xy: 514, 265
+  size: 155, 116
+  orig: 155, 116
+  offset: 0, 0
+  index: -1
+Separator
+  rotate: false
+  xy: 2, 10
+  size: 1, 1
+  orig: 1, 1
+  offset: 0, 0
+  index: -1
+SleevesL
+  rotate: false
+  xy: 514, 422
+  size: 128, 190
+  orig: 128, 190
+  offset: 0, 0
+  index: -1
+SleevesLBack
+  rotate: true
+  xy: 969, 30
+  size: 102, 21
+  orig: 102, 21
+  offset: 0, 0
+  index: -1
+SleevesR
+  rotate: false
+  xy: 496, 2
+  size: 151, 254
+  orig: 151, 254
+  offset: 0, 0
+  index: -1

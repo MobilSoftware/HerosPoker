@@ -358,6 +358,8 @@ public class _PokerGameManager : MonoBehaviour
             }
         }
 
+        //endpoker
+        //
         yield return _WFSUtility.wfs1;
         potOnTable.Clear ();
         lastPotIndex = 0;
@@ -377,6 +379,31 @@ public class _PokerGameManager : MonoBehaviour
 
         turnManager.ResetMatch();
         PhotonTexasPokerManager.instance.RoutineNextMatch();
+    }
+
+    private void PrepareEndPoker ()
+    {
+        int[] playersIndex = PhotonTexasPokerManager.instance.GetIndexesInMatch ();
+
+        for (int i = 0; i < ApiManager.instance.pokerPlayers.Length; i++)
+        {
+            ApiBridge.PokerPlayer p = ApiManager.instance.pokerPlayers[i];
+            for (int j = 0; j < playersIndex.Length; j++)
+            {
+                _PlayerPokerActor actor = stockPlayers[playersIndex[j]];
+                if (p.player_id == int.Parse (actor.myPlayer.NickName))
+                {
+                    //totalBet >= 0 => lose | coin_won = totalBet * (-1) <= 0 | coin_bet = coin_won * (-1) = totalBet >= 0
+                    //totalBet < 0 => win | coin_won = totalBet * (-1) > 0 | coin_bet = totalBet / (-0.9) > 0
+                    if (actor.totalBet >= 0)
+                        p.End (actor.totalBet, actor.totalBet * (-1), actor.myMoney);
+                    else
+                        p.End (Convert.ToInt64 (actor.totalBet / (-0.9f)), actor.totalBet * (-1), actor.myMoney);
+                }
+            }
+
+            ApiManager.instance.EndPoker (PokerData.poker_round_id);
+        }
     }
 
     public class _TurnManager

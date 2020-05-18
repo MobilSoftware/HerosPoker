@@ -1,0 +1,328 @@
+
+CleopatraSit.png
+size: 993,721
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+BlinkA
+  rotate: false
+  xy: 579, 87
+  size: 168, 44
+  orig: 168, 44
+  offset: 0, 0
+  index: -1
+BlinkB
+  rotate: false
+  xy: 577, 41
+  size: 168, 44
+  orig: 168, 44
+  offset: 0, 0
+  index: -1
+BlinkC
+  rotate: false
+  xy: 251, 7
+  size: 169, 44
+  orig: 169, 44
+  offset: 0, 0
+  index: -1
+Body
+  rotate: false
+  xy: 2, 44
+  size: 247, 327
+  orig: 247, 327
+  offset: 0, 0
+  index: -1
+EyeBall
+  rotate: false
+  xy: 746, 157
+  size: 130, 30
+  orig: 130, 30
+  offset: 0, 0
+  index: -1
+EyeBall.L
+  rotate: false
+  xy: 933, 90
+  size: 28, 27
+  orig: 28, 27
+  offset: 0, 0
+  index: -1
+EyeBall.R
+  rotate: false
+  xy: 251, 345
+  size: 31, 26
+  orig: 31, 26
+  offset: 0, 0
+  index: -1
+EyeBrow
+  rotate: false
+  xy: 422, 3
+  size: 151, 42
+  orig: 151, 42
+  offset: 0, 0
+  index: -1
+EyeBrow.L
+  rotate: false
+  xy: 933, 167
+  size: 48, 39
+  orig: 48, 39
+  offset: 0, 0
+  index: -1
+EyeBrow.R
+  rotate: true
+  xy: 842, 73
+  size: 56, 37
+  orig: 56, 37
+  offset: 0, 0
+  index: -1
+EyeGloss
+  rotate: false
+  xy: 749, 131
+  size: 124, 24
+  orig: 124, 24
+  offset: 0, 0
+  index: -1
+EyeGloss.L
+  rotate: false
+  xy: 976, 340
+  size: 15, 24
+  orig: 15, 24
+  offset: 0, 0
+  index: -1
+EyeGloss.R
+  rotate: true
+  xy: 619, 307
+  size: 23, 14
+  orig: 23, 14
+  offset: 0, 0
+  index: -1
+EyeLash
+  rotate: true
+  xy: 887, 196
+  size: 168, 44
+  orig: 168, 44
+  offset: 0, 0
+  index: -1
+EyeOverlay
+  rotate: false
+  xy: 579, 133
+  size: 165, 80
+  orig: 165, 80
+  offset: 0, 0
+  index: -1
+EyeShadow
+  rotate: false
+  xy: 2, 2
+  size: 162, 40
+  orig: 162, 40
+  offset: 0, 0
+  index: -1
+EyeWhite
+  rotate: true
+  xy: 933, 208
+  size: 156, 41
+  orig: 156, 41
+  offset: 0, 0
+  index: -1
+Face
+  rotate: true
+  xy: 685, 550
+  size: 169, 228
+  orig: 169, 228
+  offset: 0, 0
+  index: -1
+Fing1.R
+  rotate: false
+  xy: 963, 91
+  size: 26, 26
+  orig: 26, 26
+  offset: 0, 0
+  index: -1
+Fing2.L
+  rotate: true
+  xy: 873, 19
+  size: 52, 44
+  orig: 52, 44
+  offset: 0, 0
+  index: -1
+Fing2.R
+  rotate: false
+  xy: 166, 4
+  size: 63, 38
+  orig: 63, 38
+  offset: 0, 0
+  index: -1
+Fing3.L
+  rotate: false
+  xy: 815, 19
+  size: 56, 52
+  orig: 56, 52
+  offset: 0, 0
+  index: -1
+Fing3.R
+  rotate: false
+  xy: 747, 20
+  size: 66, 53
+  orig: 66, 53
+  offset: 0, 0
+  index: -1
+Fing4.L
+  rotate: false
+  xy: 924, 425
+  size: 55, 54
+  orig: 55, 54
+  offset: 0, 0
+  index: -1
+Fing4.R
+  rotate: false
+  xy: 878, 137
+  size: 53, 50
+  orig: 53, 50
+  offset: 0, 0
+  index: -1
+Fing5.L
+  rotate: false
+  xy: 933, 119
+  size: 45, 46
+  orig: 45, 46
+  offset: 0, 0
+  index: -1
+Fing5.R
+  rotate: false
+  xy: 881, 85
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+Hair
+  rotate: false
+  xy: 2, 373
+  size: 298, 346
+  orig: 298, 346
+  offset: 0, 0
+  index: -1
+HairBack1
+  rotate: true
+  xy: 575, 3
+  size: 36, 165
+  orig: 36, 165
+  offset: 0, 0
+  index: -1
+HairBack2
+  rotate: true
+  xy: 448, 47
+  size: 45, 127
+  orig: 45, 127
+  offset: 0, 0
+  index: -1
+Hand.L
+  rotate: false
+  xy: 749, 75
+  size: 91, 54
+  orig: 91, 54
+  offset: 0, 0
+  index: -1
+Hand.R
+  rotate: false
+  xy: 882, 366
+  size: 109, 57
+  orig: 109, 57
+  offset: 0, 0
+  index: -1
+HandGrip.R
+  rotate: true
+  xy: 915, 605
+  size: 114, 76
+  orig: 114, 76
+  offset: 0, 0
+  index: -1
+HeadLose
+  rotate: false
+  xy: 516, 332
+  size: 179, 191
+  orig: 179, 191
+  offset: 0, 0
+  index: -1
+HeadSide
+  rotate: true
+  xy: 302, 339
+  size: 184, 212
+  orig: 184, 212
+  offset: 0, 0
+  index: -1
+LowerArm.L
+  rotate: false
+  xy: 924, 481
+  size: 67, 122
+  orig: 67, 122
+  offset: 0, 0
+  index: -1
+LowerArm.R
+  rotate: false
+  xy: 782, 189
+  size: 103, 116
+  orig: 103, 116
+  offset: 0, 0
+  index: -1
+Neck
+  rotate: false
+  xy: 448, 94
+  size: 129, 123
+  orig: 129, 123
+  offset: 0, 0
+  index: -1
+NeckPiece
+  rotate: false
+  xy: 445, 219
+  size: 172, 111
+  orig: 172, 111
+  offset: 0, 0
+  index: -1
+NeckPieceBack
+  rotate: false
+  xy: 619, 215
+  size: 161, 90
+  orig: 161, 90
+  offset: 0, 0
+  index: -1
+Separator
+  rotate: false
+  xy: 579, 215
+  size: 2, 2
+  orig: 2, 2
+  offset: 0, 0
+  index: -1
+ShadowB
+  rotate: false
+  xy: 697, 425
+  size: 225, 123
+  orig: 225, 123
+  offset: 0, 0
+  index: -1
+Shoulder
+  rotate: false
+  xy: 302, 525
+  size: 381, 194
+  orig: 381, 194
+  offset: 0, 0
+  index: -1
+Skin
+  rotate: false
+  xy: 251, 190
+  size: 192, 147
+  orig: 192, 147
+  offset: 0, 0
+  index: -1
+UpperArm.L
+  rotate: true
+  xy: 697, 307
+  size: 116, 183
+  orig: 116, 183
+  offset: 0, 0
+  index: -1
+UpperArm.R
+  rotate: true
+  xy: 251, 53
+  size: 135, 195
+  orig: 135, 195
+  offset: 0, 0
+  index: -1

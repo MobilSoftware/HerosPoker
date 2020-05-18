@@ -45,7 +45,7 @@ public class _PokerGameHUD : MonoBehaviour
             if (GlobalVariables.bInGame)
             {
                 //SceneManager.LoadScene("Menu");
-                PokerManager.instance.uiPause.LoadMenu ();
+                PokerManager.instance.uiOthers.LoadMenu ();
                 MessageManager.instance.Show (gameObject, "Terputus dari server", ButtonMode.OK, 1);
             }
 
@@ -104,7 +104,7 @@ public class _PokerGameHUD : MonoBehaviour
         {
             GlobalVariables.bQuitOnNextRound = false;
             //StartCoroutine(PokerManager.instance.uiPause._LoadMenu ());
-            PokerManager.instance.uiPause.LoadMenu ();
+            PokerManager.instance.uiOthers.LoadMenu ();
             MenuPhotonNetworkManager.instance.Disconnect();
             lowConnectionCount = 0;
         }
@@ -145,7 +145,7 @@ public class _PokerGameHUD : MonoBehaviour
 
     public void onPause() 
     {
-        PokerOthersUI uiPause = PokerManager.instance.uiPause;
+        PokerOthersUI uiPause = PokerManager.instance.uiOthers;
         if (uiPause.gameObject.activeSelf)
             uiPause.Hide ();
         else
@@ -178,7 +178,7 @@ public class _PokerGameHUD : MonoBehaviour
         switch (returnCode)
         {
             case 1:
-                PokerManager.instance.uiPause.LoadMenu ();
+                PokerManager.instance.uiOthers.LoadMenu ();
                 break;
         }
     }

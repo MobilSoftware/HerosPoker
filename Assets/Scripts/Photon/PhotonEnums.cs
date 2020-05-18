@@ -47,7 +47,7 @@ namespace PhotonEnums
         public static string IsBot = "is_bot";
 
         public static string SlotIndex = "slot_index";
-        public static string Money = "money";
+        public static string Money = "money";       //coin inside room (cannot be higher than max room coin) NOT total coin owned by player outside room
 
         public static string PictureURL = "picture_url";
         public static string Gender = "gender_avatar";
@@ -122,7 +122,7 @@ namespace PhotonEnums
 
         //Social
         public static string SetMyStartGameRPC = "SetMyStartGameRPC";
-        public static string SetMyStartPokerRPC = "SetMyStartPokerRPC";
+        public static string SetOthersPokerData = "RPC_SetOthersPokerData";
 
         public static string PrepareRoundRPC = "PrepareRoundRPC";
         public static string ShowConnectedBoxRPC = "ShowConnectedBoxRPC";

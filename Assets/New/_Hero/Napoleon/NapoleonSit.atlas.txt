@@ -1,0 +1,223 @@
+
+NapoleonSit.png
+size: 986,330
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+ArmL
+  rotate: false
+  xy: 877, 181
+  size: 94, 147
+  orig: 94, 147
+  offset: 0, 0
+  index: -1
+ArmR
+  rotate: false
+  xy: 618, 26
+  size: 94, 147
+  orig: 94, 147
+  offset: 0, 0
+  index: -1
+BadgeA
+  rotate: false
+  xy: 947, 41
+  size: 37, 41
+  orig: 37, 41
+  offset: 0, 0
+  index: -1
+BadgeB
+  rotate: false
+  xy: 927, 5
+  size: 28, 31
+  orig: 28, 31
+  offset: 0, 0
+  index: -1
+BadgeC
+  rotate: false
+  xy: 333, 2
+  size: 31, 77
+  orig: 31, 77
+  offset: 0, 0
+  index: -1
+BlinkA
+  rotate: false
+  xy: 880, 61
+  size: 65, 21
+  orig: 65, 21
+  offset: 0, 0
+  index: -1
+BlinkB
+  rotate: false
+  xy: 880, 38
+  size: 65, 21
+  orig: 65, 21
+  offset: 0, 0
+  index: -1
+Body
+  rotate: false
+  xy: 2, 78
+  size: 229, 250
+  orig: 229, 250
+  offset: 0, 0
+  index: -1
+BodyBack
+  rotate: false
+  xy: 233, 81
+  size: 198, 93
+  orig: 198, 93
+  offset: 0, 0
+  index: -1
+EyeBack
+  rotate: false
+  xy: 618, 2
+  size: 65, 22
+  orig: 65, 22
+  offset: 0, 0
+  index: -1
+EyeBrowL
+  rotate: false
+  xy: 98, 2
+  size: 24, 17
+  orig: 24, 17
+  offset: 0, 0
+  index: -1
+EyeBrowR
+  rotate: false
+  xy: 812, 80
+  size: 29, 15
+  orig: 29, 15
+  offset: 0, 0
+  index: -1
+EyeL
+  rotate: false
+  xy: 665, 178
+  size: 11, 11
+  orig: 11, 11
+  offset: 0, 0
+  index: -1
+EyeR
+  rotate: false
+  xy: 665, 178
+  size: 11, 11
+  orig: 11, 11
+  offset: 0, 0
+  index: -1
+Face
+  rotate: false
+  xy: 714, 80
+  size: 96, 109
+  orig: 96, 109
+  offset: 0, 0
+  index: -1
+FaceL
+  rotate: false
+  xy: 452, 175
+  size: 211, 153
+  orig: 211, 153
+  offset: 0, 0
+  index: -1
+FaceR
+  rotate: false
+  xy: 233, 176
+  size: 217, 152
+  orig: 217, 152
+  offset: 0, 0
+  index: -1
+FaceWin
+  rotate: true
+  xy: 875, 84
+  size: 95, 105
+  orig: 95, 105
+  offset: 0, 0
+  index: -1
+Hand
+  rotate: false
+  xy: 2, 16
+  size: 94, 60
+  orig: 94, 60
+  offset: 0, 0
+  index: -1
+HandCloseR
+  rotate: false
+  xy: 188, 21
+  size: 68, 55
+  orig: 68, 55
+  offset: 0, 0
+  index: -1
+HandCloseRL
+  rotate: false
+  xy: 366, 13
+  size: 63, 66
+  orig: 63, 66
+  offset: 0, 0
+  index: -1
+HandOpenL
+  rotate: false
+  xy: 258, 12
+  size: 73, 67
+  orig: 73, 67
+  offset: 0, 0
+  index: -1
+HandOpenR
+  rotate: false
+  xy: 98, 21
+  size: 88, 55
+  orig: 88, 55
+  offset: 0, 0
+  index: -1
+Hat
+  rotate: false
+  xy: 665, 191
+  size: 210, 137
+  orig: 210, 137
+  offset: 0, 0
+  index: -1
+KerahFront
+  rotate: true
+  xy: 880, 11
+  size: 25, 45
+  orig: 25, 45
+  offset: 0, 0
+  index: -1
+Leg
+  rotate: false
+  xy: 433, 9
+  size: 183, 164
+  orig: 183, 164
+  offset: 0, 0
+  index: -1
+Separator
+  rotate: false
+  xy: 233, 78
+  size: 1, 1
+  orig: 1, 1
+  offset: 0, 0
+  index: -1
+ShoulderR
+  rotate: true
+  xy: 791, 9
+  size: 69, 48
+  orig: 69, 48
+  offset: 0, 0
+  index: -1
+SoulderL
+  rotate: true
+  xy: 841, 8
+  size: 70, 37
+  orig: 70, 37
+  offset: 0, 0
+  index: -1
+WristL
+  rotate: false
+  xy: 812, 97
+  size: 61, 92
+  orig: 61, 92
+  offset: 0, 0
+  index: -1
+WristR
+  rotate: true
+  xy: 714, 11
+  size: 67, 75
+  orig: 67, 75
+  offset: 0, 0
+  index: -1

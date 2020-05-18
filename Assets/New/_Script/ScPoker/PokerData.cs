@@ -6,20 +6,17 @@ public static class PokerData
     public static string room_bet;
     public static int[] cards;
     public static string str_cards;
+    public static string otp;
 
     public static bool is_setup;
 
-    public static void Setup ( int roundID, string roomBet, string _strCards )
+    public static void Setup ( int _roundID, string _roomBetCoin, int[] _cards, string _otp )
     {
-        poker_round_id = roundID;
-        room_bet = roomBet;
-        str_cards = _strCards;
-        string[] splitCards = _strCards.Split (',');
-        cards = new int[splitCards.Length];
-        for (int i = 0; i < splitCards.Length; i++)
-        {
-            cards[i] = int.Parse (splitCards[i]);
-        }
+        poker_round_id = _roundID;
+        room_bet = _roomBetCoin;
+        cards = _cards;
+        otp = _otp;
+
         is_setup = true;
     }
 
@@ -39,7 +36,7 @@ public static class PokerData
                 str_cards += cards[i] + ",";
         }
         is_setup = true;
-        PhotonTexasPokerManager.instance.SetMyStartPoker (poker_round_id, room_bet, str_cards);
+        //PhotonTexasPokerManager.instance.SetMyStartPoker (poker_round_id, room_bet, str_cards);
     }
 
     private static void RandomizeCards ()

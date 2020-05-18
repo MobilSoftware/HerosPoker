@@ -9,9 +9,9 @@ public class PokerOthersUI : MonoBehaviour
 
     private void Start()
     {
-        btnQuitGame.onClick.AddListener (onQuitGame);
-        btnForceQuit.onClick.AddListener(onQuitGame);
-        btnSwitchTable.onClick.AddListener (onSwitchTable);
+        btnQuitGame.onClick.AddListener (OnQuitGame);
+        btnForceQuit.onClick.AddListener(OnQuitGame);
+        btnSwitchTable.onClick.AddListener (OnSwitchTable);
     }
 
     public void Show()
@@ -23,39 +23,36 @@ public class PokerOthersUI : MonoBehaviour
         btnForceQuit.gameObject.SetActive(GlobalVariables.gameType == GameType.TexasPoker);
     }
 
-    private void onQuitGame()
+    private void OnQuitGame()
     {
         Debug.LogError ("Quit Game");
         if (GlobalVariables.gameType == GameType.TexasPoker)
         {
             if (PhotonNetwork.room != null || PhotonTexasPokerManager.instance.GetNumActivePlayers() <= 1)
             {
-                Debug.LogError ("Quit Game 1");
+                Logger.E ("Quit Game 1");
                 if (!PhotonUtility.GetPlayerProperties<bool> (PhotonNetwork.player, PhotonEnums.Player.Active))
                 {
                     GlobalVariables.bQuitOnNextRound = false;
                     PhotonTexasPokerManager.instance.ImLeaving ();
 
-                    Debug.LogError ("Quit Game 2");
-                    //StartCoroutine (_LoadMenu ());
+                    Logger.E ("Quit Game 2");
                     LoadMenu ();
                 }
                 else if (PhotonTexasPokerManager.instance != null && PhotonTexasPokerManager.instance.GetNumActivePlayers () > 1)
                 {
-                    Debug.LogError ("Quit Game55");
+                    Logger.E ("Quit Game55");
                     MessageManager.instance.Show (gameObject, "Keluar Ruangan", ButtonMode.OK_CANCEL, 1);
                 }
                 else
                 {
                     GlobalVariables.bQuitOnNextRound = false;
                     PhotonTexasPokerManager.instance.ImLeaving ();
-                    //StartCoroutine (_LoadMenu ());
                     LoadMenu ();
                 }
             }
             else
             {
-                //StartCoroutine(_LoadMenu());
                 LoadMenu ();
             }
         }
@@ -63,7 +60,7 @@ public class PokerOthersUI : MonoBehaviour
         //Hide();
     }
 
-    void onSwitchTable()
+    private void OnSwitchTable()
     {
         if (GlobalVariables.gameType == GameType.TexasPoker)
         {

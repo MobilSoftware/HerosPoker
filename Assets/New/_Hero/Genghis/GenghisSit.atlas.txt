@@ -1,0 +1,237 @@
+
+GenghisSit.png
+size: 977,898
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Arm
+  rotate: false
+  xy: 2, 675
+  size: 447, 221
+  orig: 447, 221
+  offset: 0, 0
+  index: -1
+ArmBandL
+  rotate: false
+  xy: 878, 251
+  size: 97, 103
+  orig: 97, 103
+  offset: 0, 0
+  index: -1
+ArmbandR
+  rotate: true
+  xy: 281, 5
+  size: 114, 105
+  orig: 114, 105
+  offset: 0, 0
+  index: -1
+Belt
+  rotate: false
+  xy: 451, 690
+  size: 305, 206
+  orig: 305, 206
+  offset: 0, 0
+  index: -1
+BeltBack
+  rotate: false
+  xy: 2, 2
+  size: 277, 112
+  orig: 277, 112
+  offset: 0, 0
+  index: -1
+BlinkA
+  rotate: true
+  xy: 932, 533
+  size: 99, 34
+  orig: 99, 34
+  offset: 0, 0
+  index: -1
+BlinkB
+  rotate: false
+  xy: 876, 68
+  size: 99, 37
+  orig: 99, 37
+  offset: 0, 0
+  index: -1
+Cape
+  rotate: true
+  xy: 309, 347
+  size: 326, 150
+  orig: 326, 150
+  offset: 0, 0
+  index: -1
+Chest
+  rotate: false
+  xy: 2, 327
+  size: 305, 346
+  orig: 305, 346
+  offset: 0, 0
+  index: -1
+ChestFurFront
+  rotate: false
+  xy: 2, 116
+  size: 270, 209
+  orig: 270, 209
+  offset: 0, 0
+  index: -1
+EyeBack
+  rotate: false
+  xy: 783, 52
+  size: 91, 24
+  orig: 91, 24
+  offset: 0, 0
+  index: -1
+EyeBallL
+  rotate: false
+  xy: 677, 672
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+EyeBrowL
+  rotate: true
+  xy: 309, 327
+  size: 18, 15
+  orig: 18, 15
+  offset: 0, 0
+  index: -1
+EyeBrowR
+  rotate: true
+  xy: 326, 327
+  size: 18, 15
+  orig: 18, 15
+  offset: 0, 0
+  index: -1
+EyeballR
+  rotate: false
+  xy: 677, 438
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+Face
+  rotate: true
+  xy: 388, 17
+  size: 118, 131
+  orig: 118, 131
+  offset: 0, 0
+  index: -1
+FurClawL
+  rotate: false
+  xy: 274, 121
+  size: 105, 204
+  orig: 105, 204
+  offset: 0, 0
+  index: -1
+FurClawR
+  rotate: true
+  xy: 461, 316
+  size: 108, 211
+  orig: 108, 211
+  offset: 0, 0
+  index: -1
+HandGripL
+  rotate: false
+  xy: 608, 51
+  size: 89, 85
+  orig: 89, 85
+  offset: 0, 0
+  index: -1
+HandGripR
+  rotate: true
+  xy: 521, 31
+  size: 104, 85
+  orig: 104, 85
+  offset: 0, 0
+  index: -1
+HandOpenL
+  rotate: false
+  xy: 876, 356
+  size: 99, 98
+  orig: 99, 98
+  offset: 0, 0
+  index: -1
+HandOpenR
+  rotate: true
+  xy: 878, 107
+  size: 142, 96
+  orig: 142, 96
+  offset: 0, 0
+  index: -1
+HeadL
+  rotate: false
+  xy: 461, 426
+  size: 214, 262
+  orig: 214, 262
+  offset: 0, 0
+  index: -1
+HeadR
+  rotate: false
+  xy: 758, 634
+  size: 206, 262
+  orig: 206, 262
+  offset: 0, 0
+  index: -1
+Helmet
+  rotate: true
+  xy: 677, 456
+  size: 176, 253
+  orig: 176, 253
+  offset: 0, 0
+  index: -1
+HelmetFurBack
+  rotate: true
+  xy: 572, 138
+  size: 176, 145
+  orig: 176, 145
+  offset: 0, 0
+  index: -1
+Logo
+  rotate: false
+  xy: 719, 137
+  size: 157, 145
+  orig: 157, 145
+  offset: 0, 0
+  index: -1
+Moustache
+  rotate: false
+  xy: 699, 65
+  size: 82, 70
+  orig: 82, 70
+  offset: 0, 0
+  index: -1
+Separator
+  rotate: false
+  xy: 281, 2
+  size: 1, 1
+  orig: 1, 1
+  offset: 0, 0
+  index: -1
+ShoulderL
+  rotate: false
+  xy: 719, 284
+  size: 155, 170
+  orig: 155, 170
+  offset: 0, 0
+  index: -1
+ShoulderLBack
+  rotate: true
+  xy: 608, 2
+  size: 47, 53
+  orig: 47, 53
+  offset: 0, 0
+  index: -1
+ShoulderR
+  rotate: false
+  xy: 381, 137
+  size: 189, 177
+  orig: 189, 177
+  offset: 0, 0
+  index: -1
+ShoulderRBack
+  rotate: false
+  xy: 783, 78
+  size: 91, 57
+  orig: 91, 57
+  offset: 0, 0
+  index: -1

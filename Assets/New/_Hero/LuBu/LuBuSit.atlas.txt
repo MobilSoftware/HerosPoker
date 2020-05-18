@@ -1,0 +1,251 @@
+
+LuBuSit.png
+size: 693,393
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Arm.L
+  rotate: true
+  xy: 380, 125
+  size: 80, 129
+  orig: 80, 129
+  offset: 0, 0
+  index: -1
+Arm.R
+  rotate: false
+  xy: 621, 275
+  size: 69, 116
+  orig: 69, 116
+  offset: 0, 0
+  index: -1
+BlinkA
+  rotate: false
+  xy: 2, 21
+  size: 69, 19
+  orig: 69, 19
+  offset: 0, 0
+  index: -1
+BlinkB
+  rotate: false
+  xy: 73, 21
+  size: 69, 19
+  orig: 69, 19
+  offset: 0, 0
+  index: -1
+Body
+  rotate: false
+  xy: 220, 162
+  size: 158, 229
+  orig: 158, 229
+  offset: 0, 0
+  index: -1
+Brace.L
+  rotate: true
+  xy: 579, 28
+  size: 83, 82
+  orig: 83, 82
+  offset: 0, 0
+  index: -1
+Brace.R
+  rotate: false
+  xy: 380, 41
+  size: 98, 82
+  orig: 98, 82
+  offset: 0, 0
+  index: -1
+EyeWhite
+  rotate: false
+  xy: 579, 2
+  size: 59, 24
+  orig: 59, 24
+  offset: 0, 0
+  index: -1
+Eyeball.L
+  rotate: false
+  xy: 365, 17
+  size: 13, 13
+  orig: 13, 13
+  offset: 0, 0
+  index: -1
+Eyeball.R
+  rotate: false
+  xy: 365, 2
+  size: 13, 13
+  orig: 13, 13
+  offset: 0, 0
+  index: -1
+Eyebrow.L
+  rotate: true
+  xy: 663, 28
+  size: 29, 27
+  orig: 29, 27
+  offset: 0, 0
+  index: -1
+Eyebrow.R
+  rotate: false
+  xy: 144, 15
+  size: 36, 25
+  orig: 36, 25
+  offset: 0, 0
+  index: -1
+Feather.L
+  rotate: true
+  xy: 380, 300
+  size: 91, 239
+  orig: 91, 239
+  offset: 0, 0
+  index: -1
+Feather.R
+  rotate: true
+  xy: 380, 207
+  size: 91, 239
+  orig: 91, 239
+  offset: 0, 0
+  index: -1
+Fing1.L
+  rotate: true
+  xy: 663, 59
+  size: 25, 28
+  orig: 25, 28
+  offset: 0, 0
+  index: -1
+Fing1.R
+  rotate: true
+  xy: 365, 32
+  size: 29, 13
+  orig: 29, 13
+  offset: 0, 0
+  index: -1
+Fing2.L
+  rotate: true
+  xy: 182, 21
+  size: 22, 40
+  orig: 22, 40
+  offset: 0, 0
+  index: -1
+Fing2.R
+  rotate: false
+  xy: 640, 2
+  size: 42, 24
+  orig: 42, 24
+  offset: 0, 0
+  index: -1
+Fing3.L
+  rotate: true
+  xy: 224, 21
+  size: 22, 35
+  orig: 22, 35
+  offset: 0, 0
+  index: -1
+Fing3.R
+  rotate: true
+  xy: 663, 86
+  size: 32, 28
+  orig: 32, 28
+  offset: 0, 0
+  index: -1
+Fing4.L
+  rotate: true
+  xy: 380, 16
+  size: 23, 32
+  orig: 23, 32
+  offset: 0, 0
+  index: -1
+Fing4.R
+  rotate: false
+  xy: 414, 13
+  size: 31, 26
+  orig: 31, 26
+  offset: 0, 0
+  index: -1
+Hand.L
+  rotate: false
+  xy: 288, 22
+  size: 50, 39
+  orig: 50, 39
+  offset: 0, 0
+  index: -1
+Hand.R
+  rotate: false
+  xy: 629, 185
+  size: 62, 36
+  orig: 62, 36
+  offset: 0, 0
+  index: -1
+HandGrip.L
+  rotate: false
+  xy: 621, 223
+  size: 63, 50
+  orig: 63, 50
+  offset: 0, 0
+  index: -1
+HandGrip.R
+  rotate: true
+  xy: 629, 120
+  size: 63, 45
+  orig: 63, 45
+  offset: 0, 0
+  index: -1
+Head
+  rotate: true
+  xy: 2, 42
+  size: 114, 175
+  orig: 114, 175
+  offset: 0, 0
+  index: -1
+HeadDown
+  rotate: false
+  xy: 2, 158
+  size: 216, 233
+  orig: 216, 233
+  offset: 0, 0
+  index: -1
+HeadSmile
+  rotate: true
+  xy: 340, 11
+  size: 50, 23
+  orig: 50, 23
+  offset: 0, 0
+  index: -1
+Separator
+  rotate: false
+  xy: 220, 158
+  size: 2, 2
+  orig: 2, 2
+  offset: 0, 0
+  index: -1
+ShoulderA.L
+  rotate: false
+  xy: 511, 113
+  size: 116, 92
+  orig: 116, 92
+  offset: 0, 0
+  index: -1
+ShoulderA.R
+  rotate: true
+  xy: 179, 45
+  size: 111, 107
+  orig: 111, 107
+  offset: 0, 0
+  index: -1
+ShoulderB.L
+  rotate: true
+  xy: 288, 63
+  size: 97, 90
+  orig: 97, 90
+  offset: 0, 0
+  index: -1
+ShoulderB.R
+  rotate: false
+  xy: 480, 15
+  size: 97, 96
+  orig: 97, 96
+  offset: 0, 0
+  index: -1
+ShoulderBa.R
+  rotate: true
+  xy: 261, 21
+  size: 22, 25
+  orig: 22, 25
+  offset: 0, 0
+  index: -1

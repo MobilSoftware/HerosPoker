@@ -225,7 +225,7 @@ public class RoomInfoManager : MonoBehaviour
         {
             //DisconnectFromSwitchRoom();
             Logger.E ("photon not connect");
-            PokerManager.instance.uiPause.LoadMenu ();
+            PokerManager.instance.uiOthers.LoadMenu ();
             yield break;
         }
 
@@ -242,7 +242,7 @@ public class RoomInfoManager : MonoBehaviour
         if (waitingSwitch)
         {
             //DisconnectFromSwitchRoom();
-            PokerManager.instance.uiPause.LoadMenu ();
+            PokerManager.instance.uiOthers.LoadMenu ();
         }
         else if(!waitingSwitch)
         {
@@ -255,7 +255,7 @@ public class RoomInfoManager : MonoBehaviour
                     MessageManager.instance.Show (null, strDesc, ButtonMode.OK);
 
                     //DisconnectFromSwitchRoom();
-                    PokerManager.instance.uiPause.LoadMenu ();
+                    PokerManager.instance.uiOthers.LoadMenu ();
                     Logger.E ("not enough coin");
 
                     yield break;

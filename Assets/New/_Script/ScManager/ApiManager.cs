@@ -25,6 +25,10 @@ public class ApiManager : MonoBehaviour
 
     [HideInInspector]
     public bool bOtpSet;
+    [HideInInspector]
+    public ApiBridge.PokerPlayer[] pokerPlayers;
+    [HideInInspector]
+    public ApiBridge.SicboPlayer[] sicboPlayers;
 
     public void RErrorHandler ( ApiBridge.ResponseParam error )
     {
@@ -190,4 +194,75 @@ public class ApiManager : MonoBehaviour
     {
         Logger.E ("Return Set Costume: " + response.post_data);
     }
+
+    #region gameplay
+    public void StartPoker (string _photonRoomID, long _roomBetCoin)
+    {
+        api.StartPoker (_photonRoomID, _roomBetCoin, pokerPlayers);
+    }
+
+    private void RStartPoker ( ApiBridge.ResponseParam response )
+    {
+        Logger.E ("Return Start Poker: " + response.post_data);
+        SetPokerData (response.post_data);
+        PhotonTexasPokerManager.instance.SetOthersPokerData (response.post_data);
+    }
+
+    public void SetPokerData (string jStartPoker )
+    {
+        //called by every client
+        JStartPoker json = JsonUtility.FromJson<JStartPoker> (jStartPoker);
+        PokerData.Setup (json.poker_round_id, json.room_bet_coin, json.cards, json.otp);
+        api.SetOtp (json.otp);
+
+        for (int i = 0; i < json.players.Length; i++)
+        {
+            if (json.players[i].player_id == PlayerData.id)
+            {
+                if (json.players[i].kick)
+                    PhotonTexasPokerManager.instance.KickFromServer ();
+                else
+                {
+                    long lCoin = Convert.ToInt64 (json.players[i].coin_server);
+                    if (lCoin <= GlobalVariables.MinBetAmount * 200)
+                        PhotonTexasPokerManager.instance.SyncCoinFromServer (lCoin);
+                }
+            }
+        }
+
+        //sync poker players among master and non masters
+        ApiBridge.PokerPlayer[] serverPlayers = new ApiBridge.PokerPlayer[8];
+        for (int x = 0; x < json.players.Length; x++)
+        {
+            serverPlayers[x] = new ApiBridge.PokerPlayer ();
+            long coinPlayer = Convert.ToInt64 (json.players[x].coin_before);
+            serverPlayers[x].Start (json.players[x].seater_id, json.players[x].player_id, coinPlayer);
+            long coinServer = Convert.ToInt64 (json.players[x].coin_server);
+            serverPlayers[x].Update (coinServer, json.players[x].kick);
+        }
+        pokerPlayers = serverPlayers;
+    }
+
+    //private void UpdatePlayerPokers (string )
+
+    public void EndPoker (int _roundID)
+    {
+        api.EndPoker (_roundID, pokerPlayers);
+    }
+
+    private void REndPoker ( ApiBridge.ResponseParam response )
+    {
+        Logger.E ("Return End Poker: " + response.post_data);
+    }
+
+    public void StartSicbo ()
+    {
+        api.StartSicbo (sicboPlayers);
+    }
+
+    private void RStartSicbo ( ApiBridge.ResponseParam response )
+    {
+        Logger.E ("Return Start Sicbo: " + response.post_data);
+    }
+    #endregion
 }

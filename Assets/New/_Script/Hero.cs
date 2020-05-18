@@ -36,16 +36,16 @@ public class Hero : MonoBehaviour
                 SetMyPartBack ();
             yield return _WFSUtility.wef;
             spineHero.transform.localEulerAngles = Vector3.zero;
-            if (_costumeID == 3)
-            {
-                spineHero.transform.localScale = scaleLuBu;
-                spineHero.transform.localPosition = posLuBu;
-            }
-            else if (_costumeID == 7)
-            {
+            //if (_costumeID == 3)
+            //{
+            //    spineHero.transform.localScale = scaleLuBu;
+            //    spineHero.transform.localPosition = posLuBu;
+            //}
+            //else if (_costumeID == 7)
+            //{
                 spineHero.transform.localScale = Vector3.one;
                 spineHero.transform.localPosition = Vector3.zero;
-            }
+            //}
             spineHero.StartRandomMove ();
         }
         ab.Unload (false);

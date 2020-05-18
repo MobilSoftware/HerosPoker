@@ -38,6 +38,62 @@ public class ApiBridge : MonoBehaviour
     public delegate void ResponseDelegate ( string inputJson, string uri );
     public delegate void ErrorDelegate ( int errorCode, string[] errorMsg, string errorUri );
 
+    public class PokerPlayer
+    {
+        public int seater_id;
+        public int player_id;
+        public long coin_before;
+        public long coin_bet;
+        public long coin_won;
+        public long coin_after;
+        public long coin_server;
+        public bool kick;
+
+        public void Start ( int _seater_id, int _player_id, long _coin_before )
+        {
+            seater_id = _seater_id;
+            player_id = _player_id;
+            coin_before = _coin_before;
+        }
+
+        public void Update ( long _coin_server, bool _kick )
+        {
+            coin_server = _coin_server;
+            kick = _kick;
+        }
+
+        public void End ( long _coin_bet, long _coin_won, long _coin_after )
+        {
+            coin_bet = _coin_bet;
+            coin_won = _coin_won;
+            coin_after = _coin_after;
+        }
+
+        public string ToJson ()
+        {
+            return JsonUtility.ToJson (this);
+        }
+    }
+
+    public class SicboPlayer
+    {
+        public int player_id;
+        public int sicbo_type;
+        public long coin_bet;
+
+        public SicboPlayer ( int _player_id, SicboBetType _sicbo_type, long _coin_bet )
+        {
+            player_id = _player_id;
+            sicbo_type = (int) _sicbo_type;
+            coin_bet = _coin_bet;
+        }
+
+        public string ToJson ()
+        {
+            return JsonUtility.ToJson (this);
+        }
+    }
+
     public enum LoginType
     {
         None, Guest, Google, Facebook
@@ -52,29 +108,25 @@ public class ApiBridge : MonoBehaviour
         Straight_Flush_Bottom, Four_Of_Kind_Middle, Four_Of_Kind_Bottom, Full_House_Middle, Full_House_Bottom,
         Flush_Middle, Flush_Bottom, Straight_Middle, Straight_Bottom, Three_Of_Kind_Top,
         Three_Of_Kind_Middle, Three_Of_Kind_Bottom, Two_Pair, One_Pair, High_Card
-    };
+    }
 
-    public enum SlotIconType
+    public enum SicboBetType
     {
-        Joker, Ace,
-        King, Queen, Jack, Ten,
-        Nine, Eight, Seven, Six,
-        Five, Four, Three, Two
-    };
-
-    public enum SlotIconRule1
-    {
-        Clover, Dragon,
-        Bell, Spade, Love, Club,
-        Diamond, Gem, A, K,
-        J, Ten, Nine, Unused
-    };
+        None,
+        Single1, Single2, Single3, Single4, Single5, Single6,
+        Double1, Double2, Double3, Double4, Double5, Double6,
+        Triple1, Triple2, Triple3, Triple4, Triple5, Triple6, TripleAny,
+        Dadu4, Dadu5, Dadu6, Dadu7, Dadu8, Dadu9, Dadu10, Dadu11, Dadu12, Dadu13, Dadu14, Dadu15, Dadu16, Dadu17,
+        Couple12, Couple13, Couple14, Couple15, Couple16, Couple23, Couple24, Couple25, Couple26,
+        Couple34, Couple35, Couple36, Couple45, Couple46, Couple56,
+        Small, Big
+    }
 
     public enum PaymentType
     {
         None, Telkomsel, Tri, Indosat, XL,
         Gopay, Dana, Unipin
-    };
+    }
 
     [Serializable]
     public class ResponseParam
@@ -198,7 +250,7 @@ public class ApiBridge : MonoBehaviour
         public string login_picture;
     }
 
-    public int UserLogin ( LoginType loginType, string loginId = "", string loginEmail = "", string loginName = "", string loginPicture = "" )
+    public int UserLogin ( LoginType loginType, string loginId = "", string loginEmail = "", string loginName = "", string loginPicture = "", string otp = "" )
     { //1. Guest, 2. Google, 3. Facebook
         UserLoginParam param = new UserLoginParam ();
         param.login_type = (int) loginType;
@@ -211,6 +263,7 @@ public class ApiBridge : MonoBehaviour
         param.device_detail = "(" + SystemInfo.operatingSystem + ") " + SystemInfo.deviceModel + " (" + SystemInfo.deviceName + ")";
         param.apk_ver = Application.version + (Congest.DEVELOPMENT ? "d" : "");
         string paramJson = JsonUtility.ToJson (param);
+        if (otp.Length > 0) apiOtp = otp;
         API api = new API ("userlogin.php", "RUserLogin", paramJson, true, apiOtp);
         param = null; paramJson = "";
         if (apiOtp.Length > 0)
@@ -379,7 +432,6 @@ public class ApiBridge : MonoBehaviour
             param.token = apiToken;
             param.hero_id = heroId;
             string paramJson = JsonUtility.ToJson (param);
-            Debug.LogError (paramJson);
             API api = new API ("sethero.php", "RSetHero", paramJson, true);
             param = null; paramJson = "";
             StartCoroutine (Congest.SendPOST (this, api));
@@ -407,6 +459,198 @@ public class ApiBridge : MonoBehaviour
             param.costume_id = costumeId;
             string paramJson = JsonUtility.ToJson (param);
             API api = new API ("setcostume.php", "RSetCostume", paramJson, true);
+            param = null; paramJson = "";
+            StartCoroutine (Congest.SendPOST (this, api));
+            return api.seed;
+        }
+        return 0;
+    }
+
+
+
+    //Get Shop
+    [Serializable]
+    private class ShopParam : GetVersionParam
+    {
+        public int item_type;
+        public int item_id;
+        public string invoice_id;
+    }
+
+    public int GetShop ( int itemType = 0, int playerId = 0, string token = "" )
+    {
+        if (ParseToken (playerId, token))
+        {
+            ShopParam param = new ShopParam ();
+            param.player_id = apiPlayerId;
+            param.token = apiToken;
+            param.item_type = itemType;
+            string paramJson = JsonUtility.ToJson (param);
+            API api = new API ("getshop.php", "RGetShop", paramJson, true);
+            param = null; paramJson = "";
+            StartCoroutine (Congest.SendPOST (this, api));
+            return api.seed;
+        }
+        return 0;
+    }
+
+
+
+    //Buy Shop
+    public int BuyShop ( int itemId, int itemType = 0, string invoiceId = "", int playerId = 0, string token = "", string otp = "" )
+    {
+        if (ParseToken (playerId, token))
+        {
+            ShopParam param = new ShopParam ();
+            param.player_id = apiPlayerId;
+            param.token = apiToken;
+            param.item_id = itemId;
+            param.item_type = itemType;
+            param.invoice_id = invoiceId;
+            param.device_id = SystemInfo.deviceUniqueIdentifier;
+            param.device_type = (int) Application.platform;
+            string paramJson = JsonUtility.ToJson (param);
+            if (otp.Length > 0) apiOtp = otp;
+            API api = new API ("buyshop.php", "RBuyShop", paramJson, true, (param.item_type == 0 ? apiOtp : ""));
+            param = null; paramJson = "";
+            if (itemType == 0 && apiOtp.Length == 0)
+            {
+                api.errorCode = 502;
+                ParseError (api);
+            }
+            else
+            {
+                StartCoroutine (Congest.SendPOST (this, api));
+            }
+            return api.seed;
+        }
+        return 0;
+    }
+
+
+
+    //Start Poker
+    [Serializable]
+    private class PokerParam : TokenParam
+    {
+        public string room_seed;
+        public long room_bet_coin;
+        public string[] poker_player;
+        public int event_id;
+        public int poker_round_id;
+    }
+
+    public int StartPoker ( string roomSeed, long roomBetCoin, PokerPlayer[] pokerPlayer, int eventId = 0, int playerId = 0, string token = "" )
+    {
+        if (ParseToken (playerId, token))
+        {
+            PokerParam param = new PokerParam ();
+            param.player_id = apiPlayerId;
+            param.token = apiToken;
+            param.room_seed = roomSeed;
+            param.room_bet_coin = roomBetCoin;
+            param.event_id = eventId;
+            string[] tempString = new string[pokerPlayer.Length];
+            var j = 0;
+            for (var i = 0; i < pokerPlayer.Length; i++) if (pokerPlayer[i].seater_id > 0) tempString[j++] = pokerPlayer[i].ToJson ();
+            param.poker_player = new string[j];
+            for (var i = 0; i < j; i++) param.poker_player[i] = tempString[i];
+            string paramJson = JsonUtility.ToJson (param);
+            API api = new API ("startpoker.php", "RStartPoker", paramJson, true);
+            param = null; paramJson = "";
+            StartCoroutine (Congest.SendPOST (this, api));
+            return api.seed;
+        }
+        return 0;
+    }
+
+
+
+    //End Poker
+    public int EndPoker ( int pokerId, PokerPlayer[] pokerPlayer, int playerId = 0, string token = "", string otp = "" )
+    {
+        if (ParseToken (playerId, token))
+        {
+            PokerParam param = new PokerParam ();
+            param.player_id = apiPlayerId;
+            param.token = apiToken;
+            param.poker_round_id = pokerId;
+            string[] tempString = new string[pokerPlayer.Length];
+            var j = 0;
+            for (var i = 0; i < pokerPlayer.Length; i++) if (pokerPlayer[i].seater_id > 0) tempString[j++] = pokerPlayer[i].ToJson ();
+            param.poker_player = new string[j];
+            for (var i = 0; i < j; i++) param.poker_player[i] = tempString[i];
+            string paramJson = JsonUtility.ToJson (param);
+            if (otp.Length > 0) apiOtp = otp;
+            API api = new API ("endpoker.php", "REndPoker", paramJson, true, apiOtp);
+            param = null; paramJson = "";
+            if (apiOtp.Length > 0)
+            {
+                StartCoroutine (Congest.SendPOST (this, api));
+            }
+            else
+            {
+                api.errorCode = 502;
+                ParseError (api);
+            }
+            return api.seed;
+        }
+        return 0;
+    }
+
+
+
+    //Start Sicbo
+    [Serializable]
+    private class SicboParam : TokenParam
+    {
+        public string[] sicbo_player;
+        public int event_id;
+    }
+
+    public int StartSicbo ( SicboPlayer[] sicboPlayer, int eventId = 0, int playerId = 0, string token = "" )
+    {
+        if (ParseToken (playerId, token))
+        {
+            SicboParam param = new SicboParam ();
+            param.player_id = apiPlayerId;
+            param.token = apiToken;
+            param.event_id = eventId;
+            string[] tempString = new string[sicboPlayer.Length];
+            var j = 0;
+            for (var i = 0; i < sicboPlayer.Length; i++) if (sicboPlayer[i].coin_bet > 0) tempString[j++] = sicboPlayer[i].ToJson ();
+            param.sicbo_player = new string[j];
+            for (var i = 0; i < j; i++) param.sicbo_player[i] = tempString[i];
+            string paramJson = JsonUtility.ToJson (param);
+            API api = new API ("startsicbo.php", "RStartSicbo", paramJson, true);
+            param = null; paramJson = "";
+            StartCoroutine (Congest.SendPOST (this, api));
+            return api.seed;
+        }
+        return 0;
+    }
+
+
+
+    //Start Slot
+    [Serializable]
+    private class SlotParam : TokenParam
+    {
+        public int slot_type;
+        public long slot_cost;
+    }
+
+    public int StartSlot ( int slotType, long slotCost = 0, int playerId = 0, string token = "" )
+    {
+        if (ParseToken (playerId, token))
+        {
+            SlotParam param = new SlotParam ();
+            param.player_id = apiPlayerId;
+            param.token = apiToken;
+            param.slot_type = slotType;
+            param.slot_cost = slotCost;
+            string paramJson = JsonUtility.ToJson (param);
+            API api = new API ("startslot.php", "RStartSlot", paramJson, true);
             param = null; paramJson = "";
             StartCoroutine (Congest.SendPOST (this, api));
             return api.seed;

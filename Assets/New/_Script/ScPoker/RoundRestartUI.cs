@@ -90,12 +90,11 @@ public class RoundRestartUI : MonoBehaviour
 
     void SetupPoker()
     {
-        int[] playerIDs = PhotonTexasPokerManager.instance.GetOtherPlayerID(PhotonEnums.Player.ReadyInitialized);
+        //int[] playerIDs = PhotonTexasPokerManager.instance.GetPlayerIDs(PhotonEnums.Player.ReadyInitialized);
         //Debug.LogError("HOI : " +playerIDs.Length);
 
-        //DataManager.instance.pokerHandler.Generate ();
-        PokerData.Generate ();
-        //HomeSceneManager.Instance.StartPoker(PhotonNetwork.room.Name, GlobalVariables.bIsCoins ? GlobalVariables.MinBetAmount : 0, GlobalVariables.bIsCoins ? 0 : GlobalVariables.MinBetAmount, playerIDs[0], playerIDs[1], playerIDs[2], playerIDs[3], playerIDs[4], playerIDs[5], playerIDs[6], playerIDs[7], playerIDs[8], playerIDs[9], HomeSceneManager.Instance.myPlayerData.player.player_id);
+        ApiManager.instance.pokerPlayers = PhotonTexasPokerManager.instance.GetPokerPlayers (PhotonEnums.Player.ReadyInitialized);
+        ApiManager.instance.StartPoker (PhotonNetwork.room.Name, GlobalVariables.MinBetAmount);
     }
 
     public void Hide ()
