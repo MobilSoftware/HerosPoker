@@ -88,7 +88,7 @@ public class ReelScript : MonoBehaviour
                     }
                 }
             }
-            else
+            else if (spin == 1)
             {
                 spin = 2;
             }

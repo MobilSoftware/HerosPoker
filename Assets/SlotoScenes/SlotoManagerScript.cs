@@ -27,11 +27,23 @@ public class SlotoManagerScript : MonoBehaviour
     private int currMoney;
     private int[] showLine = new int[5];
     private int updateSlotSpin;
+    private float timeWait;
+
+    private ApiBridge api;
 
     private int[] betArray = new int[] {100, 200, 500, 700, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000, 15000, 20000};
 
+    void Awake()
+    {
+        if (!api) api = GetComponent<ApiBridge>();
+    }
+
     void Start()
     {
+        /*for (var i=9510; i>9490; i--)
+        {
+            Debug.Log(i+" = "+ ToShortCurrency(i));
+        }*/
         Init();
         SetMoney();
     }
@@ -48,12 +60,17 @@ public class SlotoManagerScript : MonoBehaviour
         {
             reels[i].Init(tileSprite, iconSprite);
         }
+        if (api)
+        {
+            api.SetPlayerId(PlayerPrefs.GetInt(PrefEnum.PLAYER_ID.ToString(), 0));
+            api.SetToken(PlayerPrefs.GetString(PrefEnum.TOKEN.ToString(), ""));
+        }
     }
 
     public void SetMoney()
     {
-        int ownedGold = System.Convert.ToInt32 (PlayerData.owned_coin);
-        //int ownedGold = System.Convert.ToInt32(10000);
+        //int ownedGold = System.Convert.ToInt32 (PlayerData.owned_coin);
+        int ownedGold = System.Convert.ToInt32(10000); //Uncomment above
         money = ownedGold;
         currMoney = ownedGold;
         currMoneyLabelTM.text = ToShortCurrency(currMoney);
@@ -61,20 +78,20 @@ public class SlotoManagerScript : MonoBehaviour
 
     void Update()
     {
-        //if(currMoney != money)
-        //{
-        //    int temp = Mathf.CeilToInt(Mathf.Abs(money - currMoney) / 10.0f);
-        //    currMoney += (currMoney < money ? temp : -temp);
-        //    currMoneyLabelTM.text = ToShortCurrency(currMoney);
-        //}
-        //if (currBetWinning != betWinning)
-        //{
-        //    int temp = Mathf.CeilToInt(Mathf.Abs(betWinning - currBetWinning) / 10.0f);
-        //    currBetWinning += (currBetWinning < betWinning ? temp : -temp);
-        //    currBetLabelTM.text = currBetWinning.ToString("N0") + ".000";
-        //    winningBetAnimTM.text = currBetLabelTM.text;
-        //    if (currBetWinning == betWinning) StartBlink(currBetLabelTM.gameObject);
-        //}
+        if (currMoney != money)
+        {
+            int temp = Mathf.CeilToInt(Mathf.Abs(money - currMoney) / 10.0f);
+            currMoney += (currMoney < money ? temp : -temp);
+            currMoneyLabelTM.text = ToShortCurrency(currMoney);
+        }
+        if (currBetWinning != betWinning)
+        {
+            int temp = Mathf.CeilToInt(Mathf.Abs(betWinning - currBetWinning) / 10.0f);
+            currBetWinning += (currBetWinning < betWinning ? temp : -temp);
+            currBetLabelTM.text = currBetWinning.ToString("N0");
+            winningBetAnimTM.text = currBetLabelTM.text;
+            if (currBetWinning == betWinning) StartBlink(currBetLabelTM.gameObject);
+        }
     }
 
     public void OnMouseUp(ButtonScript.ButtonType type)
@@ -87,11 +104,12 @@ public class SlotoManagerScript : MonoBehaviour
             }
             else
             {
-                MessageManager.instance.Show(gameObject, "Uang tak cukup", ButtonMode.OK, -1);
+                //MessageManager.instance.Show(gameObject, "Uang tak cukup", ButtonMode.OK, -1);
+                Debug.Log("Uang tak cukup"); //Uncomment above
             }
         } else if (type == ButtonScript.ButtonType.Stop)
         {
-            StartCoroutine(StopSpin());
+            //StartCoroutine(StopSpin());
         }
         else if (type == ButtonScript.ButtonType.Max)
         {
@@ -142,6 +160,7 @@ public class SlotoManagerScript : MonoBehaviour
     {
         if (reels[0].spin == 0 && !jackpotReel.GetSpin())
         {
+            HitAPI();
             money -= bet;
             updateSlotSpin = 0;
             HideLine();
@@ -156,50 +175,82 @@ public class SlotoManagerScript : MonoBehaviour
                 reels[i].StartSpin();
                 yield return new WaitForSeconds(0.1f);
             }
-            StartCoroutine(HitAPI());
         }
     }
 
-    IEnumerator StopSpin()
+    IEnumerator StopSpin(JSlotSpin slot_spin)
     {
-        if (reels[0].spin == 2)
+        do
         {
-            for (int i = 0; i < reels.Length; i++)
-            {
-                reels[i].StopSpin();
-                yield return new WaitForSeconds(0.05f * Random.Range(1, 11));
-            }
-        }
-    }
-
-    IEnumerator HitAPI()
-    {
+            yield return new WaitForSeconds(0.1f);
+        } while (reels[4].spin != 2 || Time.time < timeWait);
         int i;
-        int[] tempValue = new int[16];
-        int rand = Random.Range(0, 3);
-        if (rand == 0)
+        for (i=0; i<slotIcons.Length; i++)
         {
-            showLine = new int[] { 1 + (Random.Range(0, 3) * 5), 2 + (Random.Range(0, 3) * 5), 3 + (Random.Range(0, 3) * 5) };
-        }
-        else if (rand == 1)
-        {
-            showLine = new int[] { 1 + (Random.Range(0, 3) * 5), 2 + (Random.Range(0, 3) * 5), 3 + (Random.Range(0, 3) * 5), 4 + (Random.Range(0, 3) * 5) };
-        }
-        else if (rand == 2)
-        {
-            showLine = new int[] { 1 + (Random.Range(0, 3) * 5), 2 + (Random.Range(0, 3) * 5), 3 + (Random.Range(0, 3) * 5), 4 + (Random.Range(0, 3) * 5), 5 + (Random.Range(0, 3) * 5) };
-        }
-        for (i = 0; i < tempValue.Length; i++)
-        {
-            tempValue[i] = Random.Range(0, reels[0].maxIconType);
-        }
-        yield return new WaitForSeconds(Random.Range(1.0f, 2.0f));
-        for (i = 0; i < slotIcons.Length; i++)
-        {
-            slotIcons[i].SetIconValue(tempValue[i], iconSprite[tempValue[i] * reels[0].maxIconBlur + 0], tileSprite[0]);
+            slotIcons[i].SetIconValue(slot_spin.slot_matrix[i], iconSprite[slot_spin.slot_matrix[i] * reels[0].maxIconBlur + 0], tileSprite[0]);
             slotIcons[i].fixedValue = true;
         }
-        StartCoroutine(StopSpin());
+        JSlotCombination[] slot_combination = slot_spin.slot_combination;
+        for (i = 0; i < slot_combination.Length; i++)
+        {
+            showLine = slot_combination[i].combination_matrix;
+        }
+        for (i = 0; i < reels.Length; i++)
+        {
+            reels[i].StopSpin();
+            yield return new WaitForSeconds(0.05f * Random.Range(1, 11));
+        }
+    }
+
+    private void HitAPI()
+    {
+        api.StartSlot(1);
+        timeWait = Time.time + 2.0f;
+    }
+
+    [System.Serializable]
+    private class JSlotCombination
+    {
+        public int[] combination_matrix;
+        public string combination_name;
+        public int combination_payout;
+    }
+
+    [System.Serializable]
+    private class JSlotSpin
+    {
+        public int[] slot_matrix;
+        public JSlotCombination[] slot_combination;
+        public int slot_bonus_id;
+        public int slot_bonus_coin;
+        public int slot_payout;
+    }
+
+    [System.Serializable]
+    private class JSlot
+    {
+        public int slot_type;
+        public int slot_cost;
+        public JSlotSpin[] slot_spin;
+        public int total_payout;
+        public int jackpot;
+    }
+
+    [System.Serializable]
+    private class JStartSlot
+    {
+        public JSlot slot;
+    }
+
+    public void RStartSlot(ApiBridge.ResponseParam response) {
+        Debug.Log("Return " + response.uri + " in " + response.post_time + " (Seed #" + response.seed.ToString() + ")\n" + response.post_data + "\n\nRaw = " + response.post_id);
+        JStartSlot jsonStart = JsonUtility.FromJson<JStartSlot>(response.post_data);
+        JSlot json = jsonStart.slot;
+        for (var i=0; i< json.slot_spin.Length; i++)
+        {
+            //JSlotSpin slot_spin = json.slot_spin[i];
+            StartCoroutine(StopSpin(json.slot_spin[i]));
+        }
     }
 
     private void HideLine()
@@ -235,10 +286,74 @@ public class SlotoManagerScript : MonoBehaviour
         winningBetAnimTM.gameObject.SetActive(true);
     }
 
-    private string ToShortCurrency(int value)
+    private string ToShortCurrency(long longValue)
     {
-        return value.toShortCurrency();
-        //return value.ToString("N0") + ".000";
+        if (longValue == 0)
+            return "0";
+
+        bool bIsBillion = false;
+        bool bIsMillion = false;
+        //bool bIsThousands = false;
+        string strSuffix = "";
+
+        if (System.Math.Abs(longValue) > 999999)
+        {
+            bIsBillion = true;
+            strSuffix = " B";
+        }
+        else if (System.Math.Abs(longValue) > 999)
+        {
+            bIsMillion = true;
+            strSuffix = " M";
+        }
+        else if (System.Math.Abs(longValue) > 0)
+        {
+            //bIsThousands = true;
+            strSuffix = " K";
+        }
+
+        float newVal = 0.0f;
+        if (bIsBillion)
+            newVal = longValue / 1000000.0f;
+        else if (bIsMillion)
+            newVal = longValue / 1000.0f;
+        else
+            newVal = longValue;
+
+        long oldVal = longValue;
+        //return newVal.ToString("#.###") + strSuffix;
+        string wholeNumber = newVal.ToString();
+        if(wholeNumber.IndexOf('.') >= 0)
+        {
+            wholeNumber = newVal.ToString().Split('.')[0];
+        }
+        else if (wholeNumber.IndexOf(',') >= 0)
+        {
+            wholeNumber = newVal.ToString().Split(',')[0];
+        }
+        else
+        {
+            wholeNumber = newVal.ToString().Split(',')[0];
+        }
+
+        string roundedNumber = newVal.ToString();
+
+        if (wholeNumber.Length > 2)
+        {
+            roundedNumber = newVal.ToString("N0");
+        }
+        else if (wholeNumber.Length > 1)
+        {
+            //roundedNumber = newVal.ToString("N1");
+            roundedNumber = newVal.ToString("#.#");
+        }
+        else if (wholeNumber.Length > 0)
+        {
+            //roundedNumber = newVal.ToString("N2");
+            roundedNumber = newVal.ToString("#.##");
+        }
+
+        return roundedNumber + strSuffix;
     }
 
     private void StartBlink(GameObject go)
@@ -264,5 +379,12 @@ public class SlotoManagerScript : MonoBehaviour
     private void OnPositiveClicked(int returnedCode)
     {
         Debug.Log("returnedCode = "+returnedCode);
+    }
+
+    public void RErrorHandler(ApiBridge.ResponseParam error)
+    {
+        Debug.Log("RErrorHandler from " + error.uri + " (Seed #" + error.seed.ToString() + ")\n(Code #" + error.error_code + ") {" + error.error_msg[0] + " || " + error.error_msg[1] + "}");
+        //MessageManager.instance.Show(gameObject, error.error_msg[0], ButtonMode.OK, -1);
+        Debug.Log(error.error_msg[0]); //Uncomment above
     }
 }
