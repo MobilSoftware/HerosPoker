@@ -43,7 +43,7 @@ SpriteAtlas:
     variantMultiplier: 1
     packables:
     - {fileID: 102900000, guid: 12d66afdad2b74f8c8660c7c4959c52b, type: 3}
-    totalSpriteSurfaceArea: 1852418
+    totalSpriteSurfaceArea: 2332546
     bindAsDefault: 1
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
@@ -91,11 +91,11 @@ SpriteAtlas:
   - ic_rank
   - ic_friend
   - btn
-  - ic_coupon
+  - IC_Coupon
   - btn_chat
   - frame_broadcast
   - ic_hero
-  - IC_gold
+  - IC_Coin
   - pp
   - arrow_mini
   m_Tag: AtlasHome

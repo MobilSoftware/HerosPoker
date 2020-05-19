@@ -32,6 +32,7 @@ public enum GameType
 {
     CapsaSusun,
     TexasPoker,
+    Sicbo,
     None
 }
 

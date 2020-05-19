@@ -151,5 +151,9 @@ namespace PhotonEnums
         public static string RPC_SyncCatchupOnTable = "RPC_SyncCatchupOnTable";
         public static string RPC_TakeYourPotTogether = "RPC_TakeYourPotTogether";
         public static string RPC_ForceQuitMatch = "RPC_ForceQuitMatch";
+
+        //Sicbo
+        public static string RequestSicboSlot = "RPC_RequestSicboSlot";
+        public static string ReturnSicboSlot = "RPC_ReturnSicboSlot";
     }
 }

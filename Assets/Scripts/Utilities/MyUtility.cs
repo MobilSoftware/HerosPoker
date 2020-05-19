@@ -1,4 +1,6 @@
 
+using System;
+
 public static class MyUtility
 {
     public static string toShortCurrency(this int longValue)   { return GetShortCurrency(longValue); }
@@ -6,6 +8,8 @@ public static class MyUtility
 
     public static string toGemShortCurrency(this long longValue) { return GetGemShortCurrency(longValue); }
     public static string toGemShortCurrency(this int longValue) { return GetGemShortCurrency(longValue); }
+
+    public static long toLongCurrency (this string strValue) { return GetLongCurrency (strValue); }
 
     public static string toFlexibleCurrency(this long longValue)
     {
@@ -51,17 +55,34 @@ public static class MyUtility
 
         long oldVal = longValue;
         //return newVal.ToString("#.###") + strSuffix;
-        string wholeNumber = newVal.ToString().Split('.')[0];
-        string roundedNumber = newVal.ToString();
-
+        string wholeNumber = newVal.ToString ();
+        if (wholeNumber.IndexOf ('.') >= 0)
+        {
+            wholeNumber = newVal.ToString ().Split ('.')[0];
+        }
+        else if (wholeNumber.IndexOf (',') >= 0)
+        {
+            wholeNumber = newVal.ToString ().Split (',')[0];
+        }
+        else
+        {
+            wholeNumber = newVal.ToString ().Split (',')[0];
+        }
+        string roundedNumber = newVal.ToString ();
         if (wholeNumber.Length > 2)
-            roundedNumber = newVal.ToString("N0");
+        {
+            roundedNumber = newVal.ToString ("N0");
+        }
         else if (wholeNumber.Length > 1)
+        {
             //roundedNumber = newVal.ToString("N1");
-            roundedNumber = newVal.ToString("#.#");
+            roundedNumber = newVal.ToString ("#.#");
+        }
         else if (wholeNumber.Length > 0)
+        {
             //roundedNumber = newVal.ToString("N2");
-            roundedNumber = newVal.ToString("#.##");
+            roundedNumber = newVal.ToString ("#.##");
+        }
 
         return roundedNumber + strSuffix;
     }
@@ -118,6 +139,26 @@ public static class MyUtility
             roundedNumber = newVal.ToString ("#.##");
 
         return roundedNumber + strSuffix;
+    }
+
+    public static long GetLongCurrency (string strCurrency )
+    {
+        long currency = 0;
+        string[] split = strCurrency.Split (' ');
+        decimal d1 = Convert.ToDecimal (split[0]);
+        decimal d2 = 1;
+        if (split.Length > 1)
+        {
+            if (split[1] == "B")
+                d2 = 1000000000;
+            else if (split[1] == "M")
+                d2 = 1000000;
+            else if (split[1] == "K")
+                d2 = 1000;
+        }
+        decimal dCurrency = d1 * d2;
+        currency = Convert.ToInt64 (dCurrency);
+        return currency;
     }
 
     public static RoomInfo GetRoomInfoFromName(string strRoomName)

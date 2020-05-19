@@ -32,6 +32,7 @@ public class BundleManager : MonoBehaviour
 
     public Text txtVersion;
     public Text txtStatusBar;
+    public Image fillProgressBar;
     [HideInInspector]
     public bool bLoadingScenes;
     private JGetVersion jGetVersion;
@@ -252,7 +253,9 @@ public class BundleManager : MonoBehaviour
             float fDownload = downloadCount;
             float percentage = (fDownloaded / fDownload) * 100f;
             percentage = (float) Math.Floor (percentage);
-            txtStatusBar.text = "Mengunduh aset: " + percentage + "%";
+            //txtStatusBar.text = "Mengunduh aset: " + percentage + "%";
+            txtStatusBar.text = "Mengunduh aset: " + fDownloaded + " / " + fDownload;
+            fillProgressBar.fillAmount = percentage / 100f;
             //progressBar.SetAmount (fDownloaded / fDownload);
             yield return null;
         }
@@ -261,6 +264,7 @@ public class BundleManager : MonoBehaviour
 
         bLoadingScenes = false;
         int counter = 1;
+        fillProgressBar.fillAmount = 1;
         txtStatusBar.text = "Memuat permainan .";
         _SceneManager.instance.LoadAllScenes ();
         while (!bLoadingScenes)

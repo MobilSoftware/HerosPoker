@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+﻿using Photon;
+using UnityEngine;
 using UnityEngine.UI;
 
-public class SicboManager : MonoBehaviour
+public class SicboManager : PunBehaviour
 {
     private static SicboManager s_Instance = null;
 
@@ -23,38 +24,136 @@ public class SicboManager : MonoBehaviour
         }
     }
 
-    public Button[] btnBetValues;   //should be 3?
-    public Button[] btnBetTypes;   //should be length = 50
+    [HideInInspector]
+    public SicboPlayer[] unsortedPlayers;   //LOCAL | [0] is myPlayer
+    [HideInInspector]
+    public SicboPlayer[] stockPlayers;  //LOCAL
 
-    private long betValue;
-    private ApiBridge.SicboBetType betType;
-
-    private void Start ()
+    public void PrepareGame ()
     {
-        for (int a = 0; a < btnBetValues.Length; a++)
+        InitMyPlayerProperties ();
+        photonView.RPC (PhotonEnums.RPC.RequestSicboSlot, PhotonTargets.MasterClient);
+    }
+
+    private void InitMyPlayerProperties ()
+    {
+        PhotonPlayer player = PhotonNetwork.player;
+        ExitGames.Client.Photon.Hashtable properties = player.CustomProperties;
+        properties[PhotonEnums.Player.Active] = false;
+        properties[PhotonEnums.Player.NextRoundIn] = true;
+        properties[PhotonEnums.Player.ReadyInitialized] = false;
+
+        properties[PhotonEnums.Player.SlotIndex] = -1;
+
+        //long _money = PlayerData.owned_coin;
+        //long _buyIn = _money > GlobalVariables.MinBetAmount * 200 ? GlobalVariables.MinBetAmount * 200 : _money;
+        //PlayerUtility.BuyInFromBankAccount (_buyIn);
+
+        properties[PhotonEnums.Player.Money] = PlayerData.owned_coin;
+
+        properties[PhotonEnums.Player.PlayerID] = PlayerData.id;
+
+        //properties[PhotonEnums.Player.ValueHand] = 0;
+        //properties[PhotonEnums.Player.SecondValueHand] = 0;
+
+        //properties[PhotonEnums.Player.RankPoker] = 10;
+        //properties[PhotonEnums.Player.Kicker] = 0;
+        //properties[PhotonEnums.Player.SecondKicker] = 0;
+
+        //properties[PhotonEnums.Player.TotalBet] = (long) 0;
+        //properties[PhotonEnums.Player.ChipsBet] = (long) 0;
+
+        player.SetCustomProperties (properties);
+    }
+
+    [PunRPC]
+    void RPC_SicboRequestSlot ( PhotonMessageInfo info )
+    {
+        SyncSlots ();
+        int _available_slot = GetAvailableRoomSlotIndex ();
+
+        PhotonUtility.SetPlayerProperties (info.sender, PhotonEnums.Player.SlotIndex, _available_slot);
+        photonView.RPC (PhotonEnums.RPC.ReturnSicboSlot, info.sender, _available_slot);
+    }
+
+    private void SyncSlots () //NEW FUNCTION Syncing Slot Available
+    {
+        if (PhotonNetwork.isMasterClient)
         {
-            btnBetValues[a].onClick.AddListener (() => OnBetValue (a));
-        }
-        for (int i = 0; i < btnBetTypes.Length; i++)
-        {
-            btnBetTypes[i].onClick.AddListener (() => OnBetType (i));
+            bool[] slots = PhotonUtility.GetRoomProperties<bool[]> (PhotonEnums.Room.Slots);
+            for (int i = 0; i < slots.Length; i++)
+                slots[i] = false;
+
+            foreach (PhotonPlayer player in PhotonNetwork.playerList)
+            {
+                int slotIndex = PhotonUtility.GetPlayerProperties<int> (player, PhotonEnums.Player.SlotIndex);
+
+                if (slotIndex != -1)
+                    slots[slotIndex] = true;
+            }
+
+            PhotonUtility.SetRoomProperties (PhotonEnums.Room.Slots, slots);
         }
     }
 
-    private void OnBetValue (int btnIndex )
+    private int GetAvailableRoomSlotIndex ()
     {
-        switch (btnIndex)
+        if (PhotonNetwork.room == null)
+            return -1;
+
+        //Make the next available slot occupied
+        int slot_index = -1;
+        bool[] slots = PhotonUtility.GetRoomProperties<bool[]> (PhotonEnums.Room.Slots);
+
+        //debug.LogError("Slot Count : " + slots.Length);
+
+        bool bFoundNewIndex = false;
+        for (int i = 0; i < slots.Length; i++)
         {
-            case 0: betValue = 1; break;
-            case 1: betValue = 2; break;
-            case 2: betValue = 5; break;
+            if (slots[i] == false)
+            {
+                slot_index = i;
+                slots[i] = true;
+                bFoundNewIndex = true;
+                break;
+            }
+        }
+
+        if (bFoundNewIndex)
+            PhotonUtility.SetRoomProperties (PhotonEnums.Room.Slots, slots);
+
+        return slot_index;
+    }
+
+    [PunRPC]
+    void RPC_ReturnSlot ( int _mySlot )
+    {
+        int mySlot = _mySlot;
+
+        if (mySlot >= 0)
+        {
+            SortingStockPlayers (mySlot);
+            PhotonUtility.SetPlayerProperties (PhotonNetwork.player, PhotonEnums.Player.SlotIndex, mySlot);
+        }
+
+        if (PhotonNetwork.isMasterClient)
+        {
+            PhotonUtility.SetRoomProperties (PhotonEnums.Room.MasterClientID, PhotonNetwork.player.UserId);
         }
     }
 
-    private void OnBetType (int btnIndex )
+    public void SortingStockPlayers ( int myIndex )
     {
-        betType = (ApiBridge.SicboBetType) (btnIndex + 1);
+        for (int x = 0; x < unsortedPlayers.Length; x++)
+        {
+            stockPlayers[myIndex] = unsortedPlayers[x];
+
+            myIndex++;
+            if (myIndex >= stockPlayers.Length)
+                myIndex = 0;
+        }
     }
 
+    //bet timer up => submit record => round timer up => master calls api.StartSicbo() => chips go to dealer => myplayer.ResetBet() [records cleared here] => roll dice 3s or until RStartSicbo => myplayer.ShowWinLose() => myplayer.HideWinLose => next round
 
 }

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using TMPro;
 using UnityEngine.UI;
 
 public class ProfileManager : MonoBehaviour
@@ -19,8 +20,16 @@ public class ProfileManager : MonoBehaviour
     }
 
     public Canvas canvas;
+    public Text txtDisplayName;
+    public Text txtLevel;
+    public Text txtCoinValue;
+    public Text txtCouponValue;
+    public Text txtVerify;
+    public Text txtTag;
     public Button btnClose;
     public Button btnVerify;
+    public Button btnVIP;
+    public StandHero standHero;
 
     private SceneType prevSceneType;
     private bool isInit;
@@ -29,11 +38,17 @@ public class ProfileManager : MonoBehaviour
     {
         btnClose.onClick.AddListener (Hide);
         btnVerify.onClick.AddListener (OnVerify);
+        btnVIP.onClick.AddListener (OnVIP);
     }
 
     private void OnVerify ()
     {
-        _SceneManager.instance.SetActiveScene (SceneType.VERIFY, true);
+        //_SceneManager.instance.SetActiveScene (SceneType.VERIFY, true);
+    }
+
+    private void OnVIP ()
+    {
+        //_SceneManager.instance.SetActiveScene (SceneType.VIP, true);
     }
 
     public void SetCanvas ( bool val )
@@ -55,6 +70,11 @@ public class ProfileManager : MonoBehaviour
         canvas.enabled = true;
         prevSceneType = _SceneManager.instance.activeSceneType;
         _SceneManager.instance.activeSceneType = SceneType.PROFILE;
+        txtDisplayName.text = PlayerData.display_name;
+        txtCoinValue.text = PlayerData.owned_coin.toShortCurrency ();
+        txtCouponValue.text = PlayerData.owned_coupon.toShortCurrency ();
+        txtTag.text = "Tag: " + PlayerData.tag;
+        standHero.LoadFromBundle (PlayerData.costume_id);
     }
 
     public void Hide ()

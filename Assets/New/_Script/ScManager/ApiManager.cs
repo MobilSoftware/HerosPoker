@@ -79,6 +79,11 @@ public class ApiManager : MonoBehaviour
         api.UserLogin (ApiBridge.LoginType.Guest);
     }
 
+    public void FacebookLogin (string fb_id, string fb_email, string fb_name, string fb_picture_url)
+    {
+        api.UserLogin (ApiBridge.LoginType.Facebook, fb_id, fb_email, fb_name, fb_picture_url);
+    }
+
     private void RUserLogin ( ApiBridge.ResponseParam response )
     {
         Logger.E ("Return User Login: " + response.post_data);
@@ -87,6 +92,8 @@ public class ApiManager : MonoBehaviour
         api.SetToken (json.player.token);
         PlayerData.display_name = json.player.display_name;
         PlayerData.id = json.player.player_id;
+        PlayerData.tag = json.player.player_tag;
+        PlayerData.owned_coupon = Convert.ToInt16 (json.player.coupon);
         PlayerData.owned_coin = Convert.ToInt64 (json.player.coin);
         PlayerPrefs.SetInt (PrefEnum.PLAYER_ID.ToString(), json.player.player_id);
         PlayerPrefs.SetString (PrefEnum.TOKEN.ToString (), json.player.token);
@@ -263,6 +270,8 @@ public class ApiManager : MonoBehaviour
 
     public void StartSicbo ()
     {
+        sicboPlayers = new ApiBridge.SicboPlayer[1];
+        sicboPlayers[0] = new ApiBridge.SicboPlayer (1016, ApiBridge.SicboBetType.Small, 100);
         api.StartSicbo (sicboPlayers);
     }
 

@@ -60,31 +60,34 @@ public class LoginManager : MonoBehaviour
         canvas.enabled = false;
     }
 
-
     private void OnGuest ()
     {
-        //ApiManager.instance.GuestLogin ();
-        StartCoroutine (_OnGuest ());
-    }
-
-    IEnumerator _OnGuest()
-    {
-        ApiManager.instance.GetOtp ();
-        while (!ApiManager.instance.bOtpSet)
-        {
-            //loading ui
-            yield return _WFSUtility.wef;
-        }
-        ApiManager.instance.GuestLogin ();
+        StartCoroutine (_UserLogin (ApiBridge.LoginType.Guest));
     }
 
     private void OnFB ()
     {
-
+        StartCoroutine (_UserLogin (ApiBridge.LoginType.Facebook));
     }
 
     private void OnGoogle ()
     {
+        StartCoroutine (_UserLogin (ApiBridge.LoginType.Google));
+    }
 
+    IEnumerator _UserLogin (ApiBridge.LoginType loginType )
+    {
+        ApiManager.instance.GetOtp ();
+        while (!ApiManager.instance.bOtpSet)
+        {
+            yield return _WFSUtility.wef;
+        }
+
+        if (loginType == ApiBridge.LoginType.Guest)
+            ApiManager.instance.GuestLogin ();
+        else if (loginType == ApiBridge.LoginType.Facebook)
+            FacebookManager.instance.Login ();
+        else if (loginType == ApiBridge.LoginType.Google)
+            Logger.E ("Login Google");
     }
 }

@@ -182,6 +182,9 @@ public class RoomInfoManager : MonoBehaviour
         {
             if (GlobalVariables.gameType == GameType.TexasPoker)
                 PhotonUtility.SetRoomProperties(PhotonEnums.Room.Slots, new bool[8] { false, false, false, false, false, false, false, false });
+            else if (GlobalVariables.gameType == GameType.Sicbo)
+                PhotonUtility.SetRoomProperties (PhotonEnums.Room.Slots, new bool[10] { false, false, false, false, false, false, false, false, false, false });
+
         }        
 
         string strBetType = PhotonUtility.GetRoomProperties<string>(PhotonEnums.Room.BetType);
