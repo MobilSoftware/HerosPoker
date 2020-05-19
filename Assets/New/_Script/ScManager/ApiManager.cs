@@ -42,7 +42,13 @@ public class ApiManager : MonoBehaviour
         int playerID = PlayerPrefs.GetInt (PrefEnum.PLAYER_ID.ToString (), 0);
         string token = PlayerPrefs.GetString (PrefEnum.TOKEN.ToString (), string.Empty);
         if (playerID != 0 && token != string.Empty)
+        {
+            Logger.E ("pID: " + playerID);
+            Logger.E ("token: " + token);
+            api.SetPlayerId (playerID);
+            api.SetToken (token);
             api.GetVersion (playerID, token);
+        }
         else
             api.GetVersion ();
     }
@@ -113,11 +119,11 @@ public class ApiManager : MonoBehaviour
         PlayerData.UpdateData (json.player);
         Logger.E (json.player.costume_equiped + " costume");
         if (json.player.costume_equiped == 0)
-            BeginManager.instance.Show ();
+            _SceneManager.instance.SetActiveScene (SceneType.BEGIN, true);
         else
         {
+            _SceneManager.instance.SetActiveScene (SceneType.HOME, true);
             HomeManager.instance.Init ();
-            HomeManager.instance.Show ();
         }
     }
 

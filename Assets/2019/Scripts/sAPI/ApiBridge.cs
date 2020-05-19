@@ -714,7 +714,7 @@ public class ApiBridge : MonoBehaviour
         }
         else
         {
-            API api = new API (uri, (apiPlayerId == 0 ? 502 : 504));
+            API api = new API (uri, (apiPlayerId == 0 ? 503 : 504));
             ParseError (api);
             return false;
         }

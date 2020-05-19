@@ -147,8 +147,12 @@ public class _SceneManager : MonoBehaviour
         SetActiveSloto (false);
         yield return _WFSUtility.wef;
         Logger.E ("11");
-        //SetActiveScene (SceneType.BEGIN, true);
-        SetActiveScene (SceneType.LOGIN, true);
+        int playerID = PlayerPrefs.GetInt (PrefEnum.PLAYER_ID.ToString (), 0);
+        string token = PlayerPrefs.GetString (PrefEnum.TOKEN.ToString (), string.Empty);
+        if (playerID != 0 && token != string.Empty)
+            ApiManager.instance.GetHome ();
+        else
+            SetActiveScene (SceneType.LOGIN, true);
         yield return _WFSUtility.wef;
         Logger.E ("12");
         BundleManager.instance.bLoadingScenes = true;
