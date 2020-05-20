@@ -51,44 +51,44 @@ public class Hero : MonoBehaviour
         ab.Unload (false);
     }
 
-    public void LoadSpine (int heroUsed, bool isMine)
-    {
-        StartCoroutine (_LoadSpine (heroUsed, isMine));
-    }
+    //public void LoadSpine (int heroUsed, bool isMine)
+    //{
+    //    StartCoroutine (_LoadSpine (heroUsed, isMine));
+    //}
 
-    IEnumerator _LoadSpine (int heroUsed, bool isMine)
-    {
-        if (spineHero != null)
-        {
-            Destroy (spineHero.gameObject);
-            yield return null;
-        }
+    //IEnumerator _LoadSpine (int heroUsed, bool isMine)
+    //{
+    //    if (spineHero != null)
+    //    {
+    //        Destroy (spineHero.gameObject);
+    //        yield return null;
+    //    }
 
-        id = heroUsed;
-        _SpineObject spHero = null;
-        if (id == 100)
-            spHero = PokerManager.instance.spLuBu;
-        else if (id == 200)
-            spHero = PokerManager.instance.spCleo;
+    //    id = heroUsed;
+    //    _SpineObject spHero = null;
+    //    if (id == 100)
+    //        spHero = PokerManager.instance.spLuBu;
+    //    else if (id == 200)
+    //        spHero = PokerManager.instance.spCleo;
 
-        spineHero = Instantiate (spHero, this.transform);
-        if (isMine)
-            SetMyPartBack ();
-        yield return null;
+    //    spineHero = Instantiate (spHero, this.transform);
+    //    if (isMine)
+    //        SetMyPartBack ();
+    //    yield return null;
 
-        spineHero.transform.localEulerAngles = Vector3.zero;
-        if (id == 100)
-        {
-            spineHero.transform.localPosition = posLuBu;
-            spineHero.transform.localScale = scaleLuBu;
-        }
-        else if (id == 200)
-        {
-            spineHero.transform.localPosition = Vector3.zero;
-            spineHero.transform.localScale = Vector3.one;
-        }
-        spineHero.StartRandomMove ();
-    }
+    //    spineHero.transform.localEulerAngles = Vector3.zero;
+    //    if (id == 100)
+    //    {
+    //        spineHero.transform.localPosition = posLuBu;
+    //        spineHero.transform.localScale = scaleLuBu;
+    //    }
+    //    else if (id == 200)
+    //    {
+    //        spineHero.transform.localPosition = Vector3.zero;
+    //        spineHero.transform.localScale = Vector3.one;
+    //    }
+    //    spineHero.StartRandomMove ();
+    //}
 
     public void SetMyPartBack ()
     {

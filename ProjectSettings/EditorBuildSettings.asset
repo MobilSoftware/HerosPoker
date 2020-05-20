@@ -18,6 +18,12 @@ EditorBuildSettings:
     path: Assets/New/_Scene/SeProfile.unity
     guid: 7c810d3366b2f4e3fb00fee1de5410e3
   - enabled: 0
+    path: Assets/New/_Scene/SeShop.unity
+    guid: ef074c8e5028a4abd9fcebe69904f56a
+  - enabled: 0
+    path: Assets/New/_Scene/SePokerRoom.unity
+    guid: 6b07f1f8e55604451bcbe0b6625b2168
+  - enabled: 0
     path: Assets/New/_Scene/SeVerify.unity
     guid: 51e150ac08e7d4d99853778e2475851b
   - enabled: 0

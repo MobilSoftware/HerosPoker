@@ -54,10 +54,28 @@ public class PokerManager : MonoBehaviour
     public Sprite sprStraightFlush;
     public Sprite sprRoyalFlush;
 
-    //for proto only
     public Sprite sprCoin;
-    public _SpineObject spLuBu;
-    public _SpineObject spCleo;
+    public Sprite sprLubu;
+    public Sprite sprCleo;
+    public Sprite sprMusashi;
+    public Sprite sprNapoleon;
+    public Sprite sprGenghis;
+
+    public GameObject objFxStraightFlush;
+    public UIParticleSystem psStraightFlush1;
+    public UIParticleSystem psStraightFlush2;
+    public GameObject objFxRoyalFlush;
+    public UIParticleSystem psRoyalFlush1;
+    public UIParticleSystem psRoyalFlush2;
+
+    [HideInInspector]
+    public bool bStraightFlush;
+    [HideInInspector]
+    public bool bRoyalFlush;
+
+    //proto only
+    //public _SpineObject spLuBu;
+    //public _SpineObject spCleo;
 
     private SceneType prevSceneType;
     private bool isInit;
@@ -92,5 +110,46 @@ public class PokerManager : MonoBehaviour
         objPoker.SetActive (false);
         canvas.enabled = false;
         _SceneManager.instance.activeSceneType = prevSceneType;
+    }
+
+    public void SetActivePokerFx (bool val)
+    {
+        if (val && (bRoyalFlush || bStraightFlush))
+        {
+            Texture2D t2d = GetHeroTexture ();
+            if (bRoyalFlush)
+            {
+                psRoyalFlush1.particleTexture = t2d;
+                psRoyalFlush2.particleTexture = t2d;
+                objFxRoyalFlush.SetActive (true);
+            } else if (bStraightFlush)
+            {
+                psStraightFlush1.particleTexture = t2d;
+                psStraightFlush2.particleTexture = t2d;
+                objFxStraightFlush.SetActive (true);
+            }
+        }
+        else
+        {
+            bStraightFlush = false;
+            bRoyalFlush = false;
+            objFxRoyalFlush.SetActive (false);
+            objFxStraightFlush.SetActive (false);
+        }
+    }
+
+    private Texture2D GetHeroTexture ()
+    {
+        Texture2D texture = sprLubu.texture;
+        switch (PlayerData.costume_id)
+        {
+            case 3: texture = sprLubu.texture; break;
+            case 7: texture = sprCleo.texture; break;
+            case 8: texture = sprMusashi.texture; break;
+            case 9: texture = sprNapoleon.texture; break;
+            case 10: texture = sprGenghis.texture; break;
+        }
+
+        return texture;
     }
 }

@@ -474,7 +474,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 0.143
+  m_FillAmount: 0
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -695,6 +695,7 @@ GameObject:
   - component: {fileID: 1524175551}
   - component: {fileID: 1524175550}
   - component: {fileID: 1524175552}
+  - component: {fileID: 1524175553}
   m_Layer: 0
   m_Name: SceneManager
   m_TagString: Untagged
@@ -782,6 +783,18 @@ MonoBehaviour:
   txtStatusBar: {fileID: 328138731}
   fillProgressBar: {fileID: 585866033}
   bLoadingScenes: 0
+--- !u!114 &1524175553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1524175546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1e7415149fcd4f5b88160c8be74527f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1848210330
 GameObject:
   m_ObjectHideFlags: 0

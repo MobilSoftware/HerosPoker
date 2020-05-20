@@ -359,12 +359,15 @@ public class _PokerGameManager : MonoBehaviour
         }
 
         //endpoker
+        PrepareEndPoker ();
+        PokerManager.instance.SetActivePokerFx (true);
         //
+
         yield return _WFSUtility.wfs1;
         potOnTable.Clear ();
         lastPotIndex = 0;
         yield return _WFSUtility.wfs1;
-
+        PokerManager.instance.SetActivePokerFx (false);
         for (int x = 0; x < tableCard.Length; x++)
         {
             tableCard[x].FlipCardDown ();

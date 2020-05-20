@@ -129,6 +129,7 @@ public class ApiManager : MonoBehaviour
             _SceneManager.instance.SetActiveScene (SceneType.BEGIN, true);
         else
         {
+            GetShop ();
             _SceneManager.instance.SetActiveScene (SceneType.HOME, true);
             HomeManager.instance.Init ();
         }
@@ -208,6 +209,31 @@ public class ApiManager : MonoBehaviour
         Logger.E ("Return Set Costume: " + response.post_data);
     }
 
+    public void GetShop (int itemType = 0)
+    {
+        api.GetShop (itemType);
+    }
+
+    private void RGetShop (ApiBridge.ResponseParam response )
+    {
+        Logger.E ("Return Get Shop: " + response.post_data);
+        JGetShop json = JsonUtility.FromJson<JGetShop> (response.post_data);
+        ShopManager.instance.SetJson (json);
+    }
+
+    public void BuyShop (int itemID, int paymentType, string invoice = "" )
+    {
+        api.BuyShop (itemID, paymentType, invoice);
+    }
+
+    private void RBuyShop (ApiBridge.ResponseParam response )
+    {
+        Logger.E ("Return Buy Shop: " + response.post_data);
+        JBuyShop json = JsonUtility.FromJson<JBuyShop> (response.post_data);
+        _SceneManager.instance.UpdateAllCoinAndCoupon ();
+        MessageManager.instance.Show (this.gameObject, "Anda berhasil membeli " + json.item.item_name[0]);
+    }
+
     #region gameplay
     public void StartPoker (string _photonRoomID, long _roomBetCoin)
     {
@@ -237,7 +263,7 @@ public class ApiManager : MonoBehaviour
                 else
                 {
                     long lCoin = Convert.ToInt64 (json.players[i].coin_server);
-                    if (lCoin <= GlobalVariables.MinBetAmount * 200)
+                    if (lCoin <= GlobalVariables.MaxBuyIn)
                         PhotonTexasPokerManager.instance.SyncCoinFromServer (lCoin);
                 }
             }

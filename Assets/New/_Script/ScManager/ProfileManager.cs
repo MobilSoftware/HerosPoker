@@ -71,8 +71,7 @@ public class ProfileManager : MonoBehaviour
         prevSceneType = _SceneManager.instance.activeSceneType;
         _SceneManager.instance.activeSceneType = SceneType.PROFILE;
         txtDisplayName.text = PlayerData.display_name;
-        txtCoinValue.text = PlayerData.owned_coin.toShortCurrency ();
-        txtCouponValue.text = PlayerData.owned_coupon.toShortCurrency ();
+        UpdateCoinAndCoupon ();
         txtTag.text = "Tag: " + PlayerData.tag;
         standHero.LoadFromBundle (PlayerData.costume_id);
     }
@@ -81,5 +80,11 @@ public class ProfileManager : MonoBehaviour
     {
         canvas.enabled = false;
         _SceneManager.instance.activeSceneType = prevSceneType;
+    }
+
+    public void UpdateCoinAndCoupon ()
+    {
+        txtCoinValue.text = PlayerData.owned_coin.toShortCurrency ();
+        txtCouponValue.text = PlayerData.owned_coupon.toCouponShortCurrency ();
     }
 }

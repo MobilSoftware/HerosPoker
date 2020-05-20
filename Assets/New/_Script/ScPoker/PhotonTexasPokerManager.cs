@@ -404,7 +404,7 @@ public class PhotonTexasPokerManager : PunBehaviour
         properties[PhotonEnums.Player.SlotIndex] = -1;
 
         long _money = PlayerData.owned_coin;
-        long _buyIn = _money > GlobalVariables.MinBetAmount * 200 ? GlobalVariables.MinBetAmount * 200 : _money;
+        long _buyIn = _money > GlobalVariables.MaxBuyIn ? GlobalVariables.MaxBuyIn : _money;
         PlayerUtility.BuyInFromBankAccount (_buyIn);
 
         properties[PhotonEnums.Player.Money] = _buyIn;

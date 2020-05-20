@@ -46,7 +46,6 @@ public class LoginManager : MonoBehaviour
     {
         if (!isInit)
         {
-            PhotonNetwork.ConnectUsingSettings ("v1.0");
             canvas.sortingOrder = (int) SceneType.LOGIN;
             isInit = true;
         }

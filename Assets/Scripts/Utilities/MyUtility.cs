@@ -6,8 +6,8 @@ public static class MyUtility
     public static string toShortCurrency(this int longValue)   { return GetShortCurrency(longValue); }
     public static string toShortCurrency(this long longValue) { return GetShortCurrency(longValue); }
 
-    public static string toGemShortCurrency(this long longValue) { return GetGemShortCurrency(longValue); }
-    public static string toGemShortCurrency(this int longValue) { return GetGemShortCurrency(longValue); }
+    public static string toCouponShortCurrency(this long longValue) { return GetCouponShortCurrency(longValue); }
+    public static string toCouponShortCurrency(this int longValue) { return GetCouponShortCurrency(longValue); }
 
     public static long toLongCurrency (this string strValue) { return GetLongCurrency (strValue); }
 
@@ -16,7 +16,7 @@ public static class MyUtility
         if(GlobalVariables.bIsCoins)
             return GetShortCurrency(longValue);
         else
-            return GetGemShortCurrency(longValue);
+            return GetCouponShortCurrency(longValue);
     }
 
     private static string GetShortCurrency(long longValue)
@@ -87,7 +87,7 @@ public static class MyUtility
         return roundedNumber + strSuffix;
     }
 
-    public static string GetGemShortCurrency (long longValue )
+    public static string GetCouponShortCurrency (long longValue )
     {
 
         if (longValue == 0)

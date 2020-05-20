@@ -1132,9 +1132,11 @@ public class _PlayerPokerActor : MonoBehaviour
                         break;
                     case HandRankPoker.straightFlush:
                         imgHandRank.sprite = PokerManager.instance.sprStraightFlush;
+                        PokerManager.instance.bStraightFlush = true;
                         break;
                     case HandRankPoker.royalFlush:
                         imgHandRank.sprite = PokerManager.instance.sprRoyalFlush;
+                        PokerManager.instance.bRoyalFlush = true;
                         break;
                 }
             }

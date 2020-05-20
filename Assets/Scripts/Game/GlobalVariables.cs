@@ -85,7 +85,8 @@ public class GlobalVariables
     //Betting Settings
     public static int playerBetMoney = 0;
     public static int maxMoney = 0;
-    public static long MinBetAmount = 20;
+    public static long MinBetAmount = 50;
+    public static long MaxBuyIn = 2000;
     public static int multiplierMinBet = 30;
     public static int curBetAmount = 0;
     public static int finalBetAmunt = 0;

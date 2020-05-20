@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,11 +10,14 @@ public enum SceneType
     BEGIN = 3,
     LOGIN = 4,
     PROFILE = 5,
-    VERIFY = 6,
-    VIP = 7,
-    POKER = 8,
-    SLOTO = 9,
-    MESSAGE = 10
+    SHOP = 6,
+    VERIFY = 7,
+    VIP = 8,
+    POKER_ROOM = 9,
+    POKER = 10,
+    SLOTO = 11,
+    //SICBO = 12,
+    MESSAGE = 12
 }
 
 public class _SceneManager : MonoBehaviour
@@ -49,6 +51,8 @@ public class _SceneManager : MonoBehaviour
     private SlotoManagerScript slotoM;
     private BeginManager beginM;
     private LoginManager loginM;
+    private ShopManager shopM;
+    private PokerRoomManager proomM;
 
     private void Start ()
     {
@@ -105,48 +109,42 @@ public class _SceneManager : MonoBehaviour
         for (int i = 2; i < enums.Length; i++)
         {
             string loadPath = BundleManager.instance.GetSceneLoadPath (i);
-            Logger.E ("loading scene: " + loadPath);
+            //Logger.E ("loading scene: " + loadPath);
             AssetBundle ab = AssetBundle.LoadFromFile (loadPath);
             string[] scenePath = ab.GetAllScenePaths ();
-            Logger.E (scenePath[0]);
+            //Logger.E (scenePath[0]);
             async = SceneManager.LoadSceneAsync (scenePath[0], LoadSceneMode.Additive);
             while (!async.isDone)
             {
                 yield return _WFSUtility.wef;
-                Logger.E ("name: " + scenePath[0] + " | progress: " + async.progress);
+                //Logger.E ("name: " + scenePath[0] + " | progress: " + async.progress);
             }
             ab.Unload (false);
         }
         yield return _WFSUtility.wef;
-        Logger.E ("1");
         homeM = HomeManager.instance;
         yield return _WFSUtility.wef;
-        Logger.E ("2");
         profileM = ProfileManager.instance;
         yield return _WFSUtility.wef;
-        Logger.E ("3");
         verifyM = VerifyManager.instance;
         yield return _WFSUtility.wef;
-        Logger.E ("4");
         vipM = VipManager.instance;
-        Logger.E ("5");
         yield return _WFSUtility.wef;
-        Logger.E ("6");
         pokerM = PokerManager.instance;
         yield return _WFSUtility.wef;
-        Logger.E ("7");
         beginM = BeginManager.instance;
         yield return _WFSUtility.wef;
-        Logger.E ("8");
         loginM = LoginManager.instance;
         yield return _WFSUtility.wef;
-        Logger.E ("9");
-        slotoM = FindObjectOfType<SlotoManagerScript> ();
+        shopM = ShopManager.instance;
         yield return _WFSUtility.wef;
-        Logger.E ("10");
+        proomM = PokerRoomManager.instance;
+        yield return _WFSUtility.wef;
+        slotoM = FindObjectOfType<SlotoManagerScript> ();
+        PhotonNetwork.ConnectUsingSettings ("v1.0");
+        yield return _WFSUtility.wef;
         SetActiveSloto (false);
         yield return _WFSUtility.wef;
-        Logger.E ("11");
         int playerID = PlayerPrefs.GetInt (PrefEnum.PLAYER_ID.ToString (), 0);
         string token = PlayerPrefs.GetString (PrefEnum.TOKEN.ToString (), string.Empty);
         if (playerID != 0 && token != string.Empty)
@@ -154,10 +152,8 @@ public class _SceneManager : MonoBehaviour
         else
             SetActiveScene (SceneType.LOGIN, true);
         yield return _WFSUtility.wef;
-        Logger.E ("12");
         BundleManager.instance.bLoadingScenes = true;
         yield return _WFSUtility.wef;
-        Logger.E ("13");
         SceneManager.UnloadSceneAsync ("SeSplash");
     }
 
@@ -169,6 +165,8 @@ public class _SceneManager : MonoBehaviour
             case SceneType.BEGIN: beginM.SetCanvas (val); break;
             case SceneType.HOME: homeM.SetCanvas (val); break;
             case SceneType.PROFILE: profileM.SetCanvas (val); break;
+            case SceneType.SHOP: shopM.SetCanvas (val); break;
+            case SceneType.POKER_ROOM: proomM.SetCanvas (val); break;
             case SceneType.VERIFY: verifyM.SetCanvas (val); break;
             case SceneType.VIP: vipM.SetCanvas (val); break;
             case SceneType.POKER: pokerM.SetCanvas (val); break;
@@ -178,7 +176,6 @@ public class _SceneManager : MonoBehaviour
 
     private void SetActiveSloto (bool val )
     {
-        Logger.E ("1001");
         if (val)
         {
             slotoM.gameObject.SetActive (true);
@@ -189,9 +186,7 @@ public class _SceneManager : MonoBehaviour
         else 
         {
             slotoM.gameObject.SetActive (false);
-            Logger.E ("1002");
             mainCamera.gameObject.SetActive (true);
-            Logger.E ("1004");
         }
     }
 
@@ -210,12 +205,20 @@ public class _SceneManager : MonoBehaviour
                 break;
             case SceneType.SLOTO:
             case SceneType.PROFILE:
+            case SceneType.SHOP:
             case SceneType.VERIFY:
             case SceneType.VIP:
                 SetActiveScene (activeSceneType, false);
-                SetActiveScene (SceneType.HOME, true);
                 break;
         }
+    }
+
+    public void UpdateAllCoinAndCoupon ()
+    {
+        homeM.UpdateCoinAndCoupon ();
+        profileM.UpdateCoinAndCoupon ();
+        shopM.UpdateCoinAndCoupon ();
+        proomM.UpdateCoinAndCoupon ();
     }
 
     private void OnPositiveClicked ( int returnCode )

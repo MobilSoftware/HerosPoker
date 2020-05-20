@@ -353,6 +353,18 @@ public class BundleManager : MonoBehaviour
         return loadPath;
     }
 
+    public void LoadImage ( RawImage _rawImage, string _path )
+    {
+        StartCoroutine (_LoadImage (_rawImage, _path));
+    }
+
+    private IEnumerator _LoadImage ( RawImage imgIcon, string _path )
+    {
+        WWW www = new WWW ("file:///" + _path + "/thumb");
+        yield return www;
+        imgIcon.texture = www.texture;
+    }
+
     public void OnPositiveClicked (int returnCode )
     {
         switch (returnCode)
