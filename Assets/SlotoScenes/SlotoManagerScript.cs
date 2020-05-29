@@ -46,10 +46,9 @@ public class SlotoManagerScript : MonoBehaviour
     void Start()
     {
         Init();
-        SetMoney();
     }
 
-    private void Init()
+    public void Init()
     {
         serverMoney = -1;
         bet = 100;
@@ -57,6 +56,7 @@ public class SlotoManagerScript : MonoBehaviour
         currBetWinning = 0;
         betLabelTM.text = bet.ToString("N0")+".000";
         currBet = bet;
+        SetMoney();
         ClearJson();
         for (int i = 0; i < reels.Length; i++)
         {
