@@ -5,7 +5,7 @@ public class JGetShop
 }
 
 [System.Serializable]
-public struct JGetShopItem
+public class JGetShopItem
 {
     public int item_id;
     public string[] item_name;
@@ -22,5 +22,6 @@ public struct JGetShopItem
     public int is_new;
     public bool is_hero_owned;
     public bool is_costume_owned;
+    public int default_item_id;
 
 }

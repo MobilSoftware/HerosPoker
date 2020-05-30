@@ -104,8 +104,9 @@ GameObject:
   - component: {fileID: 2818222424386201039}
   - component: {fileID: 3501032143197605614}
   - component: {fileID: 2265193367399903586}
+  - component: {fileID: 8150433398159153798}
   m_Layer: 0
-  m_Name: Lubu
+  m_Name: 3_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -208,7 +209,7 @@ MonoBehaviour:
     materialsInsideMask: []
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
-  _animationName: 
+  _animationName: Idle
   loop: 0
   timeScale: 1
 --- !u!114 &2265193367399903586
@@ -229,6 +230,21 @@ MonoBehaviour:
   partsRenderers:
   - {fileID: 2294018710597243252}
   - {fileID: 7259199044912751141}
+--- !u!114 &8150433398159153798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6340468090443601459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f2604fa8403844b998ed162c0f1c03c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mySkelAnim: {fileID: 3501032143197605614}
+  mySkelGraphic: {fileID: 0}
+  partBack: {fileID: 2294018710597243252}
 --- !u!1 &7417628091598805481
 GameObject:
   m_ObjectHideFlags: 0

@@ -20,6 +20,9 @@ public class VerifyManager : MonoBehaviour
 
     public Canvas canvas;
     public Button btnClose;
+    public Button btnOK;
+    public InputField ipfPhoneNumber;
+    public Dropdown ddCountryCode;
 
     private SceneType prevSceneType;
     private bool isInit;
@@ -27,6 +30,7 @@ public class VerifyManager : MonoBehaviour
     private void Start ()
     {
         btnClose.onClick.AddListener (Hide);
+        btnOK.onClick.AddListener (OnVerify);
     }
 
     public void SetCanvas ( bool val )
@@ -54,5 +58,10 @@ public class VerifyManager : MonoBehaviour
     {
         canvas.enabled = false;
         _SceneManager.instance.activeSceneType = prevSceneType;
+    }
+
+    private void OnVerify ()
+    {
+
     }
 }

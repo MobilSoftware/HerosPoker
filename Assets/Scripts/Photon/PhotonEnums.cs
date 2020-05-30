@@ -28,6 +28,8 @@ namespace PhotonEnums
         public static string BetType = "bet_type";
         public static string PokerCardTable = "PokerCardTable";
         public static string LastIndexDealer = "last_dealer";
+
+        public static string IS_PLAYING = "is_playing";
         ////Room List
         //public static string PlayerName = "players_name";
         //public static string GenderPlayers = "gender_player";
@@ -111,6 +113,8 @@ namespace PhotonEnums
         public static string MiddleResult = "middle_result";
         public static string BottomResult = "bottom_result";
         public static string ScoopCount = "scoop_count";
+
+        public static string SICBO_BETS = "sicbo_bets";
         #endregion
     }
 
@@ -155,5 +159,8 @@ namespace PhotonEnums
         //Sicbo
         public static string RequestSicboSlot = "RPC_RequestSicboSlot";
         public static string ReturnSicboSlot = "RPC_ReturnSicboSlot";
+        public static string PrepareSicboRound = "RPC_PrepareSicboRound";
+        public static string SendRStartSicbo = "RPC_SendRStartSicbo";
+        public static string RequestSicboSync = "RPC_RequestSicboSync";
     }
 }

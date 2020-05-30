@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 2402136994
+CRC: 2337957742
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
@@ -46,4 +46,31 @@ AssetBundleManifest:
       Dependencies: {}
     Info_14:
       Name: genghis
+      Dependencies: {}
+    Info_15:
+      Name: alexander
+      Dependencies: {}
+    Info_16:
+      Name: secoupon
+      Dependencies: {}
+    Info_17:
+      Name: sesicbo
+      Dependencies: {}
+    Info_18:
+      Name: sehero
+      Dependencies: {}
+    Info_19:
+      Name: seleaderboard
+      Dependencies: {}
+    Info_20:
+      Name: sefriend
+      Dependencies: {}
+    Info_21:
+      Name: sesettings
+      Dependencies: {}
+    Info_22:
+      Name: sereceiveitem
+      Dependencies: {}
+    Info_23:
+      Name: seotherprofile
       Dependencies: {}

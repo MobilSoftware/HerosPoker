@@ -150,11 +150,11 @@ public static class MyUtility
         if (split.Length > 1)
         {
             if (split[1] == "B")
-                d2 = 1000000000;
-            else if (split[1] == "M")
                 d2 = 1000000;
-            else if (split[1] == "K")
+            else if (split[1] == "M")
                 d2 = 1000;
+            else if (split[1] == "K")
+                d2 = 1;
         }
         decimal dCurrency = d1 * d2;
         currency = Convert.ToInt64 (dCurrency);

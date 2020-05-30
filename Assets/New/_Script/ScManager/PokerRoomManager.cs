@@ -57,10 +57,11 @@ public class PokerRoomManager : MonoBehaviour
         Logger.E ("btn room clicked: " + btnIndex);
         if (btnIndex != 3)
         {
-            if (PlayerData.owned_coin > minOwnedCoin[btnIndex] && PlayerData.owned_coin <= maxOwnedCoin[btnIndex])
+            if (PlayerData.owned_coin >= minOwnedCoin[btnIndex] && PlayerData.owned_coin <= maxOwnedCoin[btnIndex])
             {
                 GlobalVariables.MinBetAmount = minBets[btnIndex];
                 GlobalVariables.MaxBuyIn = maxBuyIn[btnIndex];
+                GlobalVariables.gameType = GameType.TexasPoker;
                 Hide ();
                 _SceneManager.instance.SetActiveScene (SceneType.HOME, false);
                 _SceneManager.instance.SetActiveScene (SceneType.POKER, true);

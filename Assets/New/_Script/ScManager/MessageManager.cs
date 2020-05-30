@@ -28,9 +28,11 @@ public class MessageManager : MonoBehaviour
 
     public Canvas canvas;
 
+    public GameObject objFrameTitle;
+    public Text txtTitle;
     public TextMeshProUGUI tmpDescription;
-    public TextMeshProUGUI tmpBtnPositive;
-    public TextMeshProUGUI tmpBtnNegative;
+    public Text tmpBtnPositive;
+    public Text tmpBtnNegative;
     public Button btnPositive;
     public Button btnNegative;
 
@@ -61,13 +63,22 @@ public class MessageManager : MonoBehaviour
         Hide ();
     }
 
-    public void Show (GameObject _listener, string strDescription, ButtonMode bt = ButtonMode.OK, int _returnCode = -1, string strBtnPositive = "OK", string strBtnNegative = "Batal" )
+    public void Show (GameObject _listener, string strDescription, ButtonMode bt = ButtonMode.OK, int _returnCode = -1, string strBtnPositive = "OK", string strBtnNegative = "Batal", string strTitle = "" )
     {
         objListener = _listener;
         returnCode = _returnCode;
 
         tmpDescription.text = strDescription;
-
+        if (strTitle == "")
+        {
+            objFrameTitle.SetActive (false);
+            txtTitle.text = string.Empty;
+        }
+        else
+        {
+            objFrameTitle.SetActive (true);
+            txtTitle.text = strTitle;
+        }
         switch (bt)
         {
             case ButtonMode.OK:

@@ -22,13 +22,15 @@ public class ItemCoin : MonoBehaviour
 
     private void OnBuy ()
     {
+        Logger.E ("Item id: " + itemID);
+        Logger.E ("Payment type: " + paymentType);
         ApiManager.instance.BuyShop (itemID, paymentType);
     }
 
     public void SetData (JGetShopItem json)
     {
         txtCoinName.text = json.item_name[0];
-        //load image hero
+        itemID = json.item_id;
         string imagePath = BundleManager.instance.GetItemLoadPath (DownloadType.THUMB, json.item_type_id, json.item_id);
         BundleManager.instance.LoadImage (imgCoin, imagePath);
         priceIDR = long.Parse (json.price_idr);

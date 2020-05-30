@@ -43,20 +43,24 @@ SpriteAtlas:
     variantMultiplier: 1
     packables:
     - {fileID: 102900000, guid: 12d66afdad2b74f8c8660c7c4959c52b, type: 3}
-    totalSpriteSurfaceArea: 2452036
+    totalSpriteSurfaceArea: 4087525
     bindAsDefault: 1
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: 45fee540c005a4fafab3d81133aba381, type: 3}
+  - {fileID: 21300000, guid: b8d242117856c42e8bc0bd756666dff0, type: 3}
   - {fileID: 21300000, guid: a4ff05a18c17b40f5856dcdc649be4bc, type: 3}
   - {fileID: 21300000, guid: 563f77a10e41141eb983a1d668659779, type: 3}
   - {fileID: 21300000, guid: 798d0613c97914431a1a7af2ebbe11d4, type: 3}
+  - {fileID: 21300000, guid: fe59891369f824494a2ac8bf1efc0a0a, type: 3}
   - {fileID: 21300000, guid: 10863223ea9044abea80d960542ee658, type: 3}
   - {fileID: 21300000, guid: 50d18a53301064f639d7b8f742e527e5, type: 3}
   - {fileID: 21300000, guid: 0ab70e53af7044e74ba693e7b2da10c8, type: 3}
   - {fileID: 21300000, guid: ac32a0e3991e44378b6ed765061d2ae3, type: 3}
+  - {fileID: 21300000, guid: 83d1cf34692d9418398610ca7dbf2521, type: 3}
   - {fileID: 21300000, guid: ebcc4584b9fe141de9e6816b153ee204, type: 3}
   - {fileID: 21300000, guid: 128109844d2cb433d9fe750dbf9c5195, type: 3}
+  - {fileID: 21300000, guid: 1900b195173a94caeb03aacfe4425195, type: 3}
   - {fileID: 21300000, guid: 87dc0d954511a409d914b79abc01cee2, type: 3}
   - {fileID: 21300000, guid: 2e95f927c1d9d42438622f3133f3a679, type: 3}
   - {fileID: 21300000, guid: c1f5d997704014c84bea7b8a6a02c302, type: 3}
@@ -64,29 +68,38 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 47b2e6d7e3c06404783ca09d81a962b1, type: 3}
   - {fileID: 21300000, guid: 3318fa182762e4997aa48ec352ff28a4, type: 3}
   - {fileID: 21300000, guid: fea6cf7811dbc4e0cac10283cf7ff8ac, type: 3}
+  - {fileID: 21300000, guid: f2b912880342840e79e4fe353476ea51, type: 3}
   - {fileID: 21300000, guid: b3153519755b447ddb3f50f418894d69, type: 3}
   - {fileID: 21300000, guid: 3e9adc1bb48164870bd9c701ea00d860, type: 3}
   - {fileID: 21300000, guid: d5e355cb933e44a00a6f42be82236f2b, type: 3}
   - {fileID: 21300000, guid: 9b5092ebeddef4c1a95b16ee27063a8c, type: 3}
+  - {fileID: 21300000, guid: a1939c7cb1eec423ba8c73b49e4634f4, type: 3}
+  - {fileID: 21300000, guid: 3ab5599cdba9f45589b1968faeb453ef, type: 3}
   - {fileID: 21300000, guid: d6335ffc96ef04f36b2a144d2359ff4b, type: 3}
   - {fileID: 21300000, guid: bb23bf9dc14b64b678c23c58a83f951d, type: 3}
   - {fileID: 21300000, guid: 87919c6ecc1824113acaed60b0aeb635, type: 3}
+  - {fileID: 21300000, guid: 66d76d7ed33d443caa6523ba66a0d18f, type: 3}
   - {fileID: 21300000, guid: 10209aae2e1fb4d6f9f3614a62984f6e, type: 3}
+  - {fileID: 21300000, guid: be89434f31d9b4b0b947f9b70e1402c8, type: 3}
   - {fileID: 21300000, guid: fb0bae5f7d01943399b2f60c8945f4df, type: 3}
   - {fileID: 21300000, guid: 610fd56fdabe445a4a79fbb32261e229, type: 3}
   - {fileID: 21300000, guid: 1cd931ef805684ba595ba6182b11d252, type: 3}
   - {fileID: 21300000, guid: 7c27e7ff41780465a8781b6f9a917827, type: 3}
   m_PackedSpriteNamesToIndex:
   - frame_currency
+  - IC_Daily
   - btn_+
   - ic_transaction
   - btn_freechips
+  - btn_slot_oriental
   - ic_vip
   - ic_verificationmini
   - txt_poker
   - ic_mail
+  - frame_freechips
   - btn_tournament
   - btn_other
+  - IC_ads
   - btn_poker
   - ic_news
   - btn_minigame
@@ -94,14 +107,19 @@ SpriteAtlas:
   - btn_quickplay
   - ChineseBG
   - ic_rank
+  - IC_weekly
   - ic_friend
   - btn
   - IC_Coupon
   - btn_chat
+  - btn_sicbo
+  - IC_Quest
   - txt_SNG
   - txt_minigame
   - frame_broadcast
+  - btn_slot_western
   - ic_hero
+  - btn_right
   - txt_tournament
   - IC_Coin
   - pp

@@ -9,15 +9,22 @@ public enum SceneType
     HOME = 2,
     BEGIN = 3,
     LOGIN = 4,
-    PROFILE = 5,
-    SHOP = 6,
-    VERIFY = 7,
-    VIP = 8,
-    POKER_ROOM = 9,
-    POKER = 10,
-    SLOTO = 11,
-    //SICBO = 12,
-    MESSAGE = 12
+    COUPON = 5,
+    PROFILE = 6,
+    SHOP = 7,
+    VERIFY = 8,
+    VIP = 9,
+    POKER_ROOM = 10,
+    POKER = 11,
+    SLOTO = 12,
+    SICBO = 13,
+    SETTINGS = 14,
+    HERO = 15,
+    LEADERBOARD = 16,
+    FRIEND = 17,
+    OTHER_PROFILE = 18,
+    RECEIVE_ITEM = 19,
+    MESSAGE = 20
 }
 
 public class _SceneManager : MonoBehaviour
@@ -49,10 +56,15 @@ public class _SceneManager : MonoBehaviour
     private VipManager vipM;
     private PokerManager pokerM;
     private SlotoManagerScript slotoM;
+    private SicboManager sicboM;
     private BeginManager beginM;
     private LoginManager loginM;
     private ShopManager shopM;
     private PokerRoomManager proomM;
+    private SettingsManager settingsM;
+    private HeroManager heroM;
+    private LeaderboardManager leaderboardM;
+    private FriendManager friendM;
 
     private void Start ()
     {
@@ -141,6 +153,17 @@ public class _SceneManager : MonoBehaviour
         proomM = PokerRoomManager.instance;
         yield return _WFSUtility.wef;
         slotoM = FindObjectOfType<SlotoManagerScript> ();
+        yield return _WFSUtility.wef;
+        sicboM = SicboManager.instance;
+        yield return _WFSUtility.wef;
+        settingsM = SettingsManager.instance;
+        yield return _WFSUtility.wef;
+        heroM = HeroManager.instance;
+        yield return _WFSUtility.wef;
+        leaderboardM = LeaderboardManager.instance;
+        yield return _WFSUtility.wef;
+        friendM = FriendManager.instance;
+
         PhotonNetwork.ConnectUsingSettings ("v1.0");
         yield return _WFSUtility.wef;
         SetActiveSloto (false);
@@ -171,6 +194,11 @@ public class _SceneManager : MonoBehaviour
             case SceneType.VIP: vipM.SetCanvas (val); break;
             case SceneType.POKER: pokerM.SetCanvas (val); break;
             case SceneType.SLOTO: SetActiveSloto (val); break;
+            case SceneType.SICBO: sicboM.SetCanvas (val); break;
+            case SceneType.SETTINGS: settingsM.SetCanvas (val); break;
+            case SceneType.HERO: heroM.SetCanvas (val); break;
+            case SceneType.LEADERBOARD: leaderboardM.SetCanvas (val); break;
+            case SceneType.FRIEND: friendM.SetCanvas (val); break;
         }
     }
 
@@ -180,6 +208,7 @@ public class _SceneManager : MonoBehaviour
         {
             slotoM.gameObject.SetActive (true);
             slotoM.SetMoney ();
+            slotoM.Init ();
             mainCamera.gameObject.SetActive (false);
             activeSceneType = SceneType.SLOTO;
         }
@@ -203,12 +232,28 @@ public class _SceneManager : MonoBehaviour
                 Debug.Log ("Open Pause Menu");
                 //open pause menu
                 break;
+            case SceneType.SICBO:
+                Debug.Log ("Open Pause Menu");
+                break;
             case SceneType.SLOTO:
             case SceneType.PROFILE:
             case SceneType.SHOP:
             case SceneType.VERIFY:
             case SceneType.VIP:
+            case SceneType.SETTINGS:
+            case SceneType.LEADERBOARD:
+            case SceneType.FRIEND:
+            case SceneType.HERO:
                 SetActiveScene (activeSceneType, false);
+                break;
+            case SceneType.MESSAGE:
+                MessageManager.instance.Hide ();
+                break;
+            case SceneType.OTHER_PROFILE:
+                OtherProfileManager.instance.Hide ();
+                break;
+            case SceneType.RECEIVE_ITEM:
+                ReceiveItemManager.instance.Hide ();
                 break;
         }
     }
@@ -219,6 +264,7 @@ public class _SceneManager : MonoBehaviour
         profileM.UpdateCoinAndCoupon ();
         shopM.UpdateCoinAndCoupon ();
         proomM.UpdateCoinAndCoupon ();
+        heroM.UpdateCoinAndCoupon ();
     }
 
     private void OnPositiveClicked ( int returnCode )
