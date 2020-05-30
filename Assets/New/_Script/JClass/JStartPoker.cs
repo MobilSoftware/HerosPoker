@@ -1,6 +1,12 @@
 ﻿[System.Serializable]
 public class JStartPoker
 {
+    public JPoker poker;
+}
+
+[System.Serializable]
+public struct JPoker
+{
     public int poker_round_id;
     public string room_seed;
     public string room_bet_coin;

@@ -11,7 +11,7 @@ public class StandHero : MonoBehaviour
 
     private Vector3 scaleLubu = new Vector3 (1.5f, 1.5f, 1f);
 
-    public void Reset ()
+    private void Reset ()
     {
         if (spineHero != null)
         {
@@ -30,17 +30,26 @@ public class StandHero : MonoBehaviour
                 imgHero.gameObject.SetActive (false);
                 break;
             case 8:
+                Reset ();
                 imgHero.sprite = PokerManager.instance.sprMusashi;
                 imgHero.gameObject.SetActive (true);
                 break;
             case 9:
+                Reset ();
                 imgHero.sprite = PokerManager.instance.sprNapoleon;
                 imgHero.gameObject.SetActive (true);
                 break;
             case 10:
+                Reset ();
                 imgHero.sprite = PokerManager.instance.sprGenghis;
                 imgHero.gameObject.SetActive (true);
                 break;
+            case 18:
+                Reset ();
+                imgHero.sprite = PokerManager.instance.sprAlexander;
+                imgHero.gameObject.SetActive (true);
+                break;
+
         }
     }
 

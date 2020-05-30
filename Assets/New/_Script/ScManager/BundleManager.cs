@@ -122,7 +122,6 @@ public class BundleManager : MonoBehaviour
             {
                 Directory.CreateDirectory (_path);
                 File.WriteAllBytes (path, handler.data);
-                Logger.E (_path);
             }
             catch (Exception e)
             {
@@ -156,9 +155,9 @@ public class BundleManager : MonoBehaviour
         {
             JItem item = items[i];
             string thumbPath = GetItemDownloadPath (DownloadType.THUMB, item.item_type_id, item.item_id, item.asset_version);
-            string thumbPathWithFilename = thumbPath + "/thumb";
+            string thumbPathWithFilename = thumbPath + "/image";
             string assetPath = GetItemDownloadPath (DownloadType.ASSET, item.item_type_id, item.item_id, item.asset_version);
-            Logger.E (assetPath);
+            //Logger.E (assetPath);
             string assetPathWithFilename = assetPath + "/bundle.unity3d";
 
             if (item.thumb_url.Length > 0 && !File.Exists (thumbPathWithFilename))
@@ -211,7 +210,7 @@ public class BundleManager : MonoBehaviour
             {
                 Directory.CreateDirectory (_path);
                 File.WriteAllBytes (path, handler.data);
-                Logger.E (_path);
+                //Logger.E (_path);
             }
             catch (Exception e)
             {
@@ -235,7 +234,7 @@ public class BundleManager : MonoBehaviour
             {
                 Directory.CreateDirectory (_path);
                 File.WriteAllBytes (path, handler.data);
-                Logger.E ("saved path: " + _path);
+                //Logger.E ("saved path: " + _path);
             }
             catch (Exception e)
             {
@@ -247,7 +246,7 @@ public class BundleManager : MonoBehaviour
 
     IEnumerator _Loading ()
     {
-        while (downloadedCount != downloadCount)
+        while (downloadedCount != downloadCount && downloadCount > 1)
         {
             float fDownloaded = downloadedCount;
             float fDownload = downloadCount;
@@ -360,7 +359,7 @@ public class BundleManager : MonoBehaviour
 
     private IEnumerator _LoadImage ( RawImage imgIcon, string _path )
     {
-        WWW www = new WWW ("file:///" + _path + "/thumb");
+        WWW www = new WWW ("file:///" + _path);
         yield return www;
         imgIcon.texture = www.texture;
     }

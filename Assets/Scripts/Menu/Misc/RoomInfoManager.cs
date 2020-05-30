@@ -118,6 +118,7 @@ public class RoomInfoManager : MonoBehaviour
 
     public void JoinRandomRoom()
     {
+        Logger.W ("random room joining");
         //string city = GlobalVariables.environment.ToString();
         string city = "prototype";
         string gametype = GlobalVariables.gameType.ToString();
@@ -312,7 +313,7 @@ public class RoomInfoManager : MonoBehaviour
     private IEnumerator LoadGame()
     {
         Resources.UnloadUnusedAssets ();
-
+        Logger.W ("loading game");
         yield return _WFSUtility.wfs05;
 
         if (GlobalVariables.gameType == GameType.TexasPoker)
@@ -320,6 +321,9 @@ public class RoomInfoManager : MonoBehaviour
             _PokerGameHUD.instance.Show();
 
             PhotonTexasPokerManager.instance.PrepareGame();
+        } else if (GlobalVariables.gameType == GameType.Sicbo)
+        {
+            SicboManager.instance.PrepareGame ();
         }
 
 

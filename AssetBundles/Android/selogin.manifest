@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 2939172596
+CRC: 2166486195
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 6d4bea005d5ad06517bbb4f1adf5d52b
+    Hash: 80c4f6455b06ab65f58234ad218a1235
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 9bdeefae936be3d2d2d63489334f36ca
+    Hash: fa1631c73a875a8373b20963f4a7814a
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -28,6 +28,8 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
 - Class: 114
+  Script: {fileID: 11500000, guid: e58b5c263d280451faa41e8a7efea0b5, type: 3}
+- Class: 114
   Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
@@ -46,8 +48,6 @@ ClassTypes:
 - Class: 223
   Script: {instanceID: 0}
 - Class: 224
-  Script: {instanceID: 0}
-- Class: 687078895
   Script: {instanceID: 0}
 Assets:
 - Assets/New/_Scene/SeLogin.unity

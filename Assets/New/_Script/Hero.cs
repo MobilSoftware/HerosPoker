@@ -21,16 +21,20 @@ public class Hero : MonoBehaviour
 
     public void LoadFromBundle ( int _costumeID, bool _isMine )
     {
+        Logger.E ("loading bundle");
         StartCoroutine (_LoadFromBundle (_costumeID, _isMine));
     }
 
     IEnumerator _LoadFromBundle ( int _costumeID, bool _isMine )
     {
+        Logger.E ("costumeID: " + _costumeID);
         AssetBundle ab = AssetBundle.LoadFromFile (BundleManager.instance.GetItemLoadPath (DownloadType.ASSET, 6, _costumeID));
         GameObject objHero = (GameObject) ab.LoadAsset (_costumeID + "_1", typeof (GameObject));
         _SpineObject hero = objHero.GetComponent<_SpineObject> ();
+
         if (hero)
         {
+            Logger.E ("hero not null");
             spineHero = Instantiate (hero, this.transform);
             if (_isMine)
                 SetMyPartBack ();
@@ -43,8 +47,8 @@ public class Hero : MonoBehaviour
             //}
             //else if (_costumeID == 7)
             //{
-                spineHero.transform.localScale = Vector3.one;
-                spineHero.transform.localPosition = Vector3.zero;
+            spineHero.transform.localScale = Vector3.one;
+            spineHero.transform.localPosition = posLuBu;
             //}
             spineHero.StartRandomMove ();
         }

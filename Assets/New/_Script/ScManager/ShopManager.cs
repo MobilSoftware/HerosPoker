@@ -28,6 +28,8 @@ public class ShopManager : MonoBehaviour
     public Sprite sprToggleOff;
     public Color colTextToggleOn;
     public Color colTextToggleOff;
+    public Text txtTogCoin;
+    public Text txtTogHero;
     public Toggle togCoin;
     public Toggle togHero;
     public Button btnClose;
@@ -44,10 +46,13 @@ public class ShopManager : MonoBehaviour
     private bool isSettingJson;
     private SceneType prevSceneType;
     private List<JGetShopItem> jsonItemCoins;
+    private List<JGetShopItem> jsonItemHeroes;
+    private List<ItemHero> itemHeroes;
     private JGetShopItem[] sortedItemHeroes;
 
     private void Start ()
     {
+        isSettingJson = true;
         btnClose.onClick.AddListener (Hide);
         togCoin.onValueChanged.AddListener (OnToggle);
         togHero.onValueChanged.AddListener (OnToggle);
@@ -59,18 +64,32 @@ public class ShopManager : MonoBehaviour
         {
             if (togCoin.isOn)
             {
-                togCoin.image.sprite = sprToggleOn;
-                togHero.image.sprite = sprToggleOff;
-                objCoinContainer.SetActive (true);
-                objHeroContainer.SetActive (false);
+                OpenCoinTab ();
             } else if (togHero.isOn)
             {
-                togCoin.image.sprite = sprToggleOff;
-                togHero.image.sprite = sprToggleOn;
-                objCoinContainer.SetActive (false);
-                objHeroContainer.SetActive (true);
+                OpenHeroTab ();
             }
         }
+    }
+
+    public void OpenHeroTab ()
+    {
+        togCoin.image.sprite = sprToggleOff;
+        togHero.image.sprite = sprToggleOn;
+        txtTogCoin.color = colTextToggleOff;
+        txtTogHero.color = colTextToggleOn;
+        objCoinContainer.SetActive (false);
+        objHeroContainer.SetActive (true);
+    }
+
+    public void OpenCoinTab ()
+    {
+        togCoin.image.sprite = sprToggleOn;
+        togHero.image.sprite = sprToggleOff;
+        txtTogCoin.color = colTextToggleOn;
+        txtTogHero.color = colTextToggleOff;
+        objCoinContainer.SetActive (true);
+        objHeroContainer.SetActive (false);
     }
 
     public void SetCanvas (bool val )
@@ -102,7 +121,7 @@ public class ShopManager : MonoBehaviour
     {
         isSettingJson = true;
         jsonItemCoins = new List<JGetShopItem> ();
-        List<JGetShopItem> jsonItemHeroes = new List<JGetShopItem> ();
+        jsonItemHeroes = new List<JGetShopItem> ();
         for (int i = 0; i < json.items.Length; i++)
         {
             if (json.items[i].item_type_id == 1)
@@ -110,9 +129,11 @@ public class ShopManager : MonoBehaviour
             else if (json.items[i].item_type_id == 5)
                 jsonItemHeroes.Add (json.items[i]);
         }
-
+        HeroManager.instance.SetJson (jsonItemHeroes);
         //sort here
+        Logger.E ("json item hero length: " + jsonItemHeroes.Count);
         sortedItemHeroes = jsonItemHeroes.OrderBy (x => x.is_hero_owned ? 1 : 0).ThenBy (x => (x.is_new == 0) ? 0 : 1).ThenBy (x => int.Parse (x.price_idr)).ThenBy (x => long.Parse (x.price_coin)).ToArray ();
+        Logger.E ("sorted length: " + sortedItemHeroes.Length);
         //
 
         isSettingJson = false;
@@ -147,10 +168,12 @@ public class ShopManager : MonoBehaviour
         if (sortedItemHeroes == null)
             return;
 
+        itemHeroes = new List<ItemHero> ();
         for (int i = 0; i < sortedItemHeroes.Length; i++)
         {
-            ItemHero ih = Instantiate (prefabItemHero, parentCoin);
+            ItemHero ih = Instantiate (prefabItemHero, parentHero);
             ih.SetData (sortedItemHeroes[i]);
+            itemHeroes.Add (ih);
         }
     }
 
@@ -165,5 +188,37 @@ public class ShopManager : MonoBehaviour
     {
         tmpCoin.text = PlayerData.owned_coin.toShortCurrency ();
         tmpCoupon.text = PlayerData.owned_coupon.toCouponShortCurrency ();
+    }
+
+    public void UpdateStatus (JBuyShop json )
+    {
+        if (json.item.item_type_id == 5)
+        {
+            for (int i = 0; i < jsonItemHeroes.Count; i++)
+            {
+                for (int j = 0; j < json.player.costume_owned.Length; j++)
+                {
+                    if (jsonItemHeroes[i].default_item_id == json.player.costume_owned[j])
+                    {
+                        jsonItemHeroes[i].is_costume_owned = true;
+                        jsonItemHeroes[i].is_hero_owned = true;
+                    }
+                }
+            }
+
+            sortedItemHeroes = jsonItemHeroes.OrderBy (x => x.is_hero_owned ? 1 : 0).ThenBy (x => (x.is_new == 0) ? 0 : 1).ThenBy (x => int.Parse (x.price_idr)).ThenBy (x => long.Parse (x.price_coin)).ToArray ();
+            for (int x = 0; x < itemHeroes.Count; x++)
+            {
+                itemHeroes[x].SetData (sortedItemHeroes[x]);
+            }
+
+            HeroManager.instance.UpdateStatusOwned (jsonItemHeroes);
+        }
+    }
+
+    public void Logout()
+    {
+        isInit = false;
+        isSettingJson = true;
     }
 }

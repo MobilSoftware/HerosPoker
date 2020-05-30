@@ -48,23 +48,28 @@ MonoBehaviour:
   - RPC_ForceSyncBotMoney
   - RPC_IMBankrupt
   - RPC_InitializeCatchup
+  - RPC_Initiate
+  - RPC_PrepareSicboRound
   - RPC_ReceiveAvaterExpression
   - RPC_RequestInitializeSync
+  - RPC_RequestSicboSlot
   - RPC_RequestSlot
+  - RPC_ReturnSicboSlot
   - RPC_ReturnSlot
   - RPC_SendAllIn
   - RPC_SendCheckCall
   - RPC_SendFold
   - RPC_SendRaise
   - RPC_SendRoomChat
+  - RPC_SendRStartSicbo
   - RPC_SendThrowItem
+  - RPC_SetOthersPokerData
   - RPC_StartInitialize
   - RPC_StartMatchTogether
   - RPC_SyncCalculateEndRound
   - RPC_SyncCatchupOnTable
   - RPC_SyncNextTurn
   - RPC_TakeYourPotTogether
-  - SetMyStartPokerRPC
-  - RPC_SetOthersPokerData
-  - RPC_SicboRequestSlot
+  - RPC_InitiateSync
+  - RPC_RequestSicboSync
   DisableAutoOpenWizard: 1

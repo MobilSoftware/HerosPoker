@@ -29,7 +29,7 @@ namespace Rays.Utilities
                 WWWForm form = new WWWForm ();
                 if (api.jsonData.Length > 0)
                 {
-                    if (api.isDigested)
+                    if (api.isDigested == 1)
                     {
                         string postid = (api.otp.Length == 0 ? Util.RandomChar (32) : api.otp);
                         form.AddField ("post_id", postid.Trim ());
@@ -55,7 +55,6 @@ namespace Rays.Utilities
                     }
                     else
                     {
-                        //if (DEVELOPMENT) Debug.Log(api.uri + " response return = " + www.downloadHandler.text);
                         curTime = (int) (System.DateTime.UtcNow - epochStart).TotalSeconds;
                         PlayerPrefs.SetInt (api.uri + "_time", curTime);
                         PlayerPrefs.SetString (api.uri + "_value", www.downloadHandler.text);
@@ -66,9 +65,9 @@ namespace Rays.Utilities
             }
         }
 
-        public static IEnumerator ReadChatText ( ApiBridge.ErrorDelegate returnError, ApiBridge.ResponseDelegate returnPost, string uri, string defaultNotFound = "" )
+        public static IEnumerator ReadTempFile ( ApiBridge apiBridge, ApiBridge.API api, string defaultNotFound = "" )
         {
-            using (UnityWebRequest www = UnityWebRequest.Get (CHATURI + uri))
+            using (UnityWebRequest www = UnityWebRequest.Get (CHATURI + api.uri))
             {
                 www.timeout = 30;
                 www.chunkedTransfer = false;
@@ -77,17 +76,23 @@ namespace Rays.Utilities
                 {
                     if (www.isHttpError && !www.isNetworkError)
                     {
-                        returnPost (defaultNotFound, uri);
+                        api.jsonReturn = defaultNotFound;
+                        apiBridge.GoodResponse (api);
                     }
                     else
                     {
                         string[] tempError = ParseUnityError (www.error);
-                        returnError ((www.isNetworkError ? 500 : 501), new string[] { tempError[0], tempError[1] }, uri);
+                        if (DEVELOPMENT) tempError[0] = api.uri + " = " + www.error;
+                        if (DEVELOPMENT) Debug.Log (tempError[0]);
+                        api.errorCode = (www.isNetworkError ? 500 : 501);
+                        api.errorMsg = new string[] { tempError[0], tempError[1] };
+                        apiBridge.ParseError (api);
                     }
                 }
                 else
                 {
-                    returnPost (www.downloadHandler.text, uri);
+                    api.jsonReturn = www.downloadHandler.text;
+                    apiBridge.GoodResponse (api);
                 }
             }
         }

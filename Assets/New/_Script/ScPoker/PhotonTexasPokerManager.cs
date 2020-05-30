@@ -35,6 +35,8 @@ public class PhotonTexasPokerManager : PunBehaviour
 
     readonly int maxPlayer = 7;
     bool waitingResponseSync = false;
+    //[HideInInspector]
+    //public bool isPhotonFire;
 
     private void Awake ()
     {
@@ -53,7 +55,7 @@ public class PhotonTexasPokerManager : PunBehaviour
     {
         _PokerGameManager.startBet = GlobalVariables.MinBetAmount;
         InitialPlayerProperties (PhotonNetwork.player);
-
+        Logger.E ("bb");
         photonView.RPC (PhotonEnums.RPC.RPC_RequestSlot, PhotonTargets.MasterClient);
         //int mySlot = GetAvailableRoomSlotIndex ();
 
@@ -121,6 +123,7 @@ public class PhotonTexasPokerManager : PunBehaviour
             //else
                 RespondAssignBot ();
 
+            Logger.E ("aa");
             StartCoroutine (CheckPlayers ());
         }
 
@@ -453,12 +456,14 @@ public class PhotonTexasPokerManager : PunBehaviour
 
     public void PrepareRound () //Only Master
     {
+        Logger.E ("c");
         photonView.RPC (PhotonEnums.RPC.PrepareRoundRPC, PhotonTargets.AllViaServer);
     }
 
     [PunRPC]
     protected void PrepareRoundRPC ()
     {
+        Logger.E ("b");
         msgDelayPoker = ""; //From Next Game Round
         PokerManager.instance.uiRoundRestart.Show ();
     }
@@ -502,6 +507,12 @@ public class PhotonTexasPokerManager : PunBehaviour
             int[] playerIDs = GetPlayerIDs (PhotonEnums.Player.Active);
 
             ApiManager.instance.pokerPlayers = GetPokerPlayers (PhotonEnums.Player.Active);
+            for (int i = 0; i < ApiManager.instance.pokerPlayers.Length; i++)
+            {
+                Logger.E ("ac pokerplayers: " + ApiManager.instance.pokerPlayers[i].player_id);
+            }
+            Logger.E ("room name: " + PhotonNetwork.room.Name);
+            Logger.E ("minAmount: " + GlobalVariables.MinBetAmount);
             ApiManager.instance.StartPoker (PhotonNetwork.room.Name, GlobalVariables.MinBetAmount);
             yield return _WFSUtility.wfs3;
 
@@ -742,17 +753,17 @@ public class PhotonTexasPokerManager : PunBehaviour
                 Debug.LogError ("inside bankrupt");
                 Bankrupt ();
             }
-            else if (PlayerData.owned_coin == 0 && PlayerData.charityCount > 0)
-            {
-                //auto sedekah 2M
-                Debug.LogError ("inside sedekah");
-                //MessageManager.instance.Show (this.gameObject, "Kamu mendapatkan sedekah sebesar 2M Koin!");
-                PokerManager.instance.uiInject.SetActive (true);
-                PlayerData.owned_coin += 2000;
+            //else if (PlayerData.owned_coin == 0 && PlayerData.charityCount > 0)
+            //{
+            //    //auto sedekah 2M
+            //    Debug.LogError ("inside sedekah");
+            //    //MessageManager.instance.Show (this.gameObject, "Kamu mendapatkan sedekah sebesar 2M Koin!");
+            //    PokerManager.instance.uiInject.SetActive (true);
+            //    PlayerData.owned_coin += 2000;
 
-                _PokerGameHUD.instance.buyInHUD.AutoBuyIn ();
-                PlayerData.charityCount--;
-            }
+            //    _PokerGameHUD.instance.buyInHUD.AutoBuyIn ();
+            //    PlayerData.charityCount--;
+            //}
             else
             {
                 Debug.LogError ("inside else");
@@ -809,9 +820,12 @@ public class PhotonTexasPokerManager : PunBehaviour
         {
             RefreashPWithBot();
             if (pWithBot.Count < 2)
-                ForceStopTheMatch();
+                ForceStopTheMatch ();
             else
-                PrepareRound();
+            {
+                Logger.E ("z");
+                PrepareRound ();
+            }
         }
     }
 
@@ -933,6 +947,7 @@ public class PhotonTexasPokerManager : PunBehaviour
         if (checkPlayersRoutine != null)
             StopCoroutine (checkPlayersRoutine);
 
+        Logger.E ("yy");
         checkPlayersRoutine = StartCoroutine (CheckPlayers ());
     }
 
@@ -959,6 +974,7 @@ public class PhotonTexasPokerManager : PunBehaviour
 
         if (PhotonNetwork.room != null) //player ready to start
         {
+            Logger.E ("x");
             PokerManager.instance.uiWaitingPlayers.Hide ();
             PrepareRound ();
         }
@@ -1037,8 +1053,11 @@ public class PhotonTexasPokerManager : PunBehaviour
     public ApiBridge.PokerPlayer[] GetPokerPlayers (string varFilter = "" )
     {
         ApiBridge.PokerPlayer[] apiPlayers = new ApiBridge.PokerPlayer[8];
+        for (int a = 0; a < apiPlayers.Length; a++)
+        {
+            apiPlayers[a] = new ApiBridge.PokerPlayer ();
+        }
         int count = 0;
-
         for (int i = 0; i < pWithBot.Count; i++)
         {
             bool bActive = PhotonUtility.GetPlayerProperties<bool> (pWithBot[i], varFilter);
@@ -1046,7 +1065,7 @@ public class PhotonTexasPokerManager : PunBehaviour
             {
                 long coin = PhotonUtility.GetPlayerProperties<long> (pWithBot[i], PhotonEnums.Player.Money);
                 apiPlayers[count] = new ApiBridge.PokerPlayer ();
-                apiPlayers[count].Start (count, int.Parse (pWithBot[i].NickName), coin);
+                apiPlayers[count].Start (count + 1, int.Parse (pWithBot[i].NickName), coin);
                 count++;
             }
         }
@@ -1507,34 +1526,45 @@ public class PhotonTexasPokerManager : PunBehaviour
     #region Callbacks Photon
     public override void OnDisconnectedFromPhoton()
     {
-        //If the player's in game then quit message
-        if (PhotonNetwork.room != null)
-            MessageManager.instance.Show (gameObject, "Koneksi bermasalah", ButtonMode.OK, 2);
+        //if (isPhotonFire)
+        //{
+            //If the player's in game then quit message
+            if (PhotonNetwork.room != null)
+                MessageManager.instance.Show (gameObject, "Koneksi bermasalah", ButtonMode.OK, 2);
+        //}
     }
 
     public override void OnMasterClientSwitched(PhotonPlayer newMasterClient)
     {
         //LoginSceneManager.Instance.uiToastBox.Show("Waiting for new host");
-
-        if (PhotonNetwork.isMasterClient)
-            RespondAssignBot();
+        //if (isPhotonFire)
+        //{
+            if (PhotonNetwork.isMasterClient)
+                RespondAssignBot ();
+        //}
     }
 
     public override void OnPhotonJoinRoomFailed ( object[] codeAndMsg )
     {
-        Photon_Events.FireOnFailedJoinRoomEvent (true);
+        //if (isPhotonFire)
+        //{
+            Photon_Events.FireOnFailedJoinRoomEvent (true);
 
-        Logger.D (codeAndMsg[0] + " OnPhotonRandomJoinFailed : " + codeAndMsg[1]);
-        //LoginSceneManager.Instance.uiBusyIndicator.Hide ();
+            Logger.D (codeAndMsg[0] + " OnPhotonRandomJoinFailed : " + codeAndMsg[1]);
+            //LoginSceneManager.Instance.uiBusyIndicator.Hide ();
 
-        MessageManager.instance.Show (null, codeAndMsg[0].ToString () == "32765" ? "Ruangan sudah penuh" : "Permainan sudah selesai");
+            MessageManager.instance.Show (null, codeAndMsg[0].ToString () == "32765" ? "Ruangan sudah penuh" : "Permainan sudah selesai");
+        //}
         //32758 Game Doesn't exist
         //32765 Game Full
     }
 
     public override void OnPhotonRandomJoinFailed ( object[] codeAndMsg )
     {
-        Photon_Events.FireOnFailedJoinRandomRoomEvent (true);
+        //if (isPhotonFire)
+        //{
+            Photon_Events.FireOnFailedJoinRandomRoomEvent (true);
+        //}
     }
 
     public override void OnJoinedLobby ()
@@ -1543,12 +1573,18 @@ public class PhotonTexasPokerManager : PunBehaviour
 
     public override void OnJoinedRoom ()
     {
-        Photon_Events.FireOnJoinedRoomEvent (true);
+        //if (isPhotonFire)
+        //{
+            Photon_Events.FireOnJoinedRoomEvent (true);
+        //}
     }
 
     public override void OnCreatedRoom ()
     {
-        Photon_Events.FireOnCreatedRoomEvent (true);
+        //if (isPhotonFire)
+        //{
+            Photon_Events.FireOnCreatedRoomEvent (true);
+        //}
     }
 
     public override void OnPhotonPlayerConnected ( PhotonPlayer newPlayer )
@@ -1559,7 +1595,10 @@ public class PhotonTexasPokerManager : PunBehaviour
     // when a player disconnects from the room, update the spawn/position order for all
     public override void OnPhotonPlayerDisconnected ( PhotonPlayer disconnetedPlayer )
     {
-        OtherPlayerDisconnect (disconnetedPlayer);
+        //if (isPhotonFire)
+        //{
+            OtherPlayerDisconnect (disconnetedPlayer);
+        //}
     }
 
     [PunRPC]

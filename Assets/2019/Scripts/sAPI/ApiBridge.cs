@@ -10,14 +10,14 @@ public class ApiBridge : MonoBehaviour
         public string uri;
         public string rFuncName;
         public string jsonData;
-        public bool isDigested;
+        public int isDigested; //-1. Temp File, 0. False, 1. True
         public string otp;
         public int cacheTime;
         public string jsonReturn;
         public int errorCode;
         public string[] errorMsg;
 
-        public API ( string _uri, string _rFuncName, string _jsonData = "", bool _isDigested = false, string _otp = "" )
+        public API ( string _uri, string _rFuncName, string _jsonData = "", int _isDigested = 0, string _otp = "" )
         {
             seed = UnityEngine.Random.Range (1, int.MaxValue);
             uri = _uri;
@@ -128,6 +128,17 @@ public class ApiBridge : MonoBehaviour
         Gopay, Dana, Unipin
     }
 
+    public enum FriendType
+    {
+        FriendList, FriendRequest, FriendRequestMe, FriendBlock, FriendBlockMe, FriendChatMe, FriendGiftMe
+    }
+
+    public enum SendFriendType
+    {
+        SendFriendRemove, SendFriendRequest, ResponseFriendRequestMeYes, ResponseFriendRequestMeNo,
+        SendFriendBlock, SendFriendUnBlock, SendFriendReport
+    }
+
     [Serializable]
     public class ResponseParam
     {
@@ -176,13 +187,6 @@ public class ApiBridge : MonoBehaviour
     private string apiToken = "";
     private string apiOtp = "";
 
-    private bool runBackground = true;
-
-    public void RunBackGround ( bool isRun )
-    {
-        runBackground = isRun;
-    }
-
 
 
     //Get Version
@@ -208,7 +212,7 @@ public class ApiBridge : MonoBehaviour
         param.device_detail = "(" + SystemInfo.operatingSystem + ") " + SystemInfo.deviceModel + " (" + SystemInfo.deviceName + ")";
         param.apk_ver = Application.version + (Congest.DEVELOPMENT ? "d" : "");
         string paramJson = JsonUtility.ToJson (param);
-        API api = new API ("getversion.php", "RGetVersion", paramJson, true);
+        API api = new API ("getversion.php", "RGetVersion", paramJson, 1);
         param = null; paramJson = "";
         StartCoroutine (Congest.SendPOST (this, api));
         return api.seed;
@@ -231,7 +235,7 @@ public class ApiBridge : MonoBehaviour
         param.device_type = (int) Application.platform;
         param.otp_type = otpType;
         string paramJson = JsonUtility.ToJson (param);
-        API api = new API ("getotp.php", "RGetOtp", paramJson, true);
+        API api = new API ("getotp.php", "RGetOtp", paramJson, 1);
         param = null; paramJson = "";
         StartCoroutine (Congest.SendPOST (this, api));
         return api.seed;
@@ -264,7 +268,7 @@ public class ApiBridge : MonoBehaviour
         param.apk_ver = Application.version + (Congest.DEVELOPMENT ? "d" : "");
         string paramJson = JsonUtility.ToJson (param);
         if (otp.Length > 0) apiOtp = otp;
-        API api = new API ("userlogin.php", "RUserLogin", paramJson, true, apiOtp);
+        API api = new API ("userlogin.php", "RUserLogin", paramJson, 1, apiOtp);
         param = null; paramJson = "";
         if (apiOtp.Length > 0)
         {
@@ -289,7 +293,7 @@ public class ApiBridge : MonoBehaviour
             param.player_id = apiPlayerId;
             param.token = apiToken;
             string paramJson = JsonUtility.ToJson (param);
-            API api = new API ("getnews.php", "RGetNews", paramJson, true);
+            API api = new API ("getnews.php", "RGetNews", paramJson, 1);
             param = null; paramJson = "";
             StartCoroutine (Congest.SendPOST (this, api));
             return api.seed;
@@ -308,7 +312,7 @@ public class ApiBridge : MonoBehaviour
             param.player_id = apiPlayerId;
             param.token = apiToken;
             string paramJson = JsonUtility.ToJson (param);
-            API api = new API ("gethome.php", "RGetHome", paramJson, true);
+            API api = new API ("gethome.php", "RGetHome", paramJson, 1);
             param = null; paramJson = "";
             StartCoroutine (Congest.SendPOST (this, api));
             return api.seed;
@@ -334,7 +338,7 @@ public class ApiBridge : MonoBehaviour
             param.token = apiToken;
             param.friend_id = friendId;
             string paramJson = JsonUtility.ToJson (param);
-            API api = new API ("getprofile.php", "RGetProfile", paramJson, true);
+            API api = new API ("getprofile.php", "RGetProfile", paramJson, 1);
             param = null; paramJson = "";
             StartCoroutine (Congest.SendPOST (this, api));
             return api.seed;
@@ -360,7 +364,7 @@ public class ApiBridge : MonoBehaviour
             param.token = apiToken;
             param.event_id = eventId;
             string paramJson = JsonUtility.ToJson (param);
-            API api = new API ("getevent.php", "RGetEvent", paramJson, true);
+            API api = new API ("getevent.php", "RGetEvent", paramJson, 1);
             param = null; paramJson = "";
             StartCoroutine (Congest.SendPOST (this, api));
             return api.seed;
@@ -375,6 +379,8 @@ public class ApiBridge : MonoBehaviour
     private class HeroParam : TokenParam
     {
         public int hero_gender;
+        public int hero_id;
+        public int costume_id;
     }
 
     public int GetHero ( int heroGender = 0, int playerId = 0, string token = "" )
@@ -386,7 +392,7 @@ public class ApiBridge : MonoBehaviour
             param.token = apiToken;
             param.hero_gender = heroGender;
             string paramJson = JsonUtility.ToJson (param);
-            API api = new API ("gethero.php", "RGetHero", paramJson, true);
+            API api = new API ("gethero.php", "RGetHero", paramJson, 1);
             param = null; paramJson = "";
             StartCoroutine (Congest.SendPOST (this, api));
             return api.seed;
@@ -397,22 +403,16 @@ public class ApiBridge : MonoBehaviour
 
 
     //Get Costume
-    [Serializable]
-    private class CostumeParam : TokenParam
-    {
-        public int hero_id;
-    }
-
     public int GetCostume ( int heroId = 0, int playerId = 0, string token = "" )
     {
         if (ParseToken (playerId, token))
         {
-            CostumeParam param = new CostumeParam ();
+            HeroParam param = new HeroParam ();
             param.player_id = apiPlayerId;
             param.token = apiToken;
             param.hero_id = heroId;
             string paramJson = JsonUtility.ToJson (param);
-            API api = new API ("getcostume.php", "RGetCostume", paramJson, true);
+            API api = new API ("getcostume.php", "RGetCostume", paramJson, 1);
             param = null; paramJson = "";
             StartCoroutine (Congest.SendPOST (this, api));
             return api.seed;
@@ -427,12 +427,12 @@ public class ApiBridge : MonoBehaviour
     {
         if (ParseToken (playerId, token))
         {
-            CostumeParam param = new CostumeParam ();
+            HeroParam param = new HeroParam ();
             param.player_id = apiPlayerId;
             param.token = apiToken;
             param.hero_id = heroId;
             string paramJson = JsonUtility.ToJson (param);
-            API api = new API ("sethero.php", "RSetHero", paramJson, true);
+            API api = new API ("sethero.php", "RSetHero", paramJson, 1);
             param = null; paramJson = "";
             StartCoroutine (Congest.SendPOST (this, api));
             return api.seed;
@@ -443,22 +443,16 @@ public class ApiBridge : MonoBehaviour
 
 
     //Set Costume
-    [Serializable]
-    private class SetCostumeParam : TokenParam
-    {
-        public int costume_id;
-    }
-
     public int SetCostume ( int costumeId = 0, int playerId = 0, string token = "" )
     {
         if (ParseToken (playerId, token))
         {
-            SetCostumeParam param = new SetCostumeParam ();
+            HeroParam param = new HeroParam ();
             param.player_id = apiPlayerId;
             param.token = apiToken;
             param.costume_id = costumeId;
             string paramJson = JsonUtility.ToJson (param);
-            API api = new API ("setcostume.php", "RSetCostume", paramJson, true);
+            API api = new API ("setcostume.php", "RSetCostume", paramJson, 1);
             param = null; paramJson = "";
             StartCoroutine (Congest.SendPOST (this, api));
             return api.seed;
@@ -486,7 +480,7 @@ public class ApiBridge : MonoBehaviour
             param.token = apiToken;
             param.item_type = itemType;
             string paramJson = JsonUtility.ToJson (param);
-            API api = new API ("getshop.php", "RGetShop", paramJson, true);
+            API api = new API ("getshop.php", "RGetShop", paramJson, 1);
             param = null; paramJson = "";
             StartCoroutine (Congest.SendPOST (this, api));
             return api.seed;
@@ -497,7 +491,7 @@ public class ApiBridge : MonoBehaviour
 
 
     //Buy Shop
-    public int BuyShop ( int itemId, int itemType = 0, string invoiceId = "", int playerId = 0, string token = "", string otp = "" )
+    public int BuyShop ( int itemId, int paymentType = 0, string invoiceId = "", int playerId = 0, string token = "", string otp = "" )
     {
         if (ParseToken (playerId, token))
         {
@@ -505,15 +499,15 @@ public class ApiBridge : MonoBehaviour
             param.player_id = apiPlayerId;
             param.token = apiToken;
             param.item_id = itemId;
-            param.item_type = itemType;
+            param.item_type = paymentType;
             param.invoice_id = invoiceId;
             param.device_id = SystemInfo.deviceUniqueIdentifier;
             param.device_type = (int) Application.platform;
             string paramJson = JsonUtility.ToJson (param);
             if (otp.Length > 0) apiOtp = otp;
-            API api = new API ("buyshop.php", "RBuyShop", paramJson, true, (param.item_type == 0 ? apiOtp : ""));
+            API api = new API ("buyshop.php", "RBuyShop", paramJson, 1, (param.item_type == 0 ? apiOtp : ""));
             param = null; paramJson = "";
-            if (itemType == 0 && apiOtp.Length == 0)
+            if (paymentType == 0 && apiOtp.Length == 0)
             {
                 api.errorCode = 502;
                 ParseError (api);
@@ -526,6 +520,455 @@ public class ApiBridge : MonoBehaviour
         }
         return 0;
     }
+
+
+
+    //Get Friend
+    [Serializable]
+    private class FriendParam : TokenParam
+    {
+        public int friend_id;
+        public int friend_type;
+        public string notes;
+    }
+
+    public int GetFriend ( int friendId = 0, FriendType friendType = FriendType.FriendList, int playerId = 0, string token = "" )
+    {
+        if (ParseToken (playerId, token))
+        {
+            FriendParam param = new FriendParam ();
+            param.player_id = apiPlayerId;
+            param.token = apiToken;
+            param.friend_id = friendId;
+            param.friend_type = (int) friendType;
+            string paramJson = JsonUtility.ToJson (param);
+            API api = new API ("getfriend.php", "RGetFriend", paramJson, 1);
+            param = null; paramJson = "";
+            StartCoroutine (Congest.SendPOST (this, api));
+            return api.seed;
+        }
+        return 0;
+    }
+
+
+
+    //Send Friend
+    public int SendFriend ( int friendId, SendFriendType friendType, string notes = "", int playerId = 0, string token = "" )
+    {
+        if (ParseToken (playerId, token))
+        {
+            FriendParam param = new FriendParam ();
+            param.player_id = apiPlayerId;
+            param.token = apiToken;
+            param.friend_id = friendId;
+            param.friend_type = (int) friendType;
+            param.notes = notes;
+            string paramJson = JsonUtility.ToJson (param);
+            API api = new API ("sendfriend.php", "RSendFriend", paramJson, 1);
+            param = null; paramJson = "";
+            StartCoroutine (Congest.SendPOST (this, api));
+            return api.seed;
+        }
+        return 0;
+    }
+
+
+
+    //Set Phone Num
+    [Serializable]
+    private class SetPhoneNumParam : TokenParam
+    {
+        public string phone_num;
+    }
+
+    public int SetPhoneNum ( string phoneNum, int playerId = 0, string token = "" )
+    {
+        if (ParseToken (playerId, token))
+        {
+            SetPhoneNumParam param = new SetPhoneNumParam ();
+            param.player_id = apiPlayerId;
+            param.token = apiToken;
+            param.phone_num = phoneNum;
+            string paramJson = JsonUtility.ToJson (param);
+            API api = new API ("setphonenum.php", "RSetPhoneNum", paramJson, 1);
+            param = null; paramJson = "";
+            StartCoroutine (Congest.SendPOST (this, api));
+            return api.seed;
+        }
+        return 0;
+    }
+
+
+
+    //Claim Referal Code
+    [Serializable]
+    private class ClaimReferalCodeParam : GetVersionParam
+    {
+        public string referal_code;
+    }
+
+    public int ClaimReferalCode ( string referalCode, int playerId = 0, string token = "" )
+    {
+        if (ParseToken (playerId, token))
+        {
+            ClaimReferalCodeParam param = new ClaimReferalCodeParam ();
+            param.player_id = apiPlayerId;
+            param.token = apiToken;
+            param.referal_code = referalCode;
+            param.device_id = SystemInfo.deviceUniqueIdentifier;
+            param.device_type = (int) Application.platform;
+            string paramJson = JsonUtility.ToJson (param);
+            API api = new API ("claimreferalcode.php", "RClaimReferalCode", paramJson, 1);
+            param = null; paramJson = "";
+            StartCoroutine (Congest.SendPOST (this, api));
+            return api.seed;
+        }
+        return 0;
+    }
+
+
+
+    //Get Leaderboard
+    [Serializable]
+    private class GetLeaderboardParam : TokenParam
+    {
+        public int leaderboard_type;
+        public int checked_id;
+    }
+
+    public int GetLeaderboard ( int leaderboardType = 0, int checkedId = 0, int playerId = 0, string token = "" )
+    {
+        if (ParseToken (playerId, token))
+        {
+            GetLeaderboardParam param = new GetLeaderboardParam ();
+            param.player_id = apiPlayerId;
+            param.token = apiToken;
+            param.leaderboard_type = leaderboardType;
+            param.checked_id = (checkedId == 0 ? apiPlayerId : checkedId);
+            string paramJson = JsonUtility.ToJson (param);
+            API api = new API ("getleaderboard.php", "RGetLeaderboard", paramJson, 1);
+            param = null; paramJson = "";
+            StartCoroutine (Congest.SendPOST (this, api));
+            return api.seed;
+        }
+        return 0;
+    }
+
+
+
+    //Get Inbox
+    [Serializable]
+    private class InboxParam : TokenParam
+    {
+        public int as_sender;
+        public int mail_id;
+    }
+
+    public int GetInbox ( bool asSender = false, int playerId = 0, string token = "" )
+    {
+        if (ParseToken (playerId, token))
+        {
+            InboxParam param = new InboxParam ();
+            param.player_id = apiPlayerId;
+            param.token = apiToken;
+            param.as_sender = (asSender ? 1 : 0);
+            string paramJson = JsonUtility.ToJson (param);
+            API api = new API ("getinbox.php", "RGetInbox", paramJson, 1);
+            param = null; paramJson = "";
+            StartCoroutine (Congest.SendPOST (this, api));
+            return api.seed;
+        }
+        return 0;
+    }
+
+
+
+    //Read Inbox
+    public int ReadInbox ( int mailId, int playerId = 0, string token = "" )
+    {
+        if (ParseToken (playerId, token))
+        {
+            InboxParam param = new InboxParam ();
+            param.player_id = apiPlayerId;
+            param.token = apiToken;
+            param.mail_id = mailId;
+            string paramJson = JsonUtility.ToJson (param);
+            API api = new API ("readinbox.php", "RReadInbox", paramJson, 1);
+            param = null; paramJson = "";
+            StartCoroutine (Congest.SendPOST (this, api));
+            return api.seed;
+        }
+        return 0;
+    }
+
+
+
+    //Claim Inbox
+    public int ClaimInbox ( int mailId, int playerId = 0, string token = "" )
+    {
+        if (ParseToken (playerId, token))
+        {
+            InboxParam param = new InboxParam ();
+            param.player_id = apiPlayerId;
+            param.token = apiToken;
+            param.mail_id = mailId;
+            string paramJson = JsonUtility.ToJson (param);
+            API api = new API ("claiminbox.php", "RClaimInbox", paramJson, 1);
+            param = null; paramJson = "";
+            StartCoroutine (Congest.SendPOST (this, api));
+            return api.seed;
+        }
+        return 0;
+    }
+
+
+
+    //Get VIP Level
+    public int GetVIPLevel ( int playerId = 0, string token = "" )
+    {
+        if (ParseToken (playerId, token))
+        {
+            TokenParam param = new TokenParam ();
+            param.player_id = apiPlayerId;
+            param.token = apiToken;
+            string paramJson = JsonUtility.ToJson (param);
+            API api = new API ("getviplevel.php", "RGetVIPLevel", paramJson, 1);
+            param = null; paramJson = "";
+            StartCoroutine (Congest.SendPOST (this, api));
+            return api.seed;
+        }
+        return 0;
+    }
+
+
+
+    //Send Credit
+    [Serializable]
+    private class SendCoinParam : TokenParam
+    {
+        public string friend_tag;
+        public long coin_amount;
+    }
+
+    public int SendCoin ( string friendTag, long coinAmount, int playerId = 0, string token = "" )
+    {
+        if (ParseToken (playerId, token))
+        {
+            SendCoinParam param = new SendCoinParam ();
+            param.player_id = apiPlayerId;
+            param.token = apiToken;
+            param.friend_tag = friendTag;
+            param.coin_amount = coinAmount;
+            string paramJson = JsonUtility.ToJson (param);
+            API api = new API ("sendcoin.php", "RSendCoin", paramJson, 1);
+            param = null; paramJson = "";
+            StartCoroutine (Congest.SendPOST (this, api));
+            return api.seed;
+        }
+        return 0;
+    }
+
+
+
+    public int SendCoinHistory ( int playerId = 0, string token = "" )
+    {
+        if (ParseToken (playerId, token))
+        {
+            TokenParam param = new TokenParam ();
+            param.player_id = apiPlayerId;
+            param.token = apiToken;
+            string paramJson = JsonUtility.ToJson (param);
+            API api = new API ("sendcoinhistory.php", "RSendCoinHistory", paramJson, 1);
+            param = null; paramJson = "";
+            StartCoroutine (Congest.SendPOST (this, api));
+            return api.seed;
+        }
+        return 0;
+    }
+
+
+
+    //Get Daily Login
+    [Serializable]
+    private class DailyLoginParam : TokenParam
+    {
+        public int claim;
+    }
+
+    public int GetDailyLogin ( bool claim = false, int playerId = 0, string token = "" )
+    {
+        if (ParseToken (playerId, token))
+        {
+            DailyLoginParam param = new DailyLoginParam ();
+            param.player_id = apiPlayerId;
+            param.token = apiToken;
+            param.claim = (claim ? 1 : 0);
+            string paramJson = JsonUtility.ToJson (param);
+            API api = new API ("getdailylogin.php", "RGetDailyLogin", paramJson, 1);
+            param = null; paramJson = "";
+            StartCoroutine (Congest.SendPOST (this, api));
+            return api.seed;
+        }
+        return 0;
+    }
+
+
+
+
+    //Get Invitee
+    [Serializable]
+    private class InviteeParam : TokenParam
+    {
+        public int friend_id;
+        public int mission_id;
+    }
+
+    public int GetInvitee ( int friendId = -1, int missionId = 0, int playerId = 0, string token = "" )
+    {
+        if (ParseToken (playerId, token))
+        {
+            InviteeParam param = new InviteeParam ();
+            param.player_id = apiPlayerId;
+            param.token = apiToken;
+            param.friend_id = friendId;
+            param.mission_id = missionId;
+            string paramJson = JsonUtility.ToJson (param);
+            API api = new API ("getinvitee.php", "RGetInvitee", paramJson, 1);
+            param = null; paramJson = "";
+            StartCoroutine (Congest.SendPOST (this, api));
+            return api.seed;
+        }
+        return 0;
+    }
+
+
+
+
+    //Get Store Param
+    [Serializable]
+    private class GetStoreParam : TokenParam
+    {
+        public int item_id;
+        public PaymentType payment_type;
+        public int is_live;
+    }
+
+    //Get Redeem Link
+    public string GetRedeemLink ( int playerId = 0, string token = "" )
+    {
+        string paramOtp = "";
+        string paramJson = "";
+        if (ParseToken (playerId, token))
+        {
+            GetStoreParam param = new GetStoreParam ();
+            param.player_id = apiPlayerId;
+            param.token = apiToken;
+            param.is_live = (Congest.DEVELOPMENT ? 0 : 1);
+            paramJson = JsonUtility.ToJson (param);
+            paramOtp = Util.RandomChar (32);
+            paramJson = Digest.Write (paramJson, paramOtp);
+        }
+        byte[] bytesToEncode = System.Text.Encoding.UTF8.GetBytes (paramJson);
+        paramJson = Convert.ToBase64String (bytesToEncode);
+        return Congest.DOMAIN + "redeem/index.php?postid=" + paramOtp + "&postdata=" + paramJson;
+    }
+
+
+
+
+    //Get Restore Key
+    public string GetRestoreKey ( string restoreSKU, string restoreInvoice )
+    {
+        return Digest.Write (restoreSKU, restoreInvoice);
+    }
+
+
+
+
+    //Send Client Log
+    [Serializable]
+    private class ClientLogParam
+    {
+        public string log;
+    }
+
+    public int SendClientLog ( string log )
+    {
+        ClientLogParam param = new ClientLogParam ();
+        param.log = log;
+        string paramJson = JsonUtility.ToJson (param);
+        API api = new API ("sendclientlog.php", "RSendClientLog", paramJson, 1);
+        param = null; paramJson = "";
+        StartCoroutine (Congest.SendPOST (this, api));
+        return api.seed;
+    }
+
+
+
+
+    //Get Chat
+    public int GetChat ( int friendId = -1, int playerId = 0, string token = "" )
+    {
+        if (friendId == -1) //Get Public Chat
+        {
+            string defaultNotFound = "{\"chat\":[]}";
+            API api = new API ("chat/chat.ray", "RGetChatPublic", "", -1);
+            StartCoroutine (Congest.ReadTempFile (this, api, defaultNotFound));
+            return api.seed;
+        }
+        else if (friendId == 0) //Get Private Chat List
+        {
+            if (ParseToken (playerId, token))
+            {
+                TokenParam param = new TokenParam ();
+                param.player_id = apiPlayerId;
+                param.token = apiToken;
+                string paramJson = JsonUtility.ToJson (param);
+                API api = new API ("getchat.php", "RGetChatList", paramJson, 1);
+                param = null; paramJson = "";
+                StartCoroutine (Congest.SendPOST (this, api));
+                return api.seed;
+            }
+        }
+        else //Get Private Chat
+        {
+            string fromto = (apiPlayerId < friendId ? Mathf.FloorToInt (apiPlayerId / 1000).ToString () : Mathf.FloorToInt (friendId / 1000).ToString ()) + "/" + (apiPlayerId < friendId ? apiPlayerId.ToString () : friendId.ToString ()) + "/" + (apiPlayerId > friendId ? apiPlayerId.ToString () : friendId.ToString ());
+            string defaultNotFound = "{\"chat\":[]}";
+            API api = new API ("chat/" + fromto + "/chat.ray", "RGetChatPrivate", "", -1);
+            StartCoroutine (Congest.ReadTempFile (this, api, defaultNotFound));
+            return api.seed;
+        }
+        return 0;
+    }
+
+
+
+    //Send Chat
+    [Serializable]
+    private class ChatParam : TokenParam
+    {
+        public int friend_id;
+        public string chat_msg;
+    }
+
+    public int SendChat ( string chatMsg, int friendId = 0, int playerId = 0, string token = "" )
+    {
+        if (ParseToken (playerId, token))
+        {
+            ChatParam param = new ChatParam ();
+            param.player_id = apiPlayerId;
+            param.token = apiToken;
+            param.chat_msg = chatMsg;
+            param.friend_id = friendId;
+            string paramJson = JsonUtility.ToJson (param);
+            API api = new API ("sendchat.php", (friendId == 0 ? "RSendChatPublic" : "RSendChatPrivate"), paramJson, 1);
+            param = null; paramJson = "";
+            StartCoroutine (Congest.SendPOST (this, api));
+            return api.seed;
+        }
+        return 0;
+    }
+
 
 
 
@@ -556,7 +999,7 @@ public class ApiBridge : MonoBehaviour
             param.poker_player = new string[j];
             for (var i = 0; i < j; i++) param.poker_player[i] = tempString[i];
             string paramJson = JsonUtility.ToJson (param);
-            API api = new API ("startpoker.php", "RStartPoker", paramJson, true);
+            API api = new API ("startpoker.php", "RStartPoker", paramJson, 1);
             param = null; paramJson = "";
             StartCoroutine (Congest.SendPOST (this, api));
             return api.seed;
@@ -582,7 +1025,7 @@ public class ApiBridge : MonoBehaviour
             for (var i = 0; i < j; i++) param.poker_player[i] = tempString[i];
             string paramJson = JsonUtility.ToJson (param);
             if (otp.Length > 0) apiOtp = otp;
-            API api = new API ("endpoker.php", "REndPoker", paramJson, true, apiOtp);
+            API api = new API ("endpoker.php", "REndPoker", paramJson, 1, apiOtp);
             param = null; paramJson = "";
             if (apiOtp.Length > 0)
             {
@@ -622,7 +1065,7 @@ public class ApiBridge : MonoBehaviour
             param.sicbo_player = new string[j];
             for (var i = 0; i < j; i++) param.sicbo_player[i] = tempString[i];
             string paramJson = JsonUtility.ToJson (param);
-            API api = new API ("startsicbo.php", "RStartSicbo", paramJson, true);
+            API api = new API ("startsicbo.php", "RStartSicbo", paramJson, 1);
             param = null; paramJson = "";
             StartCoroutine (Congest.SendPOST (this, api));
             return api.seed;
@@ -650,7 +1093,7 @@ public class ApiBridge : MonoBehaviour
             param.slot_type = slotType;
             param.slot_cost = slotCost;
             string paramJson = JsonUtility.ToJson (param);
-            API api = new API ("startslot.php", "RStartSlot", paramJson, true);
+            API api = new API ("startslot.php", "RStartSlot", paramJson, 1);
             param = null; paramJson = "";
             StartCoroutine (Congest.SendPOST (this, api));
             return api.seed;
@@ -666,20 +1109,24 @@ public class ApiBridge : MonoBehaviour
     private ResponseParam ParseResponse ( API api )
     {
         ResponseParam response = new ResponseParam ();
-        response = JsonUtility.FromJson<ResponseParam> (api.jsonReturn);
-        if (response.error_code == 0)
+        if (api.isDigested == -1) //Return Process For Template File
         {
-            response.post_time = (Convert.ToInt32 (response.post_time) - Convert.ToInt32 (response.request_time)).ToString () + " sec(s)";
-            response.post_data = PostData (response.post_id, response.post_data);
-            return response;
+            response.post_data = api.jsonReturn;
         }
         else
         {
-            api.errorCode = response.error_code;
-            api.errorMsg = response.error_msg;
-            ParseError (api);
-            return null;
+            response = JsonUtility.FromJson<ResponseParam> (api.jsonReturn);
+            if (response.error_code > 0)
+            {
+                api.errorCode = response.error_code;
+                api.errorMsg = response.error_msg;
+                ParseError (api);
+                return null;
+            }
+            response.post_time = (Convert.ToInt32 (response.post_time) - Convert.ToInt32 (response.request_time)).ToString () + " sec(s)";
+            response.post_data = PostData (response.post_id, response.post_data);
         }
+        return response;
     }
 
     public void ParseError ( API api )
@@ -726,6 +1173,147 @@ public class ApiBridge : MonoBehaviour
     }
 
 
+    //=======================================================================================================================
+    //Automation
+    private bool runBackground = true;
+
+    //Automation Chat Session
+    private long chatSession = -1;
+    private string chatSessionUrl = "";
+    private float refreshChatTime = 0.0f;
+
+    public void StartChatSession ( int friendId = 0, int index = 0 )
+    {
+        if (index == 0)
+        {
+            chatSession = (friendId == 0 ? PlayerPrefs.GetInt ("publicChatSession", 0) : PlayerPrefs.GetInt ("privateChatSession", 0));
+        }
+        else
+        {
+            chatSession = index;
+        }
+        chatSessionUrl = "/";
+        if (friendId > 0) chatSessionUrl += (apiPlayerId < friendId ? Mathf.FloorToInt (apiPlayerId / 1000).ToString () : Mathf.FloorToInt (friendId / 1000).ToString ()) + "/" + (apiPlayerId < friendId ? apiPlayerId.ToString () : friendId.ToString ()) + "/" + (apiPlayerId > friendId ? apiPlayerId.ToString () : friendId.ToString ()) + "/";
+    }
+
+    public void EndChatSession ()
+    {
+        chatSession = -1;
+        chatSessionUrl = "";
+    }
+
+    private int GetChatSession ()
+    {
+        string defaultNotFound = "0";
+        API api = new API ("chat" + chatSessionUrl + "chatindex.ray", "StartChatSessionResponse", "", -1);
+        StartCoroutine (Congest.ReadTempFile (this, api, defaultNotFound));
+        return api.seed;
+    }
+
+    private int StartChatSessionResponse ( ResponseParam response )
+    {
+        if (response.post_data.Length > 0)
+        {
+            try
+            {
+                long index = long.Parse (response.post_data);
+                if (index > chatSession)
+                {
+                    chatSession = index;
+                    PlayerPrefs.SetInt ((chatSessionUrl.Length == 1 ? "publicChatSession" : "privateChatSession"), (int) chatSession);
+                    string defaultNotFound = "{\"chat\":[]}";
+                    API api = new API ("chat" + chatSessionUrl + "chat.ray", "UpdateChatSessionResponse", "", -1);
+                    StartCoroutine (Congest.ReadTempFile (this, api, defaultNotFound));
+                    return api.seed;
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.Log (e.Message);
+            }
+        }
+        return 0;
+    }
+
+    private void UpdateChatSessionResponse ( ResponseParam response )
+    {
+        if (response.post_data.Length > 0)
+        {
+            SendMessage ("Update" + (chatSessionUrl.Length == 1 ? "Public" : "Private") + "ChatSession", response);
+        }
+    }
+
+    //Automation Announcement Session
+    private int announcementSession = -1;
+    private float refreshAnnouncementTime = 0.0f;
+
+    private int GetAnnouncementSession ()
+    {
+        string defaultNotFound = "0";
+        API api = new API ("announcementindex.ray", "StartAnnouncementSessionResponse", "", -1);
+        StartCoroutine (Congest.ReadTempFile (this, api, defaultNotFound));
+        return api.seed;
+    }
+
+    private int StartAnnouncementSessionResponse ( ResponseParam response )
+    {
+        if (response.post_data.Length > 0)
+        {
+            try
+            {
+                int index = int.Parse (response.post_data);
+                if (index > announcementSession)
+                {
+                    announcementSession = index;
+                    PlayerPrefs.SetInt ("announcementSession", announcementSession);
+                    string defaultNotFound = "{\"announcement\":[]}";
+                    API api = new API ("announcement.ray", "UpdateAnnouncementSession", "", -1);
+                    StartCoroutine (Congest.ReadTempFile (this, api, defaultNotFound));
+                    return api.seed;
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.Log (e.Message);
+            }
+        }
+        return 0;
+    }
+
+    // Use this for initialization
+    void Start ()
+    {
+        //PlayerPrefs.DeleteAll();
+        announcementSession = PlayerPrefs.GetInt ("announcementSession", 0);
+    }
+
+    // Update is called once per frame
+    void Update ()
+    {
+        if (runBackground)
+        {
+            //Chat Session
+            if (chatSession >= 0)
+            {
+                refreshChatTime += Time.deltaTime;
+                if (refreshChatTime >= 10.0f) //Check New Chat every 10 secs
+                {
+                    refreshChatTime = 0.0f;
+                    GetChatSession ();
+                }
+            }
+            //Announcement
+            refreshAnnouncementTime += Time.deltaTime;
+            if (refreshAnnouncementTime >= 60.0f) //Check Announcement every 60 secs
+            {
+                refreshAnnouncementTime = 0.0f;
+                GetAnnouncementSession ();
+            }
+        }
+    }
+
+
+    //=======================================================================================================================
     //Set Variable Function
     public void SetPlayerId ( int playerId ) { apiPlayerId = playerId; }
     public void SetToken ( string token ) { apiToken = token; }

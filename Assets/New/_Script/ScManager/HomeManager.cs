@@ -24,8 +24,19 @@ public class HomeManager : MonoBehaviour
     public Button btnShop;
     public Button btnQuickPlay;
     public Button btnPoker;
-    public Button btnSloto;
-    public Button btnTempLogout;
+    public Button btnMinigame;
+    public Button btnHideMinigame;
+    public Button btnOriental;
+    public Button btnWestern;
+    public Button btnSicbo;
+    public Button btnOthers;
+    public Button btnParentOthers;
+    public Button btnSettings;
+    public Button btnHero;
+    public Button btnFreeCoin;
+    public Button btnHideFreeCoin;
+    public Button btnFriend;
+    public Button btnLeaderboard;
     public TextMeshProUGUI tmpDisplayName;
     public TextMeshProUGUI tmpCoin;
     public TextMeshProUGUI tmpCoupon;
@@ -40,9 +51,45 @@ public class HomeManager : MonoBehaviour
         btnProfile.onClick.AddListener (OnProfile);
         btnQuickPlay.onClick.AddListener (OnQuickPlay);
         btnPoker.onClick.AddListener (OnPokerRoom);
-        btnSloto.onClick.AddListener (OnSloto);
-        btnTempLogout.onClick.AddListener (OnLogout);
+        btnMinigame.onClick.AddListener (OnMinigame);
         btnShop.onClick.AddListener (OnShop);
+        btnHideMinigame.onClick.AddListener (OnHideGames);
+        btnOriental.onClick.AddListener (OnOriental);
+        btnWestern.onClick.AddListener (OnWestern);
+        btnSicbo.onClick.AddListener (OnSicbo);
+        btnParentOthers.onClick.AddListener (OnHideOthers);
+        btnSettings.onClick.AddListener (OnSettings);
+        btnOthers.onClick.AddListener (OnOthers);
+        btnFreeCoin.onClick.AddListener (OnFreeCoin);
+        btnHideFreeCoin.onClick.AddListener (OnHideFreeCoin);
+        btnHero.onClick.AddListener (OnHero);
+        btnFriend.onClick.AddListener (OnFriend);
+        btnLeaderboard.onClick.AddListener (OnLeaderboard);
+    }
+
+    private void OnFriend ()
+    {
+        _SceneManager.instance.SetActiveScene (SceneType.FRIEND, true);
+    }
+
+    private void OnLeaderboard ()
+    {
+        _SceneManager.instance.SetActiveScene (SceneType.LEADERBOARD, true);
+    }
+
+    private void OnHero ()
+    {
+        _SceneManager.instance.SetActiveScene (SceneType.HERO, true);
+    }
+
+    private void OnFreeCoin ()
+    {
+        btnHideFreeCoin.gameObject.SetActive (true);
+    }
+
+    private void OnHideFreeCoin ()
+    {
+        btnHideFreeCoin.gameObject.SetActive (false);
     }
 
     private void OnProfile ()
@@ -67,18 +114,52 @@ public class HomeManager : MonoBehaviour
         _SceneManager.instance.SetActiveScene (SceneType.POKER_ROOM, true);
     }
 
-    private void OnSloto ()
+    private void OnMinigame ()
+    {
+        //_SceneManager.instance.SetActiveScene (SceneType.SLOTO, true);
+        //Hide ();
+
+        btnHideMinigame.gameObject.SetActive (true);
+    }
+
+    private void OnHideGames()
+    {
+        btnHideMinigame.gameObject.SetActive (false);
+    }
+
+    private void OnOriental ()
     {
         _SceneManager.instance.SetActiveScene (SceneType.SLOTO, true);
         Hide ();
     }
 
-    private void OnLogout()
+    private void OnWestern ()
     {
-        FacebookManager.instance.Logout ();
+        //_SceneManager.instance.SetActiveScene (SceneType.SLOTO, true);
+        //Hide ();
+    }
+
+    private void OnSicbo ()
+    {
+        GlobalVariables.gameType = GameType.Sicbo;
+        OnHideGames ();
         Hide ();
-        PlayerPrefs.DeleteAll ();
-        _SceneManager.instance.SetActiveScene (SceneType.LOGIN, true);
+        _SceneManager.instance.SetActiveScene (SceneType.SICBO, true);
+    }
+
+    private void OnOthers()
+    {
+        btnParentOthers.gameObject.SetActive (true);
+    }
+
+    private void OnHideOthers()
+    {
+        btnParentOthers.gameObject.SetActive (false);
+    }
+
+    private void OnSettings()
+    {
+        _SceneManager.instance.SetActiveScene (SceneType.SETTINGS, true);
     }
 
     public void SetCanvas (bool val )
@@ -91,6 +172,8 @@ public class HomeManager : MonoBehaviour
 
     public void Show ()
     {
+        //PhotonTexasPokerManager.instance.isPhotonFire = false;
+        SicboManager.instance.isPhotonFire = false;
         UpdateCoinAndCoupon ();
         canvas.enabled = true;
         _SceneManager.instance.activeSceneType = SceneType.HOME;

@@ -195,8 +195,9 @@ GameObject:
   - component: {fileID: 8104372790972989882}
   - component: {fileID: 613462933050943541}
   - component: {fileID: 4265697951334600674}
+  - component: {fileID: 159272985171091443}
   m_Layer: 0
-  m_Name: Napoleon
+  m_Name: 9_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -299,7 +300,7 @@ MonoBehaviour:
     materialsInsideMask: []
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
-  _animationName: 
+  _animationName: Idle
   loop: 0
   timeScale: 1
 --- !u!114 &4265697951334600674
@@ -320,3 +321,18 @@ MonoBehaviour:
   partsRenderers:
   - {fileID: 1372325478509273733}
   - {fileID: 7776663525300518422}
+--- !u!114 &159272985171091443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6653999016347948286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f2604fa8403844b998ed162c0f1c03c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mySkelAnim: {fileID: 613462933050943541}
+  mySkelGraphic: {fileID: 0}
+  partBack: {fileID: 1372325478509273733}

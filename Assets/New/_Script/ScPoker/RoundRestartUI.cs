@@ -9,6 +9,7 @@ public class RoundRestartUI : MonoBehaviour
 
     public void Show()
     {
+        Logger.E ("a");
         gameObject.SetActive (true);
         //Only call it for one time since show is sending two time to the round restart
 
@@ -94,6 +95,9 @@ public class RoundRestartUI : MonoBehaviour
         //Debug.LogError("HOI : " +playerIDs.Length);
 
         ApiManager.instance.pokerPlayers = PhotonTexasPokerManager.instance.GetPokerPlayers (PhotonEnums.Player.ReadyInitialized);
+
+        Logger.E ("room name: " + PhotonNetwork.room.Name);
+        Logger.E ("minAmount: " + GlobalVariables.MinBetAmount);
         ApiManager.instance.StartPoker (PhotonNetwork.room.Name, GlobalVariables.MinBetAmount);
     }
 

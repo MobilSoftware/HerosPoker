@@ -60,6 +60,7 @@ public class PokerManager : MonoBehaviour
     public Sprite sprMusashi;
     public Sprite sprNapoleon;
     public Sprite sprGenghis;
+    public Sprite sprAlexander;
 
     public GameObject objFxStraightFlush;
     public UIParticleSystem psStraightFlush1;
@@ -95,6 +96,7 @@ public class PokerManager : MonoBehaviour
             canvas.sortingOrder = (int) SceneType.POKER;
             isInit = true;
         }
+        //PhotonTexasPokerManager.instance.isPhotonFire = true;
         objPoker.SetActive (true);
         canvas.enabled = true;
 
@@ -107,6 +109,7 @@ public class PokerManager : MonoBehaviour
 
     public void Hide ()
     {
+        //PhotonTexasPokerManager.instance.isPhotonFire = false;
         objPoker.SetActive (false);
         canvas.enabled = false;
         _SceneManager.instance.activeSceneType = prevSceneType;
@@ -148,6 +151,7 @@ public class PokerManager : MonoBehaviour
             case 8: texture = sprMusashi.texture; break;
             case 9: texture = sprNapoleon.texture; break;
             case 10: texture = sprGenghis.texture; break;
+            case 18: texture = sprAlexander.texture; break;
         }
 
         return texture;

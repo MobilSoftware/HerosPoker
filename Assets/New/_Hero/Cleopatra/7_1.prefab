@@ -195,8 +195,9 @@ GameObject:
   - component: {fileID: 2098858089693929180}
   - component: {fileID: 6272771357363432900}
   - component: {fileID: 4106903850850308406}
+  - component: {fileID: 5602902941960680521}
   m_Layer: 0
-  m_Name: Cleopatra
+  m_Name: 7_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -299,7 +300,7 @@ MonoBehaviour:
     materialsInsideMask: []
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
-  _animationName: 
+  _animationName: Idle
   loop: 0
   timeScale: 1
 --- !u!114 &4106903850850308406
@@ -320,3 +321,18 @@ MonoBehaviour:
   partsRenderers:
   - {fileID: 6837534740104170587}
   - {fileID: 5417017627843119081}
+--- !u!114 &5602902941960680521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5679299881872295902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f2604fa8403844b998ed162c0f1c03c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mySkelAnim: {fileID: 6272771357363432900}
+  mySkelGraphic: {fileID: 0}
+  partBack: {fileID: 6837534740104170587}
