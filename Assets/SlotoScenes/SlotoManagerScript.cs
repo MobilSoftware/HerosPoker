@@ -12,6 +12,7 @@ public class SlotoManagerScript : MonoBehaviour
     public TextMesh currBetLabelTM;
     public TextMesh currMoneyLabelTM;
     public TextMesh winningBetAnimTM;
+    public TextMesh freeSpinTM;
     public ReelScript[] reels;
     public JackpotReelScript jackpotReel;
     public IconScript[] slotIcons;
@@ -31,6 +32,9 @@ public class SlotoManagerScript : MonoBehaviour
     private float timeWait;
     private int jsonIndex;
     private int jsonCombinationIndex;
+    private bool pushOk;
+    private bool pushAuto;
+    private float pushAutoTimer;
 
     private ApiBridge api;
     private JSlot json;
@@ -56,6 +60,9 @@ public class SlotoManagerScript : MonoBehaviour
         currBetWinning = 0;
         betLabelTM.text = bet.ToString("N0")+".000";
         currBet = bet;
+        pushOk = true;
+        pushAuto = false;
+        pushAutoTimer = 0f;
         SetMoney();
         ClearJson();
         for (int i = 0; i < reels.Length; i++)
@@ -75,6 +82,7 @@ public class SlotoManagerScript : MonoBehaviour
         jsonIndex = -1;
         jsonCombination = null;
         jsonCombinationIndex = -1;
+        freeSpinTM.gameObject.SetActive(false);
     }
 
     public void SetMoney()
@@ -105,19 +113,52 @@ public class SlotoManagerScript : MonoBehaviour
                 if (jsonIndex == json.slot_spin.Length - 1) money = serverMoney;
             }
         }
+        if (!pushOk)
+        {
+            if (reels[0].spin == 0 && reels[1].spin == 0 && reels[2].spin == 0 && reels[3].spin == 0 && reels[4].spin == 0 && !jackpotReel.GetSpin()) pushOk = true;
+            if (pushAuto) OnMouseUp(ButtonScript.ButtonType.Spin);
+        }
     }
 
-    public void OnMouseUp(ButtonScript.ButtonType type)
+    public void OnMouseDown(ButtonScript.ButtonType type, SpriteRenderer sr = null)
     {
-        if(type == ButtonScript.ButtonType.Spin)
+        if (type == ButtonScript.ButtonType.Spin)
+        {
+            pushAutoTimer = 0;
+            pushAuto = false;
+            sr.flipX = false;
+        }
+    }
+
+    public void OnMouseDrag(ButtonScript.ButtonType type, SpriteRenderer sr = null)
+    {
+        if (type == ButtonScript.ButtonType.Spin)
+        {
+            pushAutoTimer += Time.deltaTime;
+            if(pushAutoTimer >= 3.0f && !pushAuto)
+            {
+                pushAuto = true;
+                sr.flipX = true;
+            }
+        }
+    }
+
+    public void OnMouseUp(ButtonScript.ButtonType type, SpriteRenderer sr = null)
+    {
+        if (type == ButtonScript.ButtonType.Spin)
         {
             if (money >= bet)
             {
-                StartSpin();
+                if (pushOk)
+                {
+                    pushOk = false;
+                    StartSpin();
+                }
             }
             else
             {
                 ToMessageManager(gameObject, "Uang tak cukup", ButtonMode.OK, -1);
+                pushAuto = false;
             }
         } else if (type == ButtonScript.ButtonType.Stop)
         {
@@ -214,7 +255,7 @@ public class SlotoManagerScript : MonoBehaviour
         for (i = 0; i < reels.Length; i++)
         {
             reels[i].StopSpin();
-            yield return new WaitForSeconds(0.05f * Random.Range(1, 11));
+            yield return new WaitForSeconds(0.1f * Random.Range(1, 6));
         }
     }
 
@@ -299,6 +340,11 @@ public class SlotoManagerScript : MonoBehaviour
             jsonCombinationIndex = -1;
             StartCoroutine(ContinueSpin());
             StartCoroutine(StopSpin(json.slot_spin[jsonIndex]));
+            if (jsonIndex >= 1)
+            {
+                freeSpinTM.text = "Free Spin x"+(9-jsonIndex);
+                freeSpinTM.gameObject.SetActive(true);
+            }
         }
     }
 
