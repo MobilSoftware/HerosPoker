@@ -16,6 +16,8 @@ public class SicboPlayer : MonoBehaviour
     public GameObject[] fxSelectedTypes;        //length = 50
     public GameObject[] fxWinTypes;     //length = 50
     public GameObject[] fxLoseTypes;    //length = 50
+    public Transform[] parentChips;     //length = 50
+    public Image prefabChips;
 
     [HideInInspector]
     public SicboParasite parasite;
@@ -200,24 +202,44 @@ public class SicboPlayer : MonoBehaviour
             case 49: betType = ApiBridge.SicboBetType.Single6; break;
         }
 
-        Logger.E ("fx selected btn index: " + btnIndex);
         fxSelectedTypes[btnIndex].SetActive (true);
 
         long chipValue = 0;
-        Logger.E ("txt chip: " + txtChipValues[btnIndex].text);
         if (txtChipValues[btnIndex].text != string.Empty)
             chipValue = txtChipValues[btnIndex].text.toLongCurrency ();
         chipValue += betValue;
         txtChipValues[btnIndex].text = chipValue.toShortCurrency ();
 
-        Logger.E ("txt chip 2: " + txtChipValues[btnIndex].text);
-        imgChips[btnIndex].sprite = sprChip;
+        //imgChips[btnIndex].sprite = sprChip;
         imgChips[btnIndex].gameObject.SetActive (true);
+        SetChips (btnIndex, betValue);
 
         PlayerData.owned_coin -= betValue;
         totalBet += betValue;
         textCoinValue.text = PlayerData.owned_coin.toShortCurrency ();
+        string strSendBets = betValue + "," + btnIndex;
+        SicboManager.instance.SendPutOtherBets (strSendBets);
         RecordBet ();
+    }
+
+    public void PutOthersBet (string strOtherBets)      //strOtherBets = betAmount,btnIndex,playerID
+    {
+        string[] split = strOtherBets.Split (',');
+        long betAmount = long.Parse (split[0]);
+        int btnIndex = int.Parse (split[1]);
+
+        //if (betAmount >= 1000)
+        //    imgChips[btnIndex].sprite = sprChips[3];
+        //else if (betAmount >= 500)
+        //    imgChips[btnIndex].sprite = sprChips[2];
+        //else if (betAmount >= 200)
+        //    imgChips[btnIndex].sprite = sprChips[1];
+        //else
+        //    imgChips[btnIndex].sprite = sprChips[0];
+
+        //imgChips[btnIndex].gameObject.SetActive (true);
+
+        SetChips (btnIndex, betAmount);
     }
 
     private void RecordBet ()
@@ -237,7 +259,7 @@ public class SicboPlayer : MonoBehaviour
             records.Add (betType, betValue);
         }
 
-        betValue = 0;
+        //betValue = 0;
         betType = ApiBridge.SicboBetType.None;
     }
 
@@ -266,8 +288,10 @@ public class SicboPlayer : MonoBehaviour
         {
             fxSelectedTypes[i].gameObject.SetActive (false);
             txtChipValues[i].text = string.Empty;
-            imgChips[i].gameObject.SetActive (false);
+            //imgChips[i].gameObject.SetActive (false);
         }
+
+        ResetChipsImage ();
     }
 
     private void HideWinLose ()
@@ -287,25 +311,25 @@ public class SicboPlayer : MonoBehaviour
         betType = ApiBridge.SicboBetType.None;
     }
 
-    public void SetOtherPlayerBets ()
-    {
-        for (int i = 0; i < SicboManager.instance.apiPlayers.Length; i++)
-        {
-            ApiBridge.SicboPlayer p = SicboManager.instance.apiPlayers[i];
-            int btnIndex = ConvertToButtonIndex (p.sicbo_type);
-            if (p.coin_bet >= 1000)
-                imgChips[btnIndex].sprite = sprChips[3];
-            else if (p.coin_bet >= 500)
-                imgChips[btnIndex].sprite = sprChips[2];
-            else if (p.coin_bet >= 200)
-                imgChips[btnIndex].sprite = sprChips[1];
-            else
-                imgChips[btnIndex].sprite = sprChips[0];
+    //public void SetOtherPlayerBets ()
+    //{
+    //    for (int i = 0; i < SicboManager.instance.apiPlayers.Length; i++)
+    //    {
+    //        ApiBridge.SicboPlayer p = SicboManager.instance.apiPlayers[i];
+    //        int btnIndex = ConvertToButtonIndex (p.sicbo_type);
+    //        if (p.coin_bet >= 1000)
+    //            imgChips[btnIndex].sprite = sprChips[3];
+    //        else if (p.coin_bet >= 500)
+    //            imgChips[btnIndex].sprite = sprChips[2];
+    //        else if (p.coin_bet >= 200)
+    //            imgChips[btnIndex].sprite = sprChips[1];
+    //        else
+    //            imgChips[btnIndex].sprite = sprChips[0];
 
-            imgChips[btnIndex].gameObject.SetActive (true);
-        }
+    //        imgChips[btnIndex].gameObject.SetActive (true);
+    //    }
 
-    }
+    //}
 
     private int ConvertToButtonIndex ( int _betType )
     {
@@ -379,6 +403,51 @@ public class SicboPlayer : MonoBehaviour
         {
             fxWinTypes[btnIndex].gameObject.SetActive (false);
             fxLoseTypes[btnIndex].gameObject.SetActive (true);
+        }
+    }
+
+    public void SetChips (int btnIndex, long betAmount )
+    {
+        Image img = Instantiate (prefabChips, parentChips[btnIndex]);
+        if (betAmount >= 1000)
+            img.sprite = sprChips[3];
+        else if (betAmount >= 500)
+            img.sprite = sprChips[2];
+        else if (betAmount >= 200)
+            img.sprite = sprChips[1];
+        else
+            img.sprite = sprChips[0];
+
+        int randX = UnityEngine.Random.Range (-30, 30);
+        int randY = UnityEngine.Random.Range (-30, 30);
+
+        switch (btnIndex)
+        {
+            case 4:
+            case 5:
+            case 6:
+            case 8:
+            case 9:
+            case 10:
+                randX = UnityEngine.Random.Range (-10, 10);
+                randY = UnityEngine.Random.Range (-10, 10);
+                break;
+
+        }
+        img.transform.localPosition = new Vector3 (randX, randY);
+    }
+
+    public void ResetChipsImage ()
+    {
+        for (int i = 0; i < parentChips.Length; i++)
+        {
+            if (parentChips[i].childCount > 0)
+            {
+                for (int j = 0; j < parentChips[i].childCount; j++)
+                {
+                    Destroy (parentChips[i].GetChild (j).gameObject);
+                }
+            }
         }
     }
 }

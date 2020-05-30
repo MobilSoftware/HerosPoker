@@ -32,6 +32,7 @@ public class ApiManager : MonoBehaviour
 
     public void RErrorHandler ( ApiBridge.ResponseParam error )
     {
+        LoginManager.instance.btnGuest.interactable = true;
         Debug.LogError ("RErrorHandler from " + error.uri + " (Seed #" + error.seed.ToString ()
                     + ")\n(Code #" + error.error_code + ") {" + error.error_msg[0] + " || " + error.error_msg[1] + "}");
         if (Rays.Utilities.Congest.DEVELOPMENT)
@@ -79,6 +80,7 @@ public class ApiManager : MonoBehaviour
 
     public void GuestLogin ()
     {
+        LoginManager.instance.btnGuest.interactable = false;
         api.UserLogin (ApiBridge.LoginType.Guest);
     }
 
@@ -89,6 +91,7 @@ public class ApiManager : MonoBehaviour
 
     private void RUserLogin ( ApiBridge.ResponseParam response )
     {
+        LoginManager.instance.btnGuest.interactable = true;
         Logger.E ("Return User Login: " + response.post_data);
         JUserLogin json = JsonUtility.FromJson<JUserLogin> (response.post_data);
         api.SetPlayerId (json.player.player_id);
@@ -376,7 +379,9 @@ public class ApiManager : MonoBehaviour
         //sicboPlayers[0] = new ApiBridge.SicboPlayer (1016, ApiBridge.SicboBetType.Small, 100);
         //api.StartSicbo (sicboPlayers);
         if (SicboManager.instance.apiPlayers != null)
+        {
             api.StartSicbo (SicboManager.instance.apiPlayers);
+        }
         else
             api.StartSicbo (new ApiBridge.SicboPlayer[] { });
     }

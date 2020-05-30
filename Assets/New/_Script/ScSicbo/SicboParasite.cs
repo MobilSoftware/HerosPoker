@@ -41,6 +41,7 @@ public class SicboParasite : Photon.MonoBehaviour
     public void SetSicboBets (string strBets )
     {
         PhotonUtility.SetPlayerProperties (uiPlayer.photonPlayer, PhotonEnums.Player.Money, PlayerData.owned_coin);
+        Logger.E ("parasite strBets length: " + strBets.Length);
         PhotonUtility.SetPlayerProperties (uiPlayer.photonPlayer, PhotonEnums.Player.SICBO_BETS, strBets);
     }
 

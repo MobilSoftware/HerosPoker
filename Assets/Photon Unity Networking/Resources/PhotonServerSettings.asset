@@ -72,4 +72,5 @@ MonoBehaviour:
   - RPC_TakeYourPotTogether
   - RPC_InitiateSync
   - RPC_RequestSicboSync
+  - RPC_SendPutOtherBets
   DisableAutoOpenWizard: 1

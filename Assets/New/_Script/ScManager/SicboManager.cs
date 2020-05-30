@@ -27,6 +27,7 @@ public class SicboManager : PunBehaviour
     }
 
     public Canvas canvas;
+    public GameObject objParentParasites;
     public Text txtTimer;
     public GameObject objOthersUI;
     public Button btnOthers;
@@ -34,6 +35,8 @@ public class SicboManager : PunBehaviour
     public DiceHandler dice;
     public DiceHistoryHandler diceHistory;
     public SicboParasite[] objPlayers;        //reference prefab here
+    public GameObject objStart;
+    public GameObject objEnd;
 
     public SicboPlayer[] unsortedPlayers;   //LOCAL | [0] is myPlayer
     [HideInInspector]
@@ -93,6 +96,7 @@ public class SicboManager : PunBehaviour
             isInit = true;
         }
         canvas.enabled = true;
+        objParentParasites.SetActive (true);
         isPhotonFire = true;
         RoomInfoManager.instance.JoinRandomRoom ();
         stockPlayers = new SicboPlayer[10];
@@ -104,6 +108,8 @@ public class SicboManager : PunBehaviour
     private void Hide ()
     {
         canvas.enabled = false;
+        unsortedPlayers[0].CleanUp ();
+        objParentParasites.SetActive (false);
         isPhotonFire = false;
         _SceneManager.instance.activeSceneType = prevSceneType;
     }
@@ -237,16 +243,22 @@ public class SicboManager : PunBehaviour
         PhotonUtility.SetRoomProperties (PhotonEnums.Room.MasterClientID, PhotonNetwork.player.UserId);
         PhotonUtility.SetRoomProperties (PhotonEnums.Room.IS_PLAYING, true);
 
-        int readyCount = 0;
-        yield return _WFSUtility.wfs2;
-        foreach (PhotonPlayer player in PhotonNetwork.playerList)
-        {
-            bool bReady = PhotonUtility.GetPlayerProperties<bool> (player, PhotonEnums.Player.ReadyInitialized);
-            Logger.E (bReady.ToString());
-            if (bReady)
-                readyCount++;
-        }
+        //int readyCount = 0;
+        //yield return _WFSUtility.wfs2;
+        //foreach (PhotonPlayer player in PhotonNetwork.playerList)
+        //{
+        //    bool bReady = PhotonUtility.GetPlayerProperties<bool> (player, PhotonEnums.Player.ReadyInitialized);
+        //    Logger.E (bReady.ToString());
+        //    if (bReady)
+        //        readyCount++;
+        //}
+        //if (SicboTimer.instance == null)
+        //{
+        //    GameObject objTimer = PhotonNetwork.InstantiateSceneObject ("PhotonObjectTimer", Vector3.zero, Quaternion.identity, 0, new object[] { });
+        //    SicboTimer.instance.SetScaleZ (15f);
+        //}
 
+        yield return _WFSUtility.wfs2;
         PrepareSicboRound ();
     }
 
@@ -288,6 +300,8 @@ public class SicboManager : PunBehaviour
 
     public void PrepareSicboRound ()
     {
+        Logger.E ("psr");
+        //SicboTimer.instance.SetScaleZ (15f);
         photonView.RPC (PhotonEnums.RPC.PrepareSicboRound, PhotonTargets.AllViaServer);
     }
 
@@ -295,7 +309,6 @@ public class SicboManager : PunBehaviour
     protected void RPC_PrepareSicboRound ()
     {
         StartRound ();
-        Logger.E ("rpc prepare sicbo round");
     }
 
     public void StartRound ()
@@ -312,24 +325,36 @@ public class SicboManager : PunBehaviour
 
     IEnumerator _StartTimer (float timerValue )
     {
-        Logger.E ("starting timer");
+        objStart.SetActive (true);
+        objEnd.SetActive (false);
+        yield return _WFSUtility.wfs2;
+        objStart.SetActive (false);
         bCanBet = true;
+        //float timer = timerValue;
         while (timerValue > 0)
         {
+            //timer = SicboTimer.instance.GetScaleZ();
             txtTimer.text = timerValue.ToString ();
-            yield return new WaitForSecondsRealtime (1f);
-            timerValue--;
+            yield return new WaitForSeconds (1f);
+            timerValue = timerValue - 1f;
         }
+        //if (PhotonNetwork.isMasterClient)
+        //{
+        //    SicboTimer.instance.SetScaleZ (0f);
+        //}
         txtTimer.text = "0";
         //yield return new WaitForSecondsRealtime (timerValue);
-        Logger.E ("end");
         bCanBet = false;
         unsortedPlayers[0].SubmitRecords ();
-        yield return _WFSUtility.wfs3;
+        objEnd.SetActive (true);
+        objStart.SetActive (false);
+        yield return _WFSUtility.wfs2;
+        objEnd.SetActive (false);
+        yield return _WFSUtility.wfs1;
         jStartSicbo = null;
         PrepareStartSicbo ();
-        if (apiPlayers != null)
-            unsortedPlayers[0].SetOtherPlayerBets ();
+        //if (apiPlayers != null)
+            //unsortedPlayers[0].SetOtherPlayerBets ();
         if (PhotonNetwork.isMasterClient)
         {
             ApiManager.instance.StartSicbo ();
@@ -363,13 +388,14 @@ public class SicboManager : PunBehaviour
         }
         yield return _WFSUtility.wfs2;
         //chips from lose to dealer animation//
-        yield return _WFSUtility.wfs2;
-        //chips from dealer to win animation//
-        yield return _WFSUtility.wfs2;
+        //yield return _WFSUtility.wfs2;
+        ////chips from dealer to win animation//
+        //yield return _WFSUtility.wfs2;
         UpdateMoneyUI ();
         unsortedPlayers[0].CleanUp ();
         //TransitionToNextRound ();
-        PrepareSicboRound ();
+        if (PhotonNetwork.isMasterClient)
+            PrepareSicboRound ();
         //HAVE NOT DEDUCT COIN FROM PLAYERS*
         //HAVE NOT SHOWN DEDUCTED COIN FROM OTHER PLAYERS*
         //disable bet*
@@ -403,8 +429,20 @@ public class SicboManager : PunBehaviour
         }
     }
 
+    public void SendPutOtherBets (string strBets )
+    {
+        photonView.RPC (PhotonEnums.RPC.SendPutOtherBets, PhotonTargets.Others, strBets);
+    }
+
+    [PunRPC]
+    protected void RPC_SendPutOtherBets (string strBets )
+    {
+        unsortedPlayers[0].PutOthersBet (strBets);
+    }
+
     private ApiBridge.SicboPlayer[] FormatBets (string strBets )    //not all sicbo players
     {
+        Logger.E ("strBets length: " + strBets.Length);
         //strBets eg: 1001;4;200|1001;6;300
         string[] split1 = strBets.Split ('|');
         ApiBridge.SicboPlayer[] samePlayerBets = new ApiBridge.SicboPlayer[split1.Length];

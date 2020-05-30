@@ -162,5 +162,6 @@ namespace PhotonEnums
         public static string PrepareSicboRound = "RPC_PrepareSicboRound";
         public static string SendRStartSicbo = "RPC_SendRStartSicbo";
         public static string RequestSicboSync = "RPC_RequestSicboSync";
+        public static string SendPutOtherBets = "RPC_SendPutOtherBets";
     }
 }
