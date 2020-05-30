@@ -118,6 +118,7 @@ public class SlotoManagerScript : MonoBehaviour
             if (reels[0].spin + reels[1].spin + reels[2].spin + reels[3].spin + reels[4].spin == 0 && !jackpotReel.GetSpin())
             {
                 pushOk = true;
+                freeSpinTM.gameObject.SetActive(false);
                 if (pushAuto) OnMouseUp(ButtonScript.ButtonType.Spin);
             }
         }
@@ -345,7 +346,7 @@ public class SlotoManagerScript : MonoBehaviour
             StartCoroutine(StopSpin(json.slot_spin[jsonIndex]));
             if (jsonIndex >= 1)
             {
-                freeSpinTM.text = "Free Spin x"+(9-jsonIndex);
+                freeSpinTM.text = (9 - jsonIndex == 1 ? "Last Free Spin" : "Free Spin x" + (9 - jsonIndex));
                 freeSpinTM.gameObject.SetActive(true);
             }
         }
