@@ -115,8 +115,11 @@ public class SlotoManagerScript : MonoBehaviour
         }
         if (!pushOk)
         {
-            if (reels[0].spin == 0 && reels[1].spin == 0 && reels[2].spin == 0 && reels[3].spin == 0 && reels[4].spin == 0 && !jackpotReel.GetSpin()) pushOk = true;
-            if (pushAuto) OnMouseUp(ButtonScript.ButtonType.Spin);
+            if (reels[0].spin + reels[1].spin + reels[2].spin + reels[3].spin + reels[4].spin == 0 && !jackpotReel.GetSpin())
+            {
+                pushOk = true;
+                if (pushAuto) OnMouseUp(ButtonScript.ButtonType.Spin);
+            }
         }
     }
 
