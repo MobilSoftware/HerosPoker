@@ -17,8 +17,24 @@ public class SlotoManagerScript : MonoBehaviour
     public JackpotReelScript jackpotReel;
     public IconScript[] slotIcons;
     public GameObject[] fxsGO;
-    public Sprite[] tileSprite;
-    public Sprite[] iconSprite;
+
+    public SpriteRenderer BGSR;
+    public Sprite[] BGSprite;
+    public SpriteRenderer FGSR;
+    public Sprite[] FGSprite;
+    public SpriteRenderer[] FrameSR;
+    public Sprite[] FrameSprite;
+    public SpriteRenderer SpinButtonSR;
+    public Sprite[] SpinButtonSprite;
+    public Sprite[] StopButtonSprite;
+    public GameObject AccesoriesGO;
+    public Sprite[] tileSprite1;
+    public Sprite[] iconSprite1;
+    public Sprite[] tileSprite2;
+    public Sprite[] iconSprite2;
+
+    private Sprite[] tileSprite;
+    private Sprite[] iconSprite;
 
     private int bet;
     private int currBet;
@@ -35,6 +51,7 @@ public class SlotoManagerScript : MonoBehaviour
     private bool pushOk;
     private bool pushAuto;
     private float pushAutoTimer;
+    private int slotType;
 
     private ApiBridge api;
     private JSlot json;
@@ -49,11 +66,12 @@ public class SlotoManagerScript : MonoBehaviour
 
     void Start()
     {
-        Init();
+        //Init(2);
     }
 
-    public void Init()
+    public void Init(int _slotType = 1)
     {
+        slotType = _slotType;
         serverMoney = -1;
         bet = 100;
         betWinning = 0;
@@ -65,14 +83,49 @@ public class SlotoManagerScript : MonoBehaviour
         pushAutoTimer = 0f;
         SetMoney();
         ClearJson();
-        for (int i = 0; i < reels.Length; i++)
-        {
-            reels[i].Init(tileSprite, iconSprite);
-        }
+        ArrangeScreen();
         if (api)
         {
             api.SetPlayerId(PlayerPrefs.GetInt(PrefEnum.PLAYER_ID.ToString(), 0));
             api.SetToken(PlayerPrefs.GetString(PrefEnum.TOKEN.ToString(), ""));
+        }
+    }
+
+    private void ArrangeScreen()
+    {
+        if (slotType == 1)
+        {
+            BGSR.sprite = BGSprite[slotType - 1];
+            FGSR.sprite = FGSprite[slotType - 1];
+            FrameSR[0].sprite = FrameSprite[slotType - 1];
+            FrameSR[1].sprite = FrameSprite[slotType - 1];
+            SpinButtonSR.sprite = SpinButtonSprite[slotType - 1];
+            jackpotReel.gameObject.SetActive(true);
+            AccesoriesGO.SetActive(true);
+            tileSprite = tileSprite1;
+            iconSprite = iconSprite1;
+            for (int i = 0; i < reels.Length; i++)
+            {
+                reels[i].Init(1.88f, tileSprite, iconSprite);
+                reels[i].transform.localPosition = new Vector3((i-2)*1.89f-3.12f, 0f, 0f);
+            }
+        }
+        else if (slotType == 2)
+        {
+            BGSR.sprite = BGSprite[slotType - 1];
+            FGSR.sprite = FGSprite[slotType - 1];
+            FrameSR[0].sprite = FrameSprite[slotType - 1];
+            FrameSR[1].sprite = FrameSprite[slotType - 1];
+            SpinButtonSR.sprite = SpinButtonSprite[slotType - 1];
+            jackpotReel.gameObject.SetActive(false);
+            AccesoriesGO.SetActive(false);
+            tileSprite = tileSprite2;
+            iconSprite = iconSprite2;
+            for (int i = 0; i < reels.Length; i++)
+            {
+                reels[i].Init(2.12f, tileSprite, iconSprite);
+                reels[i].transform.localPosition = new Vector3((i - 2) * 2.13f - 3.12f, 1.3f, 0f);
+            }
         }
     }
 
@@ -130,7 +183,8 @@ public class SlotoManagerScript : MonoBehaviour
         {
             pushAutoTimer = 0;
             pushAuto = false;
-            sr.flipX = false;
+            //sr.flipX = false;
+            sr.sprite = SpinButtonSprite[slotType-1];
         }
     }
 
@@ -142,7 +196,8 @@ public class SlotoManagerScript : MonoBehaviour
             if(pushAutoTimer >= 3.0f && !pushAuto)
             {
                 pushAuto = true;
-                sr.flipX = true;
+                //sr.flipX = true;
+                sr.sprite = StopButtonSprite[slotType - 1];
             }
         }
     }
@@ -248,7 +303,14 @@ public class SlotoManagerScript : MonoBehaviour
         int i;
         for (i=0; i<slotIcons.Length; i++)
         {
-            slotIcons[i].SetIconValue(slot_spin.slot_matrix[i], iconSprite[slot_spin.slot_matrix[i] * reels[0].maxIconBlur + 0], tileSprite[0]);
+            if (slot_spin.slot_matrix[i] >= 0) //Jackpot Type
+            {
+                slotIcons[i].SetIconValue(slot_spin.slot_matrix[i], iconSprite[slot_spin.slot_matrix[i] * reels[0].maxIconBlur + 0], tileSprite[0]);
+            }
+            else //No Jackpot Type
+            {
+                slotIcons[i].SetIconValue(0, iconSprite[0], tileSprite[0]);
+            }
             slotIcons[i].fixedValue = true;
         }
         jsonCombination = slot_spin.slot_combination;
@@ -280,7 +342,7 @@ public class SlotoManagerScript : MonoBehaviour
         betWinning = 0;
         currBetWinning = 0;
         currBetLabelTM.text = "0";
-        api.StartSlot(1, bet);
+        api.StartSlot(slotType, bet);
     }
 
     public void RStartSlot(ApiBridge.ResponseParam response) {

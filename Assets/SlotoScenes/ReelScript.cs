@@ -20,15 +20,16 @@ public class ReelScript : MonoBehaviour
     private readonly float upSpeed = 50.0f;
     private readonly float downSpeed = 25.0f;
     private readonly float maxSpeed = -25.0f;
-    private readonly float iconWidth = 1.88f;
+    private float iconWidth = 1.88f;
 
     // Start is called before the first frame update
     void Start()
     {
     }
 
-    public void Init(Sprite[] tileS, Sprite[] iconS)
+    public void Init(float _iconWidth, Sprite[] tileS, Sprite[] iconS)
     {
+        iconWidth = _iconWidth;
         spin = 0;
         speed = 0.0f;
         speedBlur = 0;
@@ -38,10 +39,11 @@ public class ReelScript : MonoBehaviour
         iconSprite = iconS;
         for (int i = 0; i < icons.Length; i++)
         {
-            icons[i].Init();
+            icons[i].Init(iconWidth * 5.5f);
             int tempValue = Random.Range(0, maxIconType);
             icons[i].SetIconValue(tempValue, iconSprite[tempValue * maxIconBlur + 0], tileSprite[0]);
-        }
+            icons[i].transform.localPosition = new Vector3(0f, -iconWidth*i, 0f);
+    }
     }
 
     public void StartSpin()

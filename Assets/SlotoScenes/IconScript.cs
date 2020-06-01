@@ -9,6 +9,7 @@ public class IconScript : MonoBehaviour
     public bool fixedValue;
 
     private int iconValue;
+    private float bottomLine;
 
     // Start is called before the first frame update
     void Start()
@@ -16,9 +17,10 @@ public class IconScript : MonoBehaviour
         
     }
 
-    public void Init()
+    public void Init(float _bottomLine)
     {
         //iconSR = GetComponent<SpriteRenderer>();
+        bottomLine = _bottomLine;
     }
 
     public void SetIconValue(int value, Sprite iconSprite, Sprite tileSprite)
@@ -41,7 +43,7 @@ public class IconScript : MonoBehaviour
     public bool Spin(float speed)
     {
         transform.position += new Vector3(0.0f, speed, 0.0f);
-        return (transform.localPosition.y <= -10.0f ? true : false);
+        return (transform.localPosition.y <= -bottomLine ? true : false);
     }
 
     // Update is called once per frame

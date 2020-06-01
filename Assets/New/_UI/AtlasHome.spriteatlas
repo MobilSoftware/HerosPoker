@@ -110,7 +110,7 @@ SpriteAtlas:
   - IC_weekly
   - ic_friend
   - btn
-  - IC_Coupon
+  - ic_coupon
   - btn_chat
   - btn_sicbo
   - IC_Quest
