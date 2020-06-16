@@ -327,6 +327,7 @@ public class ApiBridge : MonoBehaviour
     private class ProfileParam : TokenParam
     {
         public int friend_id;
+        public string search_key;
     }
 
     public int GetProfile ( int friendId = 0, int playerId = 0, string token = "" )
@@ -381,6 +382,7 @@ public class ApiBridge : MonoBehaviour
         public int hero_gender;
         public int hero_id;
         public int costume_id;
+        public string heroes_id;
     }
 
     public int GetHero ( int heroGender = 0, int playerId = 0, string token = "" )
@@ -433,6 +435,26 @@ public class ApiBridge : MonoBehaviour
             param.hero_id = heroId;
             string paramJson = JsonUtility.ToJson (param);
             API api = new API ("sethero.php", "RSetHero", paramJson, 1);
+            param = null; paramJson = "";
+            StartCoroutine (Congest.SendPOST (this, api));
+            return api.seed;
+        }
+        return 0;
+    }
+
+
+
+    //Set Hero Featured
+    public int SetHeroFeatured ( int[] heroId, int playerId = 0, string token = "" )
+    {
+        if (ParseToken (playerId, token))
+        {
+            HeroParam param = new HeroParam ();
+            param.player_id = apiPlayerId;
+            param.token = apiToken;
+            param.heroes_id = String.Join (",", heroId);
+            string paramJson = JsonUtility.ToJson (param);
+            API api = new API ("setherofeatured.php", "RSetHeroFeatured", paramJson, 1);
             param = null; paramJson = "";
             StartCoroutine (Congest.SendPOST (this, api));
             return api.seed;
@@ -552,6 +574,24 @@ public class ApiBridge : MonoBehaviour
 
 
 
+    //Search Friend
+    public int SearchFriend ( string searchKey = "", int playerId = 0, string token = "" )
+    {
+        if (ParseToken (playerId, token))
+        {
+            ProfileParam param = new ProfileParam ();
+            param.player_id = apiPlayerId;
+            param.token = apiToken;
+            param.search_key = searchKey;
+            string paramJson = JsonUtility.ToJson (param);
+            API api = new API ("searchfriend.php", "RSearchFriend", paramJson, 1);
+            param = null; paramJson = "";
+            StartCoroutine (Congest.SendPOST (this, api));
+            return api.seed;
+        }
+        return 0;
+    }
+
     //Send Friend
     public int SendFriend ( int friendId, SendFriendType friendType, string notes = "", int playerId = 0, string token = "" )
     {
@@ -579,6 +619,7 @@ public class ApiBridge : MonoBehaviour
     private class SetPhoneNumParam : TokenParam
     {
         public string phone_num;
+        public string status_message;
     }
 
     public int SetPhoneNum ( string phoneNum, int playerId = 0, string token = "" )
@@ -591,6 +632,25 @@ public class ApiBridge : MonoBehaviour
             param.phone_num = phoneNum;
             string paramJson = JsonUtility.ToJson (param);
             API api = new API ("setphonenum.php", "RSetPhoneNum", paramJson, 1);
+            param = null; paramJson = "";
+            StartCoroutine (Congest.SendPOST (this, api));
+            return api.seed;
+        }
+        return 0;
+    }
+
+
+
+    public int SetStatus ( string statusMsg, int playerId = 0, string token = "" )
+    {
+        if (ParseToken (playerId, token))
+        {
+            SetPhoneNumParam param = new SetPhoneNumParam ();
+            param.player_id = apiPlayerId;
+            param.token = apiToken;
+            param.status_message = statusMsg;
+            string paramJson = JsonUtility.ToJson (param);
+            API api = new API ("setstatus.php", "RSetStatus", paramJson, 1);
             param = null; paramJson = "";
             StartCoroutine (Congest.SendPOST (this, api));
             return api.seed;

@@ -51,8 +51,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   txtDisplayName: {fileID: 623017291850567181}
   txtStatus: {fileID: 2758049177250603177}
+  txtLevel: {fileID: 971302734636178725}
   tmpCoinValue: {fileID: 4742196082515375531}
   btnViewProfile: {fileID: 5288079480249865589}
+  playerID: 0
 --- !u!1 &1571397016817419335
 GameObject:
   m_ObjectHideFlags: 0

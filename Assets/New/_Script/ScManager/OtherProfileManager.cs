@@ -22,10 +22,12 @@ public class OtherProfileManager : MonoBehaviour
 
     public Canvas canvas;
     public Text txtDisplayName;
+    public Text txtStatus;
     public Text txtLevel;
     public Text txtCoinValue;
     public Text txtCouponValue;
     public Text txtTag;
+    public Image fillExpBar;
     public Button btnClose;
     public Button btnAdd;
     public Button btnRemove;
@@ -73,11 +75,14 @@ public class OtherProfileManager : MonoBehaviour
         }
         jFriend = json;
         txtDisplayName.text = json.display_name;
+        txtStatus.text = json.status_message;
+        txtLevel.text = json.level.ToString ();
         txtCoinValue.text = long.Parse (json.coin).toShortCurrency ();
         txtCouponValue.text = long.Parse (json.coupon).toCouponShortCurrency ();
         txtTag.text = "Tag: " + json.player_tag;
+        fillExpBar.fillAmount = float.Parse (json.exp_percentage);
         standHero.LoadFromBundle (json.costume_equiped);
-        if (json.is_already_friend)
+        if (json.on_friend_list)
         {
             btnAdd.gameObject.SetActive (false);
             btnRemove.gameObject.SetActive (true);

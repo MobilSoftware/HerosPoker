@@ -131,11 +131,9 @@ public class ShopManager : MonoBehaviour
         }
         HeroManager.instance.SetJson (jsonItemHeroes);
         //sort here
-        Logger.E ("json item hero length: " + jsonItemHeroes.Count);
         sortedItemHeroes = jsonItemHeroes.OrderBy (x => x.is_hero_owned ? 1 : 0).ThenBy (x => (x.is_new == 0) ? 0 : 1).ThenBy (x => int.Parse (x.price_idr)).ThenBy (x => long.Parse (x.price_coin)).ToArray ();
-        Logger.E ("sorted length: " + sortedItemHeroes.Length);
         //
-
+        ProfileManager.instance.SetOwnedHeroesJson (sortedItemHeroes);
         isSettingJson = false;
     }
 

@@ -47,4 +47,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/SlotoScenes/SlotoScene.unity
     guid: 6ba6e830a7236408cb12ba5f1468d902
+  - enabled: 0
+    path: Assets/New/_Scene/SeSettings.unity
+    guid: 06046743c52a4490eae30737eb072116
   m_configObjects: {}

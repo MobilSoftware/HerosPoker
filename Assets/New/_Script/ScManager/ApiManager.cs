@@ -97,10 +97,6 @@ public class ApiManager : MonoBehaviour
         api.SetPlayerId (json.player.player_id);
         api.SetToken (json.player.token);
         PlayerData.display_name = json.player.display_name;
-        if (PlayerData.display_name.Length > 10)
-        {
-            PlayerData.display_name = PlayerData.display_name.Substring (0, 7) + "...";
-        }
         PlayerData.id = json.player.player_id;
         PlayerData.tag = json.player.player_tag;
         PlayerData.owned_coupon = Convert.ToInt64 (json.player.coupon);
@@ -142,7 +138,6 @@ public class ApiManager : MonoBehaviour
             GetShop ();
             GetLeaderboard ();
             GetFriend ();
-            //GetFriend (0, ApiBridge.FriendType.FriendRequestMe);
             _SceneManager.instance.SetActiveScene (SceneType.HOME, true);
             HomeManager.instance.Init ();
         }
@@ -303,6 +298,33 @@ public class ApiManager : MonoBehaviour
     private void RSendFriend (ApiBridge.ResponseParam response )
     {
         Logger.E ("Return Send Friend: " + response.post_data);
+    }
+
+    public void SearchFriend (string strSearch)
+    {
+        api.SearchFriend (strSearch);
+    }
+
+    private void RSearchFriend (ApiBridge.ResponseParam response )
+    {
+        Logger.E ("Return Search Friend: " + response.post_data);
+        JSearchFriend json = JsonUtility.FromJson<JSearchFriend> (response.post_data);
+        FriendManager.instance.ShowSearchResult (json.friend);
+    }
+
+    public void SetStatus (string strStatus )
+    {
+        api.SetStatus (strStatus);
+    }
+
+    private void RSetStatus (ApiBridge.ResponseParam response )
+    {
+        Logger.E ("Return Set Status: " + response.post_data);
+    }
+
+    public void SetHeroFeatured (int[] heroIDs )
+    {
+        api.SetHeroFeatured (heroIDs);
     }
 
     #region gameplay

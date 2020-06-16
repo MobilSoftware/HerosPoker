@@ -8,6 +8,7 @@ public class ItemFriendList : MonoBehaviour
 {
     public Text txtDisplayName;
     public Text txtStatus;
+    public Text txtLevel;
     public TextMeshProUGUI tmpCoinValue;
     public Button btnViewProfile;
 
@@ -35,6 +36,8 @@ public class ItemFriendList : MonoBehaviour
             json.display_name = json.display_name.Substring (0, 7) + "...";
         }
         txtDisplayName.text = json.display_name;
+        txtStatus.text = json.status_message;
+        txtLevel.text = "Lv. " + json.level;
         tmpCoinValue.text = long.Parse (json.coin).toShortCurrency ();
     }
 }

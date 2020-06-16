@@ -7,6 +7,7 @@ public class ItemFriendReqMe : MonoBehaviour
 {
     public Text txtDisplayName;
     public Text txtStatus;
+    public Text txtLevel;
     public Button btnYes;
     public Button btnNo;
     public Button btnViewProfile;
@@ -22,7 +23,6 @@ public class ItemFriendReqMe : MonoBehaviour
 
     private void OnViewProfile ()
     {
-        //ApiManager.instance.GetFriend (jFriend.player_id);
         OtherProfileManager.instance.SetData (jFriend);
     }
 
@@ -47,5 +47,7 @@ public class ItemFriendReqMe : MonoBehaviour
             json.display_name = json.display_name.Substring (0, 7) + "...";
         }
         txtDisplayName.text = json.display_name;
+        txtStatus.text = json.status_message;
+        txtLevel.text = "Lv. " + json.level;
     }
 }

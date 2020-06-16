@@ -6,11 +6,11 @@ public class ItemLeaderboard : MonoBehaviour
 {
     public Text txtDisplayName;
     public Text txtStatus;
+    public Text txtLevel;
     public TextMeshProUGUI tmpCoinValue;
     public Button btnViewProfile;
 
     JLeaderboard jLeaderboard;
-    JFriend jFriend;
 
     private void Start ()
     {

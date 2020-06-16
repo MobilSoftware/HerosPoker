@@ -20,25 +20,6 @@ public static class PokerData
         is_setup = true;
     }
 
-    public static void Generate ()
-    {
-        poker_round_id = UnityEngine.Random.Range (1, 90000);
-        room_bet = PlayerData.proto_bet;
-
-        RandomizeCards ();
-
-        str_cards = string.Empty;
-        for (int i = 0; i < cards.Length; i++)
-        {
-            if (i == cards.Length - 1)
-                str_cards += cards[i];
-            else
-                str_cards += cards[i] + ",";
-        }
-        is_setup = true;
-        //PhotonTexasPokerManager.instance.SetMyStartPoker (poker_round_id, room_bet, str_cards);
-    }
-
     private static void RandomizeCards ()
     {
         int[] cardIndices = new int[52];

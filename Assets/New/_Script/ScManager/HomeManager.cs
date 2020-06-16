@@ -129,14 +129,14 @@ public class HomeManager : MonoBehaviour
 
     private void OnOriental ()
     {
-        _SceneManager.instance.SetActiveScene (SceneType.SLOTO, true);
+        _SceneManager.instance.SetActiveScene (SceneType.SLOTO, true, 1);
         Hide ();
     }
 
     private void OnWestern ()
     {
-        //_SceneManager.instance.SetActiveScene (SceneType.SLOTO, true);
-        //Hide ();
+        _SceneManager.instance.SetActiveScene (SceneType.SLOTO, true, 2);
+        Hide ();
     }
 
     private void OnSicbo ()

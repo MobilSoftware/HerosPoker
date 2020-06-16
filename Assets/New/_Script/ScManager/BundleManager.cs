@@ -94,15 +94,15 @@ public class BundleManager : MonoBehaviour
             {
                 downloadCount++;
                 StartCoroutine (_DownloadScene (scenePath, scene.asset_url));
-                //if (scene.asset_version > 0)
-                //{
-                //    for (int x = 0; x < scene.asset_version; x++)
-                //    {
-                //        string previousVersionPath = GetSceneDownloadPath (scene.scene_id, x);
-                //        if (Directory.Exists (previousVersionPath))
-                //            Directory.Delete (previousVersionPath, true);
-                //    }
-                //}
+                if (scene.asset_version > 0)
+                {
+                    for (int x = 0; x < scene.asset_version; x++)
+                    {
+                        string previousVersionPath = GetSceneDownloadPath (scene.scene_id, x);
+                        if (Directory.Exists (previousVersionPath))
+                            Directory.Delete (previousVersionPath, true);
+                    }
+                }
             }
         }
     }
@@ -165,30 +165,30 @@ public class BundleManager : MonoBehaviour
                 downloadCount++;
                 StartCoroutine (_DownloadThumb (thumbPath, item.thumb_url));
 
-                //if (item.asset_version > 0)
-                //{
-                //    for (int x = 0; x < item.asset_version; x++)
-                //    {
-                //        string previousVersionPath = GetItemDownloadPath (DownloadType.THUMB, item.type, item.item_id, x);
-                //        if (Directory.Exists (previousVersionPath))
-                //            Directory.Delete (previousVersionPath, true);
-                //    }
-                //}
+                if (item.asset_version > 0)
+                {
+                    for (int x = 0; x < item.asset_version; x++)
+                    {
+                        string previousVersionPath = GetItemDownloadPath (DownloadType.THUMB, item.item_type_id, item.item_id, x);
+                        if (Directory.Exists (previousVersionPath))
+                            Directory.Delete (previousVersionPath, true);
+                    }
+                }
             }
             if (item.asset_url.Length > 0 && !File.Exists (assetPathWithFilename))
             {
                 downloadCount++;
                 StartCoroutine (_DownloadAsset (assetPath, item.asset_url));
 
-                //if (item.asset_version > 0)
-                //{
-                //    for (int x = 0; x < item.asset_version; x++)
-                //    {
-                //        string previousVersionPath = GetItemDownloadPath (DownloadType.ASSET, item.type, item.item_id, x);
-                //        if (Directory.Exists (previousVersionPath))
-                //            Directory.Delete (previousVersionPath, true);
-                //    }
-                //}
+                if (item.asset_version > 0)
+                {
+                    for (int x = 0; x < item.asset_version; x++)
+                    {
+                        string previousVersionPath = GetItemDownloadPath (DownloadType.ASSET, item.item_type_id, item.item_id, x);
+                        if (Directory.Exists (previousVersionPath))
+                            Directory.Delete (previousVersionPath, true);
+                    }
+                }
             }
         }
     }

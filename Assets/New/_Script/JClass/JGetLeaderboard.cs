@@ -13,6 +13,7 @@ public struct JLeaderboard
     public string scoring;
     public int rank_id;
     public string display_name;
+    public string status_message;
     public string display_picture;
     public bool verified;
 }

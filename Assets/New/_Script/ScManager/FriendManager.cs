@@ -22,8 +22,11 @@ public class FriendManager : MonoBehaviour
 
     public Canvas canvas;
     public Button btnClose;
+    public Button btnSearch;
+    public InputField ipfSearch;
     public ItemFriendList prefabItemFriendList;
     public ItemFriendReqMe prefabItemFriendReqMe;
+    public ItemSearchPlayer prefabItemSearchPlayer;
     public Text txtTogFriendList;
     public Text txtTogFriendReqMe;
     public Text txtTogPlayerSearch;
@@ -45,15 +48,30 @@ public class FriendManager : MonoBehaviour
     private SceneType prevSceneType;
     private JFriend[] listFriends;
     private JFriend[] reqMeFriends;
+    private JFriend[] searchPlayers;
     private List<ItemFriendList> itemListFriends;
     private List<ItemFriendReqMe> itemReqMeFriends;
+    private List<ItemSearchPlayer> itemSearchPlayers;
+    private string strSearch;
 
     private void Start ()
     {
         btnClose.onClick.AddListener (Hide);
+        btnSearch.onClick.AddListener (OnSearch);
+        ipfSearch.onEndEdit.AddListener (OnEndEdit);
         togFriendList.onValueChanged.AddListener (OnToggle);
         togFriendReqMe.onValueChanged.AddListener (OnToggle);
         togPlayerSearch.onValueChanged.AddListener (OnToggle);
+    }
+
+    private void OnSearch ()
+    {
+        ApiManager.instance.SearchFriend (strSearch);
+    }
+
+    private void OnEndEdit (string strIpf )
+    {
+        strSearch = strIpf;
     }
 
     private void OnToggle (bool val )
@@ -62,10 +80,12 @@ public class FriendManager : MonoBehaviour
         {
             if (togFriendList.isOn)
             {
+                ResetSearchPlayerTab ();
                 OpenFriendListTab ();
             }
             else if (togFriendReqMe.isOn)
             {
+                ResetSearchPlayerTab ();
                 OpenFriendReqMeTab ();
             } else if (togPlayerSearch.isOn)
             {
@@ -78,10 +98,10 @@ public class FriendManager : MonoBehaviour
     {
         togFriendList.image.sprite = ShopManager.instance.sprToggleOn;
         togFriendReqMe.image.sprite = ShopManager.instance.sprToggleOff;
-        //togPlayerSearch.image.sprite = ShopManager.instance.sprToggleOff;
+        togPlayerSearch.image.sprite = ShopManager.instance.sprToggleOff;
         txtTogFriendList.color = ShopManager.instance.colTextToggleOn;
         txtTogFriendReqMe.color = ShopManager.instance.colTextToggleOff;
-        //txtTogPlayerSearch.color = ShopManager.instance.colTextToggleOff;
+        txtTogPlayerSearch.color = ShopManager.instance.colTextToggleOff;
         objFriendListContainer.SetActive (true);
         objFriendReqMeContainer.SetActive (false);
         objPlayerSearchContainer.SetActive (false);
@@ -91,10 +111,10 @@ public class FriendManager : MonoBehaviour
     {
         togFriendList.image.sprite = ShopManager.instance.sprToggleOff;
         togFriendReqMe.image.sprite = ShopManager.instance.sprToggleOn;
-        //togPlayerSearch.image.sprite = ShopManager.instance.sprToggleOff;
+        togPlayerSearch.image.sprite = ShopManager.instance.sprToggleOff;
         txtTogFriendList.color = ShopManager.instance.colTextToggleOff;
         txtTogFriendReqMe.color = ShopManager.instance.colTextToggleOn;
-        //txtTogPlayerSearch.color = ShopManager.instance.colTextToggleOff;
+        txtTogPlayerSearch.color = ShopManager.instance.colTextToggleOff;
         objFriendListContainer.SetActive (false);
         objFriendReqMeContainer.SetActive (true);
         objPlayerSearchContainer.SetActive (false);
@@ -105,10 +125,10 @@ public class FriendManager : MonoBehaviour
     {
         togFriendList.image.sprite = ShopManager.instance.sprToggleOff;
         togFriendReqMe.image.sprite = ShopManager.instance.sprToggleOff;
-        //togPlayerSearch.image.sprite = ShopManager.instance.sprToggleOn;
+        togPlayerSearch.image.sprite = ShopManager.instance.sprToggleOn;
         txtTogFriendList.color = ShopManager.instance.colTextToggleOff;
         txtTogFriendReqMe.color = ShopManager.instance.colTextToggleOff;
-        //txtTogPlayerSearch.color = ShopManager.instance.colTextToggleOn;
+        txtTogPlayerSearch.color = ShopManager.instance.colTextToggleOn;
         objFriendListContainer.SetActive (false);
         objFriendReqMeContainer.SetActive (false);
         objPlayerSearchContainer.SetActive (true);
@@ -138,9 +158,17 @@ public class FriendManager : MonoBehaviour
 
     private void Hide ()
     {
+        ResetSearchPlayerTab ();
         UpdateAllFriendTypes ();
         canvas.enabled = false;
         _SceneManager.instance.activeSceneType = prevSceneType;
+    }
+
+    private void ResetSearchPlayerTab ()
+    {
+        DeleteSearchResult ();
+        ipfSearch.text = string.Empty;
+        strSearch = string.Empty;
     }
 
     public void SetJson ( JGetFriend json, ApiBridge.FriendType friendType )
@@ -214,6 +242,24 @@ public class FriendManager : MonoBehaviour
             ItemFriendReqMe ifrm = Instantiate (prefabItemFriendReqMe, parentFriendReqMe);
             ifrm.SetData (reqMeFriends[i]);
             itemReqMeFriends.Add (ifrm);
+        }
+    }
+
+    public void ShowSearchResult (JFriend[] players )
+    {
+        DeleteSearchResult ();
+        for (int i = 0; i < players.Length; i++)
+        {
+            ItemSearchPlayer isp = Instantiate (prefabItemSearchPlayer, parentPlayerSearch);
+            isp.SetData (players[i]);
+        }
+    }
+
+    private void DeleteSearchResult ()
+    {
+        for (int a = 0; a < parentPlayerSearch.childCount; a++)
+        {
+            Destroy (parentPlayerSearch.GetChild (a).gameObject);
         }
     }
 

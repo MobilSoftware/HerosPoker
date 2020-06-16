@@ -745,6 +745,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   txtDisplayName: {fileID: 4716830950321169474}
   txtStatus: {fileID: 8040725450438167270}
+  txtLevel: {fileID: 4947811807633946474}
   btnYes: {fileID: 1557053242045188172}
   btnNo: {fileID: 1194293857354309919}
   btnViewProfile: {fileID: 50632966506331962}

@@ -166,7 +166,7 @@ public class _SceneManager : MonoBehaviour
 
         PhotonNetwork.ConnectUsingSettings ("v1.0");
         yield return _WFSUtility.wef;
-        SetActiveSloto (false);
+        SetActiveScene (SceneType.SLOTO, false);
         yield return _WFSUtility.wef;
         int playerID = PlayerPrefs.GetInt (PrefEnum.PLAYER_ID.ToString (), 0);
         string token = PlayerPrefs.GetString (PrefEnum.TOKEN.ToString (), string.Empty);
@@ -180,7 +180,7 @@ public class _SceneManager : MonoBehaviour
         SceneManager.UnloadSceneAsync ("SeSplash");
     }
 
-    public void SetActiveScene (SceneType st, bool val )
+    public void SetActiveScene (SceneType st, bool val, int indexSlotoType = 1 )
     {
         switch (st)
         {
@@ -193,7 +193,7 @@ public class _SceneManager : MonoBehaviour
             case SceneType.VERIFY: verifyM.SetCanvas (val); break;
             case SceneType.VIP: vipM.SetCanvas (val); break;
             case SceneType.POKER: pokerM.SetCanvas (val); break;
-            case SceneType.SLOTO: SetActiveSloto (val); break;
+            case SceneType.SLOTO: SetActiveSloto (val, indexSlotoType); break;
             case SceneType.SICBO: sicboM.SetCanvas (val); break;
             case SceneType.SETTINGS: settingsM.SetCanvas (val); break;
             case SceneType.HERO: heroM.SetCanvas (val); break;
@@ -202,13 +202,13 @@ public class _SceneManager : MonoBehaviour
         }
     }
 
-    private void SetActiveSloto (bool val )
+    private void SetActiveSloto (bool val, int indexSlotoType )
     {
         if (val)
         {
             slotoM.gameObject.SetActive (true);
             slotoM.SetMoney ();
-            slotoM.Init ();
+            slotoM.Init (indexSlotoType);
             mainCamera.gameObject.SetActive (false);
             activeSceneType = SceneType.SLOTO;
         }
