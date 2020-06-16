@@ -21,6 +21,7 @@ public class LeaderboardManager : MonoBehaviour
 
     public Canvas canvas;
     public Button btnClose;
+    public ScrollRect scrRect;
     //public Transform parentItems;
     //public ItemLeaderboard prefabItemLeaderboard;
     public ItemLeaderboard[] itemLeaderboards;      //length = 20 for now, should be 50
@@ -52,8 +53,8 @@ public class LeaderboardManager : MonoBehaviour
             canvas.sortingOrder = (int) SceneType.LEADERBOARD;
             StartCoroutine (_WaitSetJson ());
         }
-
         canvas.enabled = true;
+        scrRect.verticalNormalizedPosition = 1f;
         prevSceneType = _SceneManager.instance.activeSceneType;
         _SceneManager.instance.activeSceneType = SceneType.LEADERBOARD;
     }

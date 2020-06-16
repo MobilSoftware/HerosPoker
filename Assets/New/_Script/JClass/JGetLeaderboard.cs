@@ -12,10 +12,25 @@ public struct JLeaderboard
     public int player_id;
     public string scoring;
     public int rank_id;
-    public string display_name;
-    public string status_message;
-    public string display_picture;
-    public bool verified;
+    public JHome profile;
+}
+
+[System.Serializable]
+public struct JPlayerProfile
+{
+    public int player_id;
+    public string coin;
+    public string coupon;
+    public int level;
+    public int exp;
+    public int vip_level;
+    public int vip_exp;
+    public int costume_equiped;
+    public int[] costume_owned;
+    public int[] hero_owned;
+    public int[] hero_featured;
+    public string refer_by;
+
 }
 
 [System.Serializable]

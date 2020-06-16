@@ -25,11 +25,14 @@ public class ItemLeaderboard : MonoBehaviour
     public void SetData (JLeaderboard json)
     {
         jLeaderboard = json;
-        if (json.display_name.Length > 10)
+        if (json.profile.display_name == null)
+            json.profile.display_name = string.Empty;
+        if (json.profile.display_name.Length > 10)
         {
-            json.display_name = json.display_name.Substring (0, 7) + "...";
+            json.profile.display_name = json.profile.display_name.Substring (0, 7) + "...";
         }
-        txtDisplayName.text = json.display_name;
+        txtDisplayName.text = json.profile.display_name;
         tmpCoinValue.text = long.Parse (json.scoring).toShortCurrency ();
+        txtStatus.text = json.profile.status_message;
     }
 }

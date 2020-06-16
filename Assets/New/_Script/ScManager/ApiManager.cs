@@ -320,11 +320,21 @@ public class ApiManager : MonoBehaviour
     private void RSetStatus (ApiBridge.ResponseParam response )
     {
         Logger.E ("Return Set Status: " + response.post_data);
+        JSetStatus json = JsonUtility.FromJson<JSetStatus> (response.post_data);
+        PlayerData.jHome = json.player;
+        PlayerData.status_message = json.player.status_message;
     }
 
     public void SetHeroFeatured (int[] heroIDs )
     {
         api.SetHeroFeatured (heroIDs);
+    }
+
+    private void RSetHeroFeatured (ApiBridge.ResponseParam response )
+    {
+        Logger.E ("Return Set Hero Featured: " + response.post_data);
+        JSetHeroFeatured json = JsonUtility.FromJson<JSetHeroFeatured> (response.post_data);
+        PlayerData.jHome = json.player;
     }
 
     #region gameplay

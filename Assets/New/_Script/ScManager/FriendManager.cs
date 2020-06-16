@@ -267,7 +267,6 @@ public class FriendManager : MonoBehaviour
     {
         Logout ();
         ApiManager.instance.GetFriend ();
-        ApiManager.instance.GetFriend (0, ApiBridge.FriendType.FriendRequestMe);
     }
 
     public void Logout ()

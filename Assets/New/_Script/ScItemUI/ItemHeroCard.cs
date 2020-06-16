@@ -40,7 +40,8 @@ public class ItemHeroCard : MonoBehaviour
         txtHeroName.text = json.item_name[0];
         string imagePath = BundleManager.instance.GetItemLoadPath (DownloadType.THUMB, json.item_type_id, json.item_id);
         BundleManager.instance.LoadImage (imgHero, imagePath);
-        objEmpty.SetActive (false);
+        if (objEmpty != null)
+            objEmpty.SetActive (false);
     }
 
     public void SetCard (ItemHeroCard card )

@@ -23,6 +23,7 @@ public class ProfileManager : MonoBehaviour
     public Canvas canvas;
     public Text txtDisplayName;
     public InputField txtStatus;
+    public Text txtStatusMsg;
     public Text txtLevel;
     public Text txtCoinValue;
     public Text txtCouponValue;
@@ -53,14 +54,20 @@ public class ProfileManager : MonoBehaviour
         btnClose.onClick.AddListener (Hide);
         btnVerify.onClick.AddListener (OnVerify);
         btnVIP.onClick.AddListener (OnVIP);
-        //btnEditStatus.onClick.AddListener (OnEditStatus);
-        //btnEditCards.onClick.AddListener (OnEditCards);
-        //btnHideMenuCards.onClick.AddListener (HideMenuCards);
+        btnEditStatus.onClick.AddListener (OnEditStatus);
+        btnEditCards.onClick.AddListener (OnEditCards);
+        btnHideMenuCards.onClick.AddListener (HideMenuCards);
+        txtStatus.onEndEdit.AddListener (OnEndEdit);
     }
 
     private void OnVerify ()
     {
         //_SceneManager.instance.SetActiveScene (SceneType.VERIFY, true);
+    }
+
+    private void OnEndEdit (string msg)
+    {
+        txtStatusMsg.text = msg;
     }
 
     private void OnEditStatus ()
@@ -81,7 +88,7 @@ public class ProfileManager : MonoBehaviour
             if (!equipedCards[i].objEmpty.activeSelf)
                 featuredHeroes.Add (equipedCards[i].heroID);
         }
-        if (featuredHeroes.Count == 0)
+        if (featuredHeroes.Count > 0)
             ApiManager.instance.SetHeroFeatured (featuredHeroes.ToArray ());
 
         objMenuCards.SetActive (false);
@@ -104,27 +111,56 @@ public class ProfileManager : MonoBehaviour
     {
         if (!isInit)
         {
-            ownedCards = new List<ItemHeroCard> ();
             canvas.sortingOrder = (int) SceneType.PROFILE;
             isInit = true;
         }
 
+        for (int a = 0; a < equipedCards.Length; a++)
+        {
+            equipedCards[a].objEmpty.SetActive (true);
+        }
         canvas.enabled = true;
         prevSceneType = _SceneManager.instance.activeSceneType;
         _SceneManager.instance.activeSceneType = SceneType.PROFILE;
         txtDisplayName.text = PlayerData.display_name;
-        txtStatus.text = PlayerData.status_message;
+        txtStatusMsg.text = PlayerData.status_message;
         txtLevel.text = "Lv. " + PlayerData.level;
         fillExpBar.fillAmount = PlayerData.exp_percentage;
         UpdateCoinAndCoupon ();
         txtTag.text = "Tag: " + PlayerData.tag;
         standHero.LoadFromBundle (PlayerData.costume_id);
+        Logger.E ("feature length: " + PlayerData.jHome.hero_featured.Length);
+        Logger.E ("owned length: " + ownedCards.Count);
+        if (PlayerData.jHome.hero_featured.Length > 0)
+        {
+            for (int i = 0; i < PlayerData.jHome.hero_featured.Length; i++)
+            {
+                for (int j = 0; j < ownedCards.Count; j++)
+                {
+                    if (PlayerData.jHome.hero_featured[i] == ownedCards[j].heroID)
+                    {
+                        EquipHeroCard (ownedCards[j]);
+                    }
+                }
+            }
+        }
     }
 
     public void Hide ()
     {
         canvas.enabled = false;
         _SceneManager.instance.activeSceneType = prevSceneType;
+
+        List<int> featuredHeroes = new List<int> ();
+        for (int i = 0; i < equipedCards.Length; i++)
+        {
+            if (!equipedCards[i].objEmpty.activeSelf)
+                featuredHeroes.Add (equipedCards[i].heroID);
+        }
+        if (featuredHeroes.Count > 0)
+            ApiManager.instance.SetHeroFeatured (featuredHeroes.ToArray ());
+        else
+            ApiManager.instance.SetHeroFeatured (new int[] {0});
     }
 
     public void UpdateCoinAndCoupon ()
@@ -135,6 +171,8 @@ public class ProfileManager : MonoBehaviour
 
     public void SetOwnedHeroesJson (JGetShopItem[] itemHeroes)
     {
+        hero_owned = PlayerData.jHome.hero_owned;
+        ownedCards = new List<ItemHeroCard> ();
         for (int i = 0; i < itemHeroes.Length; i++)
         {
             for (int j = 0; j < hero_owned.Length; j++)

@@ -226,7 +226,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -302, y: 25}
+  m_AnchoredPosition: {x: -302, y: 27}
   m_SizeDelta: {x: 300, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4575532588995537446
@@ -409,6 +409,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   txtDisplayName: {fileID: 8829757771396573274}
   txtStatus: {fileID: 2645777534401348206}
+  txtLevel: {fileID: 0}
   tmpCoinValue: {fileID: 4596658063527193922}
   btnViewProfile: {fileID: 6547596127908538338}
 --- !u!1 &6674015211737912361
@@ -768,7 +769,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -302, y: -19}
+  m_AnchoredPosition: {x: -302, y: -17}
   m_SizeDelta: {x: 300, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6587651470425656030
