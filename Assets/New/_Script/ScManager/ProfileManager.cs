@@ -129,8 +129,6 @@ public class ProfileManager : MonoBehaviour
         UpdateCoinAndCoupon ();
         txtTag.text = "Tag: " + PlayerData.tag;
         standHero.LoadFromBundle (PlayerData.costume_id);
-        Logger.E ("feature length: " + PlayerData.jHome.hero_featured.Length);
-        Logger.E ("owned length: " + ownedCards.Count);
         if (PlayerData.jHome.hero_featured.Length > 0)
         {
             for (int i = 0; i < PlayerData.jHome.hero_featured.Length; i++)

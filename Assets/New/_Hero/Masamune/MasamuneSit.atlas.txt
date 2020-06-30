@@ -1,0 +1,258 @@
+
+MasamuneSit.png
+size: 819,772
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+ArmL
+  rotate: true
+  xy: 496, 182
+  size: 126, 102
+  orig: 126, 102
+  offset: 0, 0
+  index: -1
+ArmR
+  rotate: true
+  xy: 588, 347
+  size: 149, 109
+  orig: 149, 109
+  offset: 0, 0
+  index: -1
+Belt
+  rotate: true
+  xy: 718, 577
+  size: 193, 92
+  orig: 193, 92
+  offset: 0, 0
+  index: -1
+BeltBack
+  rotate: false
+  xy: 2, 26
+  size: 186, 49
+  orig: 186, 49
+  offset: 0, 0
+  index: -1
+BlinkA
+  rotate: false
+  xy: 712, 5
+  size: 31, 26
+  orig: 31, 26
+  offset: 0, 0
+  index: -1
+BlinkB
+  rotate: false
+  xy: 347, 5
+  size: 31, 26
+  orig: 31, 26
+  offset: 0, 0
+  index: -1
+Body
+  rotate: true
+  xy: 424, 498
+  size: 272, 292
+  orig: 272, 292
+  offset: 0, 0
+  index: -1
+Crescent
+  rotate: true
+  xy: 206, 67
+  size: 452, 158
+  orig: 452, 158
+  offset: 0, 0
+  index: -1
+Eye
+  rotate: false
+  xy: 347, 49
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+EyeBack
+  rotate: false
+  xy: 366, 500
+  size: 26, 19
+  orig: 26, 19
+  offset: 0, 0
+  index: -1
+EyeBrow
+  rotate: false
+  xy: 745, 4
+  size: 26, 27
+  orig: 26, 27
+  offset: 0, 0
+  index: -1
+EyePatch
+  rotate: false
+  xy: 598, 9
+  size: 40, 30
+  orig: 40, 30
+  offset: 0, 0
+  index: -1
+Face
+  rotate: false
+  xy: 366, 120
+  size: 128, 188
+  orig: 128, 188
+  offset: 0, 0
+  index: -1
+FaceL
+  rotate: false
+  xy: 2, 521
+  size: 420, 249
+  orig: 420, 249
+  offset: 0, 0
+  index: -1
+FaceR
+  rotate: true
+  xy: 2, 77
+  size: 442, 202
+  orig: 442, 202
+  offset: 0, 0
+  index: -1
+ForeArmL
+  rotate: true
+  xy: 366, 33
+  size: 85, 114
+  orig: 85, 114
+  offset: 0, 0
+  index: -1
+ForeArmR
+  rotate: true
+  xy: 698, 188
+  size: 112, 119
+  orig: 112, 119
+  offset: 0, 0
+  index: -1
+HandFold
+  rotate: true
+  xy: 190, 14
+  size: 51, 100
+  orig: 51, 100
+  offset: 0, 0
+  index: -1
+HandGripL
+  rotate: true
+  xy: 611, 41
+  size: 77, 74
+  orig: 77, 74
+  offset: 0, 0
+  index: -1
+HandGripR
+  rotate: true
+  xy: 687, 33
+  size: 80, 84
+  orig: 80, 84
+  offset: 0, 0
+  index: -1
+HandOpenL
+  rotate: true
+  xy: 718, 487
+  size: 88, 99
+  orig: 88, 99
+  offset: 0, 0
+  index: -1
+HandOpenR
+  rotate: true
+  xy: 496, 90
+  size: 90, 113
+  orig: 90, 113
+  offset: 0, 0
+  index: -1
+Helmet
+  rotate: false
+  xy: 366, 310
+  size: 220, 186
+  orig: 220, 186
+  offset: 0, 0
+  index: -1
+Separator
+  rotate: false
+  xy: 812, 767
+  size: 3, 3
+  orig: 3, 3
+  offset: 0, 0
+  index: -1
+ShoulderABackL
+  rotate: true
+  xy: 773, 77
+  size: 36, 44
+  orig: 36, 44
+  offset: 0, 0
+  index: -1
+ShoulderABackR
+  rotate: true
+  xy: 2, 2
+  size: 22, 29
+  orig: 22, 29
+  offset: 0, 0
+  index: -1
+ShoulderAL
+  rotate: false
+  xy: 611, 120
+  size: 76, 109
+  orig: 76, 109
+  offset: 0, 0
+  index: -1
+ShoulderAR
+  rotate: false
+  xy: 600, 231
+  size: 96, 114
+  orig: 96, 114
+  offset: 0, 0
+  index: -1
+ShoulderBBackL
+  rotate: false
+  xy: 773, 27
+  size: 42, 48
+  orig: 42, 48
+  offset: 0, 0
+  index: -1
+ShoulderBBackR
+  rotate: true
+  xy: 678, 3
+  size: 28, 32
+  orig: 28, 32
+  offset: 0, 0
+  index: -1
+ShoulderBL
+  rotate: true
+  xy: 689, 115
+  size: 71, 113
+  orig: 71, 113
+  offset: 0, 0
+  index: -1
+ShoulderBR
+  rotate: true
+  xy: 699, 394
+  size: 91, 118
+  orig: 91, 118
+  offset: 0, 0
+  index: -1
+ShoulderCBackL
+  rotate: true
+  xy: 292, 22
+  size: 43, 53
+  orig: 43, 53
+  offset: 0, 0
+  index: -1
+ShoulderCBackR
+  rotate: true
+  xy: 640, 7
+  size: 32, 36
+  orig: 32, 36
+  offset: 0, 0
+  index: -1
+ShoulderCL
+  rotate: true
+  xy: 482, 18
+  size: 70, 114
+  orig: 70, 114
+  offset: 0, 0
+  index: -1
+ShoulderCR
+  rotate: true
+  xy: 699, 302
+  size: 90, 118
+  orig: 90, 118
+  offset: 0, 0
+  index: -1

@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 2665820338
+CRC: 3060781374
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 437ae0cdf4450adeb1422643506f6274
+    Hash: 3386f69ca489097447ca8b986744e545
   TypeTreeHash:
     serializedVersion: 2
-    Hash: e12b150eac8a629a9e589ee5ff6adc9f
+    Hash: e93c509c0a8450b780d0a0a5ecf10149
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -50,8 +50,6 @@ ClassTypes:
 - Class: 223
   Script: {instanceID: 0}
 - Class: 224
-  Script: {instanceID: 0}
-- Class: 687078895
   Script: {instanceID: 0}
 Assets:
 - Assets/New/_Scene/SeOtherProfile.unity

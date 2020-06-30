@@ -31,7 +31,8 @@ public static class PlayerData
         owned_coupon = Convert.ToInt64 (json.coupon);
         if (json.costume_equiped != 0)
             costume_id = json.costume_equiped;
-        exp_percentage = float.Parse (json.exp_percentage);
+        if (json.exp_percentage != null)
+            exp_percentage = float.Parse (json.exp_percentage);
         vip_level = json.vip_level;
         vip_exp = json.vip_exp;
     }

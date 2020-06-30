@@ -5,7 +5,8 @@ using UnityEngine;
 public class Logger
 {
 
-	static bool isLogging = Rays.Utilities.Congest.DEVELOPMENT;
+    //static bool isLogging = Rays.Utilities.Congest.DEVELOPMENT;
+    static bool isLogging = false;
 
     /// <summary>
     /// Logger Debug

@@ -1,0 +1,202 @@
+
+GajahmadaSit.png
+size: 835,646
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+ArmL
+  rotate: true
+  xy: 435, 44
+  size: 152, 209
+  orig: 152, 209
+  offset: 0, 0
+  index: -1
+ArmR
+  rotate: false
+  xy: 304, 400
+  size: 143, 244
+  orig: 143, 244
+  offset: 0, 0
+  index: -1
+Belt
+  rotate: false
+  xy: 2, 182
+  size: 278, 160
+  orig: 278, 160
+  offset: 0, 0
+  index: -1
+BeltBack
+  rotate: false
+  xy: 449, 518
+  size: 256, 126
+  orig: 256, 126
+  offset: 0, 0
+  index: -1
+BeltOrn
+  rotate: true
+  xy: 303, 4
+  size: 201, 130
+  orig: 201, 130
+  offset: 0, 0
+  index: -1
+BlinkA
+  rotate: true
+  xy: 803, 552
+  size: 92, 30
+  orig: 92, 30
+  offset: 0, 0
+  index: -1
+BlinkB
+  rotate: false
+  xy: 728, 213
+  size: 92, 30
+  orig: 92, 30
+  offset: 0, 0
+  index: -1
+Body
+  rotate: false
+  xy: 2, 344
+  size: 300, 300
+  orig: 300, 300
+  offset: 0, 0
+  index: -1
+Crown
+  rotate: false
+  xy: 663, 202
+  size: 63, 53
+  orig: 63, 53
+  offset: 0, 0
+  index: -1
+Ear
+  rotate: true
+  xy: 759, 348
+  size: 156, 73
+  orig: 156, 73
+  offset: 0, 0
+  index: -1
+EyeBack
+  rotate: false
+  xy: 728, 182
+  size: 85, 29
+  orig: 85, 29
+  offset: 0, 0
+  index: -1
+EyeBrowL
+  rotate: false
+  xy: 563, 18
+  size: 33, 24
+  orig: 33, 24
+  offset: 0, 0
+  index: -1
+EyeBrowR
+  rotate: true
+  xy: 803, 511
+  size: 39, 21
+  orig: 39, 21
+  offset: 0, 0
+  index: -1
+EyeL
+  rotate: false
+  xy: 282, 326
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+EyeR
+  rotate: false
+  xy: 282, 326
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+HandGripL
+  rotate: true
+  xy: 663, 257
+  size: 103, 80
+  orig: 103, 80
+  offset: 0, 0
+  index: -1
+HandGripR
+  rotate: true
+  xy: 745, 245
+  size: 101, 81
+  orig: 101, 81
+  offset: 0, 0
+  index: -1
+HandOpenL
+  rotate: true
+  xy: 666, 365
+  size: 139, 91
+  orig: 139, 91
+  offset: 0, 0
+  index: -1
+HandOpenR
+  rotate: true
+  xy: 707, 506
+  size: 138, 94
+  orig: 138, 94
+  offset: 0, 0
+  index: -1
+Head
+  rotate: false
+  xy: 2, 2
+  size: 127, 178
+  orig: 127, 178
+  offset: 0, 0
+  index: -1
+HeadL
+  rotate: true
+  xy: 449, 198
+  size: 162, 212
+  orig: 162, 212
+  offset: 0, 0
+  index: -1
+HeadR
+  rotate: true
+  xy: 449, 362
+  size: 154, 215
+  orig: 154, 215
+  offset: 0, 0
+  index: -1
+Laugh
+  rotate: false
+  xy: 724, 147
+  size: 65, 33
+  orig: 65, 33
+  offset: 0, 0
+  index: -1
+LoseBack
+  rotate: true
+  xy: 131, 4
+  size: 176, 170
+  orig: 176, 170
+  offset: 0, 0
+  index: -1
+LoseFront
+  rotate: true
+  xy: 304, 207
+  size: 191, 143
+  orig: 191, 143
+  offset: 0, 0
+  index: -1
+Necklace
+  rotate: true
+  xy: 646, 35
+  size: 161, 76
+  orig: 161, 76
+  offset: 0, 0
+  index: -1
+NecklaceBack
+  rotate: false
+  xy: 435, 17
+  size: 126, 25
+  orig: 126, 25
+  offset: 0, 0
+  index: -1
+Separator
+  rotate: false
+  xy: 803, 506
+  size: 3, 3
+  orig: 3, 3
+  offset: 0, 0
+  index: -1

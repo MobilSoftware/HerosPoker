@@ -289,6 +289,7 @@ public class BundleManager : MonoBehaviour
         List<int> version = new List<int> ();
         string halfLoadPath = dlSceneFolder + "/" + _id;
         loadPath = Path.Combine (Application.persistentDataPath, halfLoadPath);
+        Logger.E ("load Path: " + loadPath);
         if (Directory.Exists (loadPath))
         {
             //load from persistent data path
@@ -298,6 +299,8 @@ public class BundleManager : MonoBehaviour
                 version.Add (Convert.ToInt32 (subDirectories[i].Remove (0, loadPath.Length + 1)));
             }
             version.Sort ();
+            //Logger.E ("scene: " + _id);
+            //Logger.E ("count: " + version.Count);
             loadPath = loadPath + "/" + version[version.Count - 1] + "/" + "scene.unity3d";     //ex: /Users/michael/Library/Application Support/Myplay/PokerHeroes/scene/2/1/scene.unity3d
         }
         else

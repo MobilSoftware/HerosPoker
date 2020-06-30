@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 1155858788
+CRC: 1493007472
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 60dbd19f47c23f5e35a9d50c21c3e030
+    Hash: 61124ac820656dc766765b55d3a8f00e
   TypeTreeHash:
     serializedVersion: 2
-    Hash: d691889feb2d6d02c4a821cf8226cef6
+    Hash: d135e1cbd7d9edc235cd29f103fd8f59
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -52,8 +52,6 @@ ClassTypes:
 - Class: 223
   Script: {instanceID: 0}
 - Class: 224
-  Script: {instanceID: 0}
-- Class: 687078895
   Script: {instanceID: 0}
 Assets:
 - Assets/New/_Scene/SePokerRoom.unity

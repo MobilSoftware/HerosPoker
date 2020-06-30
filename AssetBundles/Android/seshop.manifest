@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 1352498166
+CRC: 3449759859
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: f6b8df80ae39f2596291e0403d32d101
+    Hash: 9ca6355f5b6badc80663603ac3a041a9
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 2eb7121d7dddb40f4f6d1da28a3e524b
+    Hash: d56f0b6085f0aad08c82a2bd01e5d274
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -72,8 +72,6 @@ ClassTypes:
 - Class: 223
   Script: {instanceID: 0}
 - Class: 224
-  Script: {instanceID: 0}
-- Class: 687078895
   Script: {instanceID: 0}
 Assets:
 - Assets/New/_Scene/SeShop.unity

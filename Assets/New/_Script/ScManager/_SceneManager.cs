@@ -23,8 +23,13 @@ public enum SceneType
     LEADERBOARD = 16,
     FRIEND = 17,
     OTHER_PROFILE = 18,
-    RECEIVE_ITEM = 19,
-    MESSAGE = 20
+    INBOX = 19,
+    TRANSFER = 20,
+    REDEEM = 21,
+    DAILY_REWARDS = 22,
+    WEEKLY_REWARDS = 23,
+    RECEIVE_ITEM = 24,
+    MESSAGE = 25
 }
 
 public class _SceneManager : MonoBehaviour
@@ -65,6 +70,11 @@ public class _SceneManager : MonoBehaviour
     private HeroManager heroM;
     private LeaderboardManager leaderboardM;
     private FriendManager friendM;
+    private InboxManager inboxM;
+    private TransferManager transferM;
+    private RedeemManager redeemM;
+    private DailyRewardsManager dailyRewardsM;
+    private WeeklyRewardsManager weeklyRewardsM;
 
     private void Start ()
     {
@@ -111,12 +121,12 @@ public class _SceneManager : MonoBehaviour
 
     public void LoadAllScenes()
     {
-        //StartCoroutine (_LoadAllScenes ());
-#if UNITY_EDITOR
-        StartCoroutine (_LoadLocalScenes ());
-#else
         StartCoroutine (_LoadAllScenes ());
-#endif
+//#if UNITY_EDITOR
+//        StartCoroutine (_LoadLocalScenes ());
+//#else
+//        StartCoroutine (_LoadAllScenes ());
+//#endif
     }
 
     IEnumerator _LoadLocalScenes ()
@@ -159,6 +169,17 @@ public class _SceneManager : MonoBehaviour
         leaderboardM = LeaderboardManager.instance;
         yield return _WFSUtility.wef;
         friendM = FriendManager.instance;
+        yield return _WFSUtility.wef;
+        inboxM = InboxManager.instance;
+        yield return _WFSUtility.wef;
+        transferM = TransferManager.instance;
+        yield return _WFSUtility.wef;
+        redeemM = RedeemManager.instance;
+        yield return _WFSUtility.wef;
+        dailyRewardsM = DailyRewardsManager.instance;
+        yield return _WFSUtility.wef;
+        weeklyRewardsM = WeeklyRewardsManager.instance;
+
 
         PhotonNetwork.ConnectUsingSettings ("v1.0");
         yield return _WFSUtility.wef;
@@ -226,6 +247,16 @@ public class _SceneManager : MonoBehaviour
         leaderboardM = LeaderboardManager.instance;
         yield return _WFSUtility.wef;
         friendM = FriendManager.instance;
+        yield return _WFSUtility.wef;
+        inboxM = InboxManager.instance;
+        yield return _WFSUtility.wef;
+        transferM = TransferManager.instance;
+        yield return _WFSUtility.wef;
+        redeemM = RedeemManager.instance;
+        yield return _WFSUtility.wef;
+        dailyRewardsM = DailyRewardsManager.instance;
+        yield return _WFSUtility.wef;
+        weeklyRewardsM = WeeklyRewardsManager.instance;
 
         PhotonNetwork.ConnectUsingSettings ("v1.0");
         yield return _WFSUtility.wef;
@@ -262,6 +293,11 @@ public class _SceneManager : MonoBehaviour
             case SceneType.HERO: heroM.SetCanvas (val); break;
             case SceneType.LEADERBOARD: leaderboardM.SetCanvas (val); break;
             case SceneType.FRIEND: friendM.SetCanvas (val); break;
+            case SceneType.INBOX: inboxM.SetCanvas (val); break;
+            case SceneType.TRANSFER: transferM.SetCanvas (val); break;
+            case SceneType.REDEEM: redeemM.SetCanvas (val); break;
+            case SceneType.DAILY_REWARDS: dailyRewardsM.SetCanvas (val); break;
+            case SceneType.WEEKLY_REWARDS: weeklyRewardsM.SetCanvas (val); break;
         }
     }
 
@@ -306,6 +342,11 @@ public class _SceneManager : MonoBehaviour
             case SceneType.SETTINGS:
             case SceneType.LEADERBOARD:
             case SceneType.FRIEND:
+            case SceneType.INBOX:
+            case SceneType.TRANSFER:
+            case SceneType.REDEEM:
+            case SceneType.DAILY_REWARDS:
+            case SceneType.WEEKLY_REWARDS:
             case SceneType.HERO:
                 SetActiveScene (activeSceneType, false);
                 break;

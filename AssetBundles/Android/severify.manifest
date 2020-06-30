@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 931789853
+CRC: 1445368982
 Hashes:
   AssetFileHash:
     serializedVersion: 2
     Hash: 2fa16b0ebce5da5a2444d8132b894842
   TypeTreeHash:
     serializedVersion: 2
-    Hash: b2972d36b1cb7d367c8f30d08291d642
+    Hash: 72fae263e498ec6ebaa9a4bb5308484a
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -60,8 +60,6 @@ ClassTypes:
 - Class: 223
   Script: {instanceID: 0}
 - Class: 224
-  Script: {instanceID: 0}
-- Class: 687078895
   Script: {instanceID: 0}
 Assets:
 - Assets/New/_Scene/SeVerify.unity

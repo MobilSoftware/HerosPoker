@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f3758f8f58fdef43803eb9be1df0608, type: 3}
   m_Name: PhotonServerSettings
   m_EditorClassIdentifier: 
-  AppID: 00bff6fb-8d55-4292-ab1f-5f82ec46f140
+  AppID: 8ec7e8ba-82da-4c52-ba44-03159904468b
   VoiceAppID: 
-  ChatAppID: d3267ece-b620-4925-8af0-fa127edddabd
+  ChatAppID: 
   HostType: 1
   PreferredRegion: 2
   EnabledRegions: -1
@@ -49,16 +49,19 @@ MonoBehaviour:
   - RPC_IMBankrupt
   - RPC_InitializeCatchup
   - RPC_Initiate
+  - RPC_InitiateSync
   - RPC_PrepareSicboRound
   - RPC_ReceiveAvaterExpression
   - RPC_RequestInitializeSync
   - RPC_RequestSicboSlot
+  - RPC_RequestSicboSync
   - RPC_RequestSlot
   - RPC_ReturnSicboSlot
   - RPC_ReturnSlot
   - RPC_SendAllIn
   - RPC_SendCheckCall
   - RPC_SendFold
+  - RPC_SendPutOtherBets
   - RPC_SendRaise
   - RPC_SendRoomChat
   - RPC_SendRStartSicbo
@@ -70,7 +73,4 @@ MonoBehaviour:
   - RPC_SyncCatchupOnTable
   - RPC_SyncNextTurn
   - RPC_TakeYourPotTogether
-  - RPC_InitiateSync
-  - RPC_RequestSicboSync
-  - RPC_SendPutOtherBets
   DisableAutoOpenWizard: 1

@@ -665,6 +665,7 @@ public class ApiBridge : MonoBehaviour
     private class ClaimReferalCodeParam : GetVersionParam
     {
         public string referal_code;
+        public string promo_code;
     }
 
     public int ClaimReferalCode ( string referalCode, int playerId = 0, string token = "" )
@@ -679,6 +680,26 @@ public class ApiBridge : MonoBehaviour
             param.device_type = (int) Application.platform;
             string paramJson = JsonUtility.ToJson (param);
             API api = new API ("claimreferalcode.php", "RClaimReferalCode", paramJson, 1);
+            param = null; paramJson = "";
+            StartCoroutine (Congest.SendPOST (this, api));
+            return api.seed;
+        }
+        return 0;
+    }
+
+
+
+    //ClaimPromoCode
+    public int ClaimPromoCode ( string promoCode, int playerId = 0, string token = "" )
+    {
+        if (ParseToken (playerId, token))
+        {
+            ClaimReferalCodeParam param = new ClaimReferalCodeParam ();
+            param.player_id = apiPlayerId;
+            param.token = apiToken;
+            param.promo_code = promoCode;
+            string paramJson = JsonUtility.ToJson (param);
+            API api = new API ("claimpromocode.php", "RClaimPromoCode", paramJson, 1);
             param = null; paramJson = "";
             StartCoroutine (Congest.SendPOST (this, api));
             return api.seed;
@@ -763,6 +784,26 @@ public class ApiBridge : MonoBehaviour
 
 
 
+    //Hide Inbox
+    public int HideInbox ( int mailId, int playerId = 0, string token = "" )
+    {
+        if (ParseToken (playerId, token))
+        {
+            InboxParam param = new InboxParam ();
+            param.player_id = apiPlayerId;
+            param.token = apiToken;
+            param.mail_id = mailId;
+            string paramJson = JsonUtility.ToJson (param);
+            API api = new API ("hideinbox.php", "RHideInbox", paramJson, 1);
+            param = null; paramJson = "";
+            StartCoroutine (Congest.SendPOST (this, api));
+            return api.seed;
+        }
+        return 0;
+    }
+
+
+
     //Claim Inbox
     public int ClaimInbox ( int mailId, int playerId = 0, string token = "" )
     {
@@ -810,7 +851,7 @@ public class ApiBridge : MonoBehaviour
         public long coin_amount;
     }
 
-    public int SendCoin ( string friendTag, long coinAmount, int playerId = 0, string token = "" )
+    public int SendCoin ( string friendTag = "", long coinAmount = 0, int playerId = 0, string token = "" )
     {
         if (ParseToken (playerId, token))
         {
@@ -855,7 +896,24 @@ public class ApiBridge : MonoBehaviour
         public int claim;
     }
 
-    public int GetDailyLogin ( bool claim = false, int playerId = 0, string token = "" )
+    public int GetDailyLogin ( int playerId = 0, string token = "" )
+    {
+        if (ParseToken (playerId, token))
+        {
+            DailyLoginParam param = new DailyLoginParam ();
+            param.player_id = apiPlayerId;
+            param.token = apiToken;
+            param.claim = 2;
+            string paramJson = JsonUtility.ToJson (param);
+            API api = new API ("getdailylogin.php", "RGetDailyLogin", paramJson, 1);
+            param = null; paramJson = "";
+            StartCoroutine (Congest.SendPOST (this, api));
+            return api.seed;
+        }
+        return 0;
+    }
+
+    public int GetWeeklyLogin ( bool claim = false, int playerId = 0, string token = "" )
     {
         if (ParseToken (playerId, token))
         {
@@ -864,7 +922,26 @@ public class ApiBridge : MonoBehaviour
             param.token = apiToken;
             param.claim = (claim ? 1 : 0);
             string paramJson = JsonUtility.ToJson (param);
-            API api = new API ("getdailylogin.php", "RGetDailyLogin", paramJson, 1);
+            API api = new API ("getdailylogin.php", "RGetWeeklyLogin", paramJson, 1);
+            param = null; paramJson = "";
+            StartCoroutine (Congest.SendPOST (this, api));
+            return api.seed;
+        }
+        return 0;
+    }
+
+
+
+    //Get Money Slot
+    public int GetMoneySlot ( int playerId = 0, string token = "" )
+    {
+        if (ParseToken (playerId, token))
+        {
+            TokenParam param = new TokenParam ();
+            param.player_id = apiPlayerId;
+            param.token = apiToken;
+            string paramJson = JsonUtility.ToJson (param);
+            API api = new API ("getmoneyslot.php", "RGetMoneySlot", paramJson, 1);
             param = null; paramJson = "";
             StartCoroutine (Congest.SendPOST (this, api));
             return api.seed;
@@ -908,8 +985,8 @@ public class ApiBridge : MonoBehaviour
     [Serializable]
     private class GetStoreParam : TokenParam
     {
-        public int item_id;
-        public PaymentType payment_type;
+        //public int item_id;
+        //public PaymentType payment_type;
         public int is_live;
     }
 
@@ -945,17 +1022,42 @@ public class ApiBridge : MonoBehaviour
 
 
 
-    //Send Client Log
+    //Send Support
     [Serializable]
-    private class ClientLogParam
+    private class SupportParam : TokenParam
     {
-        public string log;
+        public string ticket_id;
+        public string email;
+        public string message;
     }
 
+    public int SendSupport ( string email, string message, string ticketId = "", int playerId = 0, string token = "" )
+    {
+        if (ParseToken (playerId, token))
+        {
+            SupportParam param = new SupportParam ();
+            param.player_id = apiPlayerId;
+            param.token = apiToken;
+            param.ticket_id = (ticketId.Length > 0 ? ticketId : apiPlayerId.ToString () + System.DateTime.UtcNow.ToString ("yyMMdd") + UnityEngine.Random.Range (0, 9999).ToString ());
+            param.email = email;
+            param.message = message;
+            string paramJson = JsonUtility.ToJson (param);
+            API api = new API ("sendsupport.php", "RSendSupport", paramJson, 1);
+            param = null; paramJson = "";
+            StartCoroutine (Congest.SendPOST (this, api));
+            return api.seed;
+        }
+        return 0;
+    }
+
+
+
+    //Send Client Log
     public int SendClientLog ( string log )
     {
-        ClientLogParam param = new ClientLogParam ();
-        param.log = log;
+        SupportParam param = new SupportParam ();
+        param.player_id = apiPlayerId;
+        param.message = log;
         string paramJson = JsonUtility.ToJson (param);
         API api = new API ("sendclientlog.php", "RSendClientLog", paramJson, 1);
         param = null; paramJson = "";

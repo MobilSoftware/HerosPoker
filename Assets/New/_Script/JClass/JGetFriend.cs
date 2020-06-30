@@ -3,6 +3,7 @@ public class JGetFriend
 {
     public JListFriendType list;
     public JFriend[] friends;
+    public JFriend friend;
 }
 
 [System.Serializable]

@@ -61,6 +61,9 @@ public class PokerManager : MonoBehaviour
     public Sprite sprNapoleon;
     public Sprite sprGenghis;
     public Sprite sprAlexander;
+    public Sprite sprMasamune;
+    public Sprite sprGajahMada;
+    public Sprite sprHercules;
 
     public GameObject objFxStraightFlush;
     public UIParticleSystem psStraightFlush1;
@@ -152,6 +155,9 @@ public class PokerManager : MonoBehaviour
             case 9: texture = sprNapoleon.texture; break;
             case 10: texture = sprGenghis.texture; break;
             case 18: texture = sprAlexander.texture; break;
+            case 22: texture = sprMasamune.texture; break;
+            case 24: texture = sprGajahMada.texture; break;
+            case 25: texture = sprHercules.texture; break;
         }
 
         return texture;

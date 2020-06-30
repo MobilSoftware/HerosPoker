@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 2805517737
+CRC: 37927011
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 154c76dad26cc28753d4e63f247ff8f8
+    Hash: 60865ccc64d8808701d47dfca9c85fd9
   TypeTreeHash:
     serializedVersion: 2
-    Hash: fb310a42b9cd4dfdae332080beb17722
+    Hash: d1b998801f11a25f1492042287b912a6
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -56,8 +56,6 @@ ClassTypes:
 - Class: 223
   Script: {instanceID: 0}
 - Class: 224
-  Script: {instanceID: 0}
-- Class: 687078895
   Script: {instanceID: 0}
 Assets:
 - Assets/New/_Scene/SeHome.unity

@@ -32,7 +32,8 @@ public class HeroManager : MonoBehaviour
 
     private bool isInit;
     private SceneType prevSceneType;
-    private bool isSettingJson;
+    [HideInInspector]
+    public bool isSettingJson;
     private JGetShopItem[] sortedHeroes;
     private List<ItemSelectHero> selectHeroes;
 
@@ -56,9 +57,9 @@ public class HeroManager : MonoBehaviour
         {
             isInit = true;
             canvas.sortingOrder = (int) SceneType.HERO;
-            StartCoroutine (_WaitSetJson ());
         }
 
+        StartCoroutine (_WaitSetJson ());
         canvas.enabled = true;
         tmpCoin.text = Convert.ToInt64 (PlayerData.owned_coin).toShortCurrency ();
         tmpCoupon.text = Convert.ToInt64 (PlayerData.owned_coupon).toCouponShortCurrency ();
@@ -74,7 +75,6 @@ public class HeroManager : MonoBehaviour
 
     public void SetJson ( List<JGetShopItem> unsortedHeroes )
     {
-        isSettingJson = true;
         sortedHeroes = unsortedHeroes.OrderBy (x => (x.default_item_id == PlayerData.costume_id) ? 0 : 1).ThenBy(x => x.is_hero_owned ? 0 : 1).ToArray ();
         isSettingJson = false;
     }

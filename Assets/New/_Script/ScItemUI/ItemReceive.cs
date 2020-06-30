@@ -9,12 +9,11 @@ public class ItemReceiveData
     public int itemValue;
     public int isCurrency;  //0 = item, 1 = coin, 2 = coupon
 
-    public ItemReceiveData ( int _typeID, int _itemID, int _itemValue, int _isCurrency )
+    public ItemReceiveData ( int _typeID, int _itemID, int _itemValue )
     {
         typeID = _typeID;
         itemID = _itemID;
         itemValue = _itemValue;
-        isCurrency = _isCurrency;
     }
 }
 
@@ -25,14 +24,21 @@ public class ItemReceive : MonoBehaviour
 
     public void SetData (ItemReceiveData data)
     {
-        if (data.isCurrency == 1)
+        if (data.typeID == 1)
+        {
             txtItemValue.text = data.itemValue.toShortCurrency ();
-        else if (data.isCurrency == 2)
+            imgItem.texture = HomeManager.instance.sprCoin.texture;
+        }
+        else if (data.typeID == 2)
+        {
             txtItemValue.text = data.itemValue.toCouponShortCurrency ();
+            imgItem.texture = HomeManager.instance.sprCoupon.texture;
+        }
         else
+        {
             txtItemValue.text = data.itemValue.ToString ();
-
-        string imagePath = BundleManager.instance.GetItemLoadPath (DownloadType.THUMB, data.typeID, data.itemID);
-        BundleManager.instance.LoadImage (imgItem, imagePath);
+            string imagePath = BundleManager.instance.GetItemLoadPath (DownloadType.THUMB, data.typeID, data.itemID);
+            BundleManager.instance.LoadImage (imgItem, imagePath);
+        }
     }
 }

@@ -49,7 +49,21 @@ public class StandHero : MonoBehaviour
                 imgHero.sprite = PokerManager.instance.sprAlexander;
                 imgHero.gameObject.SetActive (true);
                 break;
-
+            case 22:
+                Reset ();
+                imgHero.sprite = PokerManager.instance.sprMasamune;
+                imgHero.gameObject.SetActive (true);
+                break;
+            case 24:
+                Reset ();
+                imgHero.sprite = PokerManager.instance.sprGajahMada;
+                imgHero.gameObject.SetActive (true);
+                break;
+            case 26:
+                Reset ();
+                imgHero.sprite = PokerManager.instance.sprHercules;
+                imgHero.gameObject.SetActive (true);
+                break;
         }
     }
 

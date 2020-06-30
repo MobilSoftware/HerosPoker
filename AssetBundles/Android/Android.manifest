@@ -1,76 +1,100 @@
 ManifestFileVersion: 0
-CRC: 3465283119
+CRC: 1926463680
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: sebegin
+      Name: slotoscene
       Dependencies: {}
     Info_1:
-      Name: sehome
+      Name: sesettings
       Dependencies: {}
     Info_2:
-      Name: selogin
+      Name: seredeem
       Dependencies: {}
     Info_3:
-      Name: sepoker
+      Name: seotherprofile
       Dependencies: {}
     Info_4:
-      Name: seprofile
+      Name: sesicbo
       Dependencies: {}
     Info_5:
       Name: severify
       Dependencies: {}
     Info_6:
-      Name: sevip
-      Dependencies: {}
-    Info_7:
-      Name: slotoscene
-      Dependencies: {}
-    Info_8:
-      Name: lubu
-      Dependencies: {}
-    Info_9:
-      Name: cleopatra
-      Dependencies: {}
-    Info_10:
-      Name: seshop
-      Dependencies: {}
-    Info_11:
       Name: sepokerroom
       Dependencies: {}
+    Info_7:
+      Name: seinbox
+      Dependencies: {}
+    Info_8:
+      Name: sehero
+      Dependencies: {}
+    Info_9:
+      Name: sereceiveitem
+      Dependencies: {}
+    Info_10:
+      Name: seweeklyrewards
+      Dependencies: {}
+    Info_11:
+      Name: seprofile
+      Dependencies: {}
     Info_12:
-      Name: musashi
+      Name: sepoker
       Dependencies: {}
     Info_13:
-      Name: napoleon
+      Name: seleaderboard
       Dependencies: {}
     Info_14:
-      Name: genghis
+      Name: setransfer
       Dependencies: {}
     Info_15:
-      Name: alexander
+      Name: sefriend
       Dependencies: {}
     Info_16:
       Name: secoupon
       Dependencies: {}
     Info_17:
-      Name: sesicbo
+      Name: sedailyrewards
       Dependencies: {}
     Info_18:
-      Name: sehero
+      Name: sehome
       Dependencies: {}
     Info_19:
-      Name: seleaderboard
+      Name: selogin
       Dependencies: {}
     Info_20:
-      Name: sefriend
+      Name: sevip
       Dependencies: {}
     Info_21:
-      Name: sesettings
+      Name: sebegin
       Dependencies: {}
     Info_22:
-      Name: sereceiveitem
+      Name: seshop
       Dependencies: {}
     Info_23:
-      Name: seotherprofile
+      Name: cleopatra
+      Dependencies: {}
+    Info_24:
+      Name: lubu
+      Dependencies: {}
+    Info_25:
+      Name: hercules
+      Dependencies: {}
+    Info_26:
+      Name: alexander
+      Dependencies: {}
+    Info_27:
+      Name: masamune
+      Dependencies: {}
+    Info_28:
+      Name: genghis
+      Dependencies: {}
+    Info_29:
+      Name: gajahmada
+      Dependencies: {}
+    Info_30:
+      Name: musashi
+      Dependencies: {}
+    Info_31:
+      Name: napoleon
       Dependencies: {}

@@ -136,11 +136,17 @@ public class ApiManager : MonoBehaviour
         else
         {
             GetShop ();
+            GetInbox ();
             GetLeaderboard ();
             GetFriend ();
+            GetDailyTransferLimit ();
+            GetWeeklyLogin ();
             _SceneManager.instance.SetActiveScene (SceneType.HOME, true);
             HomeManager.instance.Init ();
         }
+
+        if (json.player.friend_gift_me.Length > 0)
+            HomeManager.instance.objNotifInbox.SetActive (true);
     }
 
     //public void GetProfile (int friendID = 0)
@@ -224,6 +230,9 @@ public class ApiManager : MonoBehaviour
     public void GetShop (int itemType = 0)
     {
         api.GetShop (itemType);
+        ShopManager.instance.isSettingJson = true;
+        HeroManager.instance.isSettingJson = true;
+
     }
 
     private void RGetShop (ApiBridge.ResponseParam response )
@@ -242,13 +251,10 @@ public class ApiManager : MonoBehaviour
     {
         Logger.E ("Return Buy Shop: " + response.post_data);
         JBuyShop json = JsonUtility.FromJson<JBuyShop> (response.post_data);
-        int isCurrency = 0;
-        int itemValue = 0;
         if (json.item.item_type_id == 1)
         {
-            isCurrency = 1;
-            itemValue = int.Parse (json.item.bonus_coin);
-            ItemReceiveData data = new ItemReceiveData (json.item.item_type_id, json.item.item_id, itemValue, isCurrency);
+            int itemValue = int.Parse (json.item.bonus_coin);
+            ItemReceiveData data = new ItemReceiveData (json.item.item_type_id, json.item.item_id, itemValue);
             ReceiveItemManager.instance.Show (new ItemReceiveData[] { data });
         }
         PlayerData.owned_coin = long.Parse (json.player.coin);
@@ -279,15 +285,27 @@ public class ApiManager : MonoBehaviour
     {
         Logger.E ("Return Get Friend: " + response.post_data);
         JGetFriend json = JsonUtility.FromJson<JGetFriend> (response.post_data);
+        if (TransferManager.instance.isWaitingJSON)
+        {
+            if (json.friend.display_name == null)
+            {
+                MessageManager.instance.Show (this.gameObject, "Pemain tidak ditemukan");
+                TransferManager.instance.ResetAll ();
+                TransferManager.instance.ToInput ();
+                return;
+            }
+            TransferManager.instance.SetReceiverInfo (json.friend.display_name, json.friend.display_picture);
+            return;
+        }
         if (FriendManager.instance.isSettingJsonFriendList)
         {
             FriendManager.instance.SetJson (json, ApiBridge.FriendType.FriendList);
             GetFriend (0, ApiBridge.FriendType.FriendRequestMe);
-        } else if (FriendManager.instance.isSettingJsonFriendReqMe)
+        } 
+        else if (FriendManager.instance.isSettingJsonFriendReqMe)
         {
             FriendManager.instance.SetJson (json, ApiBridge.FriendType.FriendRequestMe);
         }
-
     }
 
     public void SendFriend (int friendID, ApiBridge.SendFriendType sendFriendType, string notes = "")
@@ -335,6 +353,167 @@ public class ApiManager : MonoBehaviour
         Logger.E ("Return Set Hero Featured: " + response.post_data);
         JSetHeroFeatured json = JsonUtility.FromJson<JSetHeroFeatured> (response.post_data);
         PlayerData.jHome = json.player;
+        PlayerData.UpdateData (json.player);
+    }
+
+    public void GetDailyTransferLimit ()
+    {
+        api.SendCoin ();
+    }
+
+    public void SendCoin (string playerTag, long coinAmount )
+    {
+        api.SendCoin (playerTag, coinAmount);
+    }
+
+    private void RSendCoin (ApiBridge.ResponseParam response )
+    {
+        Logger.E ("Return Send Coin: " + response.post_data);
+        JSendCoin json = JsonUtility.FromJson<JSendCoin> (response.post_data);
+        long lCoin = long.Parse (json.transfer.coin_limit) * 1000;
+        TransferManager.instance.txtCoinLimitAmount.text = lCoin.ToString ("N0");
+        if (TransferManager.instance.isInit)
+        {
+            MessageManager.instance.Show (this.gameObject, "Proses transfer telah berhasil");
+            _SceneManager.instance.SetActiveScene (SceneType.TRANSFER, false);
+            PlayerData.owned_coin = Convert.ToInt64 (json.player.coin);
+            PlayerData.owned_coupon = Convert.ToInt64 (json.player.coupon);
+            _SceneManager.instance.UpdateAllCoinAndCoupon ();
+        }
+    }
+
+    public void ClaimPromoCode (string strCode )
+    {
+        api.ClaimPromoCode (strCode);
+    }
+
+    private void RClaimPromoCode (ApiBridge.ResponseParam response )
+    {
+        Logger.E ("Return Claim Promo Code: " + response.post_data);
+        JClaimPromoCode json = JsonUtility.FromJson<JClaimPromoCode> (response.post_data);
+        if (json.promo.item_type == 1 || json.promo.item_type == 2)
+        {
+            int itemValue = int.Parse (json.promo.item_amount);
+            ItemReceiveData data = new ItemReceiveData (json.promo.item_type, json.promo.item_id, itemValue);
+            ReceiveItemManager.instance.Show (new ItemReceiveData[] { data });
+            PlayerData.owned_coin = Convert.ToInt64 (json.player.coin);
+            PlayerData.owned_coupon = Convert.ToInt64 (json.player.coupon);
+            _SceneManager.instance.UpdateAllCoinAndCoupon ();
+        }
+        RedeemManager.instance.ipfCode.text = string.Empty;
+    }
+
+    public void GetInbox (bool isSender = false )
+    {
+        api.GetInbox (isSender);
+        InboxManager.instance.isSettingJSON = true;
+    }
+
+    private void RGetInbox (ApiBridge.ResponseParam response )
+    {
+        Logger.E ("Return Get Inbox: " + response.post_data);
+        JGetInbox json = JsonUtility.FromJson<JGetInbox> (response.post_data);
+        InboxManager.instance.SetJson (json);
+    }
+
+    public void ReadInbox (int mailID)
+    {
+        api.ReadInbox (mailID);
+    }
+
+    private void RReadInbox (ApiBridge.ResponseParam response )
+    {
+        Logger.E ("Return Read Inbox: " + response.post_data);
+    }
+
+    public void ClaimInbox (int mailID)
+    {
+        api.ClaimInbox (mailID);
+    }
+
+    private void RClaimInbox (ApiBridge.ResponseParam response )
+    {
+        Logger.E ("Return Claim Inbox: " + response.post_data);
+        JClaimInbox json = JsonUtility.FromJson<JClaimInbox> (response.post_data);
+        int itemValue = int.Parse (json.inbox.item_amount);
+        ItemReceiveData data = new ItemReceiveData (json.inbox.item_type_id, json.inbox.item_id, itemValue);
+        ReceiveItemManager.instance.itemsData.Add (data);
+        if (InboxManager.instance.countClaim == 0)
+        {
+            ReceiveItemManager.instance.ShowCombined ();
+            PlayerData.owned_coin = Convert.ToInt64 (json.player.coin);
+            PlayerData.owned_coupon = Convert.ToInt64 (json.player.coupon);
+            _SceneManager.instance.UpdateAllCoinAndCoupon ();
+        }
+        else
+        {
+            InboxManager.instance.countClaim--;
+        }
+    }
+
+    public void HideInbox (int mailID )
+    {
+        api.HideInbox (mailID);
+    }
+
+    private void RHideInbox (ApiBridge.ResponseParam response )
+    {
+        Logger.E ("Return Hide Inbox: " + response.post_data);
+    }
+
+    public void GetDailyLogin ()
+    {
+        api.GetDailyLogin ();
+    }
+
+    private void RGetDailyLogin (ApiBridge.ResponseParam response )
+    {
+        Logger.E ("Return Get Daily Login: " + response.post_data);
+        JGetDailyLogin json = JsonUtility.FromJson<JGetDailyLogin> (response.post_data);
+        int itemValue = int.Parse (json.reward.item_amount);
+        ItemReceiveData data = new ItemReceiveData (json.reward.item_type, json.reward.item_id, itemValue);
+        ReceiveItemManager.instance.Show (new ItemReceiveData[] { data });
+        PlayerData.jHome.can_claim_daily = false;
+        PlayerData.owned_coin = Convert.ToInt64 (json.player.coin);
+        PlayerData.owned_coupon = Convert.ToInt64 (json.player.coupon);
+        _SceneManager.instance.UpdateAllCoinAndCoupon ();
+    }
+
+    public void GetWeeklyLogin (bool isClaim = false)
+    {
+        if (!isClaim)
+            WeeklyRewardsManager.instance.isSettingJson = true;
+        api.GetWeeklyLogin (isClaim);
+    }
+
+    private void RGetWeeklyLogin (ApiBridge.ResponseParam response )
+    {
+        Logger.E ("Return GetWeeklyLogin: " + response.post_data);
+        JGetWeeklyLogin json = JsonUtility.FromJson<JGetWeeklyLogin> (response.post_data);
+
+        if (json.reward.item_amount == null)
+        {
+            WeeklyRewardsManager.instance.SetJson (json);
+        }
+        else
+        {
+            int itemValue = int.Parse (json.reward.item_amount);
+            ItemReceiveData data = new ItemReceiveData (json.reward.item_type, json.reward.item_id, itemValue);
+            ReceiveItemManager.instance.itemsData.Add (data);
+            if (json.bonus_reward.item_amount != null)
+            {
+                int bonusItemValue = int.Parse (json.bonus_reward.item_amount);
+                ItemReceiveData bonusData = new ItemReceiveData (json.bonus_reward.item_type, json.bonus_reward.item_id, bonusItemValue);
+                ReceiveItemManager.instance.itemsData.Add (bonusData);
+            }
+            ReceiveItemManager.instance.ShowCombined ();
+            PlayerData.jHome.can_claim_weekly = false;
+            PlayerData.owned_coin = Convert.ToInt64 (json.player.coin);
+            PlayerData.owned_coupon = Convert.ToInt64 (json.player.coupon);
+            _SceneManager.instance.UpdateAllCoinAndCoupon ();
+            WeeklyRewardsManager.instance.SetWeeklyDaysStatus (json);
+            WeeklyRewardsManager.instance.IncrementProgressBar ();
+        }
     }
 
     #region gameplay

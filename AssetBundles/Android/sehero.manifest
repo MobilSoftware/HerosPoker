@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 3146638381
+CRC: 3639010198
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 50c5c5a33c31680d4a5b0538a61db897
+    Hash: 692ff2f49a03d3e43c4188ab69f2ba09
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 02f55e5f1b55eb4151e02753225d06ca
+    Hash: a8d45fbfa555d46853b79ad365c55b25
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -66,8 +66,6 @@ ClassTypes:
 - Class: 223
   Script: {instanceID: 0}
 - Class: 224
-  Script: {instanceID: 0}
-- Class: 687078895
   Script: {instanceID: 0}
 Assets:
 - Assets/New/_Scene/SeHero.unity

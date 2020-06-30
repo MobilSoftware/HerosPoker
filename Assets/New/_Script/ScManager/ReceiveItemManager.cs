@@ -25,12 +25,16 @@ public class ReceiveItemManager : MonoBehaviour
     public ItemReceive prefabItemReceive;
     public Button btnOK;
 
+    [HideInInspector]
+    public List<ItemReceiveData> itemsData;
+
     private bool isInit;
     private SceneType prevSceneType;
 
     private void Start ()
     {
         btnOK.onClick.AddListener (Hide);
+        itemsData = new List<ItemReceiveData> ();
     }
 
     public void Show (ItemReceiveData[] items)
@@ -64,5 +68,14 @@ public class ReceiveItemManager : MonoBehaviour
         {
             Destroy (parentItems.GetChild (i).gameObject);
         }
+    }
+
+    public void ShowCombined ()
+    {
+        if (itemsData.Count == 0)
+            return;
+
+        Show (itemsData.ToArray ());
+        itemsData.Clear ();
     }
 }

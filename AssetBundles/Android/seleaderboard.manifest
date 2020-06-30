@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 41776926
+CRC: 450908490
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 1ecf52987d0ff7011541a9b5be94837a
+    Hash: b082a04b5acbc0d171835fb32532a1dd
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 838f84fa599413d780859e6c14c7b6f4
+    Hash: c7857f89bbb29d12d4dc46636bae2a4a
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -64,8 +64,6 @@ ClassTypes:
 - Class: 223
   Script: {instanceID: 0}
 - Class: 224
-  Script: {instanceID: 0}
-- Class: 687078895
   Script: {instanceID: 0}
 Assets:
 - Assets/New/_Scene/SeLeaderboard.unity

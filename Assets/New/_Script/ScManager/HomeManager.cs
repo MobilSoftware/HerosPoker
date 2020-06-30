@@ -20,6 +20,8 @@ public class HomeManager : MonoBehaviour
     }
 
     public Canvas canvas;
+    public Sprite sprCoin;
+    public Sprite sprCoupon;
     public Button btnProfile;
     public Button btnShop;
     public Button btnQuickPlay;
@@ -37,6 +39,12 @@ public class HomeManager : MonoBehaviour
     public Button btnHideFreeCoin;
     public Button btnFriend;
     public Button btnLeaderboard;
+    public Button btnPromoCode;
+    public Button btnInbox;
+    public Button btnTransfer;
+    public Button btnDailyRewards;
+    public Button btnWeeklyRewards;
+    public GameObject objNotifInbox;
     public TextMeshProUGUI tmpDisplayName;
     public TextMeshProUGUI tmpCoin;
     public TextMeshProUGUI tmpCoupon;
@@ -65,6 +73,21 @@ public class HomeManager : MonoBehaviour
         btnHero.onClick.AddListener (OnHero);
         btnFriend.onClick.AddListener (OnFriend);
         btnLeaderboard.onClick.AddListener (OnLeaderboard);
+        btnPromoCode.onClick.AddListener (OnPromoCode);
+        btnInbox.onClick.AddListener (OnInbox);
+        btnTransfer.onClick.AddListener (OnTransfer);
+        btnDailyRewards.onClick.AddListener (OnDailyRewards);
+        btnWeeklyRewards.onClick.AddListener (OnWeeklyRewards);
+    }
+
+    private void OnDailyRewards ()
+    {
+        _SceneManager.instance.SetActiveScene (SceneType.DAILY_REWARDS, true);
+    }
+
+    private void OnWeeklyRewards ()
+    {
+        _SceneManager.instance.SetActiveScene (SceneType.WEEKLY_REWARDS, true);
     }
 
     private void OnFriend ()
@@ -75,6 +98,21 @@ public class HomeManager : MonoBehaviour
     private void OnLeaderboard ()
     {
         _SceneManager.instance.SetActiveScene (SceneType.LEADERBOARD, true);
+    }
+
+    private void OnTransfer()
+    {
+        _SceneManager.instance.SetActiveScene (SceneType.TRANSFER, true);
+    }
+
+    private void OnPromoCode ()
+    {
+        _SceneManager.instance.SetActiveScene (SceneType.REDEEM, true);
+    }
+
+    private void OnInbox ()
+    {
+        _SceneManager.instance.SetActiveScene (SceneType.INBOX, true);
     }
 
     private void OnHero ()

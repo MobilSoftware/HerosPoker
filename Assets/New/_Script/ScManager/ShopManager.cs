@@ -43,7 +43,8 @@ public class ShopManager : MonoBehaviour
     public TextMeshProUGUI tmpCoupon;
 
     private bool isInit;
-    private bool isSettingJson;
+    [HideInInspector]
+    public bool isSettingJson;
     private SceneType prevSceneType;
     private List<JGetShopItem> jsonItemCoins;
     private List<JGetShopItem> jsonItemHeroes;
@@ -106,9 +107,9 @@ public class ShopManager : MonoBehaviour
         {
             isInit = true;
             canvas.sortingOrder = (int) SceneType.SHOP;
-            StartCoroutine (_WaitSetJson ());
         }
 
+        StartCoroutine (_WaitSetJson ());
         canvas.enabled = true;
         tmpCoin.text = Convert.ToInt64 (PlayerData.owned_coin).toShortCurrency ();
         tmpCoupon.text = Convert.ToInt64 (PlayerData.owned_coupon).toCouponShortCurrency ();
@@ -119,7 +120,6 @@ public class ShopManager : MonoBehaviour
 
     public void SetJson (JGetShop json )
     {
-        isSettingJson = true;
         jsonItemCoins = new List<JGetShopItem> ();
         jsonItemHeroes = new List<JGetShopItem> ();
         for (int i = 0; i < json.items.Length; i++)
@@ -177,6 +177,7 @@ public class ShopManager : MonoBehaviour
 
     public void Hide ()
     {
+        isInit = false;
         togCoin.isOn = true;
         canvas.enabled = false;
         _SceneManager.instance.activeSceneType = prevSceneType;
