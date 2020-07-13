@@ -181,7 +181,7 @@ public class SlotoManagerScript : MonoBehaviour
     {
         if (type == ButtonScript.ButtonType.Spin)
         {
-            pushAutoTimer = 0;
+            pushAutoTimer = 0f;
             pushAuto = false;
             //sr.flipX = false;
             sr.sprite = SpinButtonSprite[slotType-1];
@@ -193,7 +193,7 @@ public class SlotoManagerScript : MonoBehaviour
         if (type == ButtonScript.ButtonType.Spin)
         {
             pushAutoTimer += Time.deltaTime;
-            if(pushAutoTimer >= 3.0f && !pushAuto)
+            if(pushAutoTimer >= 1.5f && !pushAuto)
             {
                 pushAuto = true;
                 //sr.flipX = true;
