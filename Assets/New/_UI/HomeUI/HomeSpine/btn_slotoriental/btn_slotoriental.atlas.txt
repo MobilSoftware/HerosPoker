@@ -1,0 +1,55 @@
+
+btn_slotoriental.png
+size: 840,260
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Back
+  rotate: false
+  xy: 2, 8
+  size: 344, 250
+  orig: 344, 250
+  offset: 0, 0
+  index: -1
+Body
+  rotate: false
+  xy: 698, 53
+  size: 140, 99
+  orig: 140, 99
+  offset: 0, 0
+  index: -1
+Front
+  rotate: false
+  xy: 348, 20
+  size: 348, 238
+  orig: 348, 238
+  offset: 0, 0
+  index: -1
+Hand
+  rotate: false
+  xy: 770, 6
+  size: 54, 45
+  orig: 54, 45
+  offset: 0, 0
+  index: -1
+Head
+  rotate: false
+  xy: 698, 154
+  size: 140, 104
+  orig: 140, 104
+  offset: 0, 0
+  index: -1
+Jaw
+  rotate: false
+  xy: 698, 12
+  size: 70, 39
+  orig: 70, 39
+  offset: 0, 0
+  index: -1
+Tongue
+  rotate: false
+  xy: 348, 2
+  size: 48, 16
+  orig: 48, 16
+  offset: 0, 0
+  index: -1

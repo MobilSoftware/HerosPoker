@@ -53,7 +53,8 @@ public class BeginManager : MonoBehaviour
 
     public void Hide ()
     {
-        _SceneManager.instance.SetActiveScene (SceneType.HOME, true);
+        //_SceneManager.instance.SetActiveScene (SceneType.HOME, true);
+        HomeManager.instance.Show ();
         canvas.enabled = false;
     }
 

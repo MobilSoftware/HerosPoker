@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 4219896747
+CRC: 148329811
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 5adc57f032bdbac594bd18755a2a8663
+    Hash: cc94b28e96e69d646dc3000f928647c6
   TypeTreeHash:
     serializedVersion: 2
     Hash: 3e8099e4f556b3292f8204aae06d0083
@@ -40,5 +40,5 @@ ClassTypes:
 - Class: 115
   Script: {instanceID: 0}
 Assets:
-- Assets/New/_Hero/Genghis/10_1.prefab
+- Assets/New/_Hero/Genghis/14_1.prefab
 Dependencies: []

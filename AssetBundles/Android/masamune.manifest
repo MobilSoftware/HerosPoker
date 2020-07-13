@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 211537910
+CRC: 4045959461
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: f05b27a5305e2ef7550eef262a6d39ce
+    Hash: ac9b306d60f070458737be10afc1ba4b
   TypeTreeHash:
     serializedVersion: 2
     Hash: 3e8099e4f556b3292f8204aae06d0083
@@ -40,5 +40,5 @@ ClassTypes:
 - Class: 115
   Script: {instanceID: 0}
 Assets:
-- Assets/New/_Hero/Masamune/22_1.prefab
+- Assets/New/_Hero/Masamune/16_1.prefab
 Dependencies: []

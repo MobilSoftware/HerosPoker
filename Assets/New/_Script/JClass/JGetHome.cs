@@ -32,6 +32,7 @@ public struct JHome
     public string exp_percentage;
     public bool can_claim_daily;
     public bool can_claim_weekly;
+    public int money_slot_next_in;
     public int[] friend_list;
     public int[] friend_request;
     public int[] friend_request_me;

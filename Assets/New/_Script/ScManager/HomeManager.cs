@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections;
 
 public class HomeManager : MonoBehaviour
 {
@@ -44,18 +45,32 @@ public class HomeManager : MonoBehaviour
     public Button btnTransfer;
     public Button btnDailyRewards;
     public Button btnWeeklyRewards;
+    public Button btnMoneySlot;
+    public Button btnChat;
     public GameObject objNotifInbox;
+    public GameObject objNotifFriend;
     public TextMeshProUGUI tmpDisplayName;
     public TextMeshProUGUI tmpCoin;
     public TextMeshProUGUI tmpCoupon;
     public StandHero standHero;
+    public Transform parentMinichat;
+    public ItemMinichat prefabItemMinichat;
+    public InputField invisIPF;
+    public ScrollRect scrRect;
+    public RunningText runningText;
 
+    [HideInInspector]
+    public JGetChatPublic json;
+    private Coroutine crSetMinichat;
+    private Coroutine crAddPublicChat;
 
     //public _SpineObject spStandCleo;
     //public _SpineObject spStandLubu;
 
     private void Start ()
     {
+        btnChat.onClick.AddListener (OnChat);
+        invisIPF.onEndEdit.AddListener (OnSubmit);
         btnProfile.onClick.AddListener (OnProfile);
         btnQuickPlay.onClick.AddListener (OnQuickPlay);
         btnPoker.onClick.AddListener (OnPokerRoom);
@@ -78,6 +93,25 @@ public class HomeManager : MonoBehaviour
         btnTransfer.onClick.AddListener (OnTransfer);
         btnDailyRewards.onClick.AddListener (OnDailyRewards);
         btnWeeklyRewards.onClick.AddListener (OnWeeklyRewards);
+        btnMoneySlot.onClick.AddListener (OnMoneySlot);
+    }
+
+    private void OnChat ()
+    {
+        invisIPF.ActivateInputField ();
+    }
+
+    private void OnSubmit (string strContent )
+    {
+        if (strContent.Length > 0)
+        {
+            ApiManager.instance.SendChat (strContent);
+        }
+    }
+
+    private void OnMoneySlot ()
+    {
+        _SceneManager.instance.SetActiveScene (SceneType.MONEY_SLOT, true);
     }
 
     private void OnDailyRewards ()
@@ -92,6 +126,7 @@ public class HomeManager : MonoBehaviour
 
     private void OnFriend ()
     {
+        objNotifFriend.SetActive (false);
         _SceneManager.instance.SetActiveScene (SceneType.FRIEND, true);
     }
 
@@ -117,6 +152,7 @@ public class HomeManager : MonoBehaviour
 
     private void OnHero ()
     {
+        Hide ();
         _SceneManager.instance.SetActiveScene (SceneType.HERO, true);
     }
 
@@ -235,5 +271,71 @@ public class HomeManager : MonoBehaviour
     {
         tmpCoin.text = PlayerData.owned_coin.toShortCurrency ();
         tmpCoupon.text = PlayerData.owned_coupon.toCouponShortCurrency ();
+    }
+
+    public void SetJson (JGetChatPublic _json)
+    {
+        parentMinichat.gameObject.SetActive (false);
+        json = _json;
+        for (int i = 0; i < parentMinichat.childCount; i++)
+        {
+            Destroy (parentMinichat.GetChild (i).gameObject);
+        }
+        parentMinichat.gameObject.SetActive (true);
+        if (crSetMinichat != null)
+            StopCoroutine (crSetMinichat);
+        crSetMinichat = StartCoroutine (_SetMinichat ());
+    }
+
+    IEnumerator _SetMinichat ()
+    {
+
+        for (int x = 0; x < json.chat.Length; x++)
+        {
+            ItemMinichat imc = Instantiate (prefabItemMinichat, parentMinichat);
+            yield return _WFSUtility.wef;
+            imc.SetData (json.chat[x]);
+        }
+
+        scrRect.verticalNormalizedPosition = 0f;
+        yield return _WFSUtility.wef;
+        parentMinichat.gameObject.SetActive (false);
+        yield return _WFSUtility.wef;
+        scrRect.verticalNormalizedPosition = 0f;
+        parentMinichat.gameObject.SetActive (true);
+        yield return _WFSUtility.wef;
+        scrRect.verticalNormalizedPosition = 0f;
+    }
+
+    public void AddPublicChat (JPublicChat[] chat )
+    {
+        if (crAddPublicChat != null)
+            StopCoroutine (crAddPublicChat);
+        crAddPublicChat = StartCoroutine (_AddPublicChat (chat));
+    }
+
+    IEnumerator _AddPublicChat (JPublicChat[] chat )
+    {
+        Logger.E ("adding chat");
+        for (int i = 0; i < chat.Length; i++)
+        {
+            ItemMinichat imc = Instantiate (prefabItemMinichat, parentMinichat);
+            yield return _WFSUtility.wef;
+            imc.SetData (chat[i]);
+        }
+
+        scrRect.verticalNormalizedPosition = 0f;
+        yield return _WFSUtility.wef;
+        parentMinichat.gameObject.SetActive (false);
+        yield return _WFSUtility.wef;
+        scrRect.verticalNormalizedPosition = 0f;
+        parentMinichat.gameObject.SetActive (true);
+        yield return _WFSUtility.wef;
+        scrRect.verticalNormalizedPosition = 0f;
+    }
+
+    public int GetLastPublicChatID ()
+    {
+        return json.chat[json.chat.Length - 1].chat_public_id;
     }
 }

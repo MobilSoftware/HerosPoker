@@ -552,7 +552,7 @@ public class _PlayerPokerActor : MonoBehaviour
             yield return _WFSUtility.wfs1;
             tolerantTime--;
         }
-        Debug.LogError ("after tolerant");
+        //Debug.LogError ("after tolerant");
 
         PhotonTexasPokerManager.msgDelayPoker = "Wait To Force Fold";
         if (PhotonNetwork.isMasterClient)

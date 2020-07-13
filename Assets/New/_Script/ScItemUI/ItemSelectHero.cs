@@ -24,6 +24,11 @@ public class ItemSelectHero : MonoBehaviour
     private void OnChoose ()
     {
         ApiManager.instance.SetCostume (jHero.default_item_id);
+        if (HeroManager.instance.selectedHero != null)
+        {
+            HeroManager.instance.UnequipSelected ();
+            Equip ();
+        }
     }
 
     private void OnBuy ()
@@ -36,8 +41,8 @@ public class ItemSelectHero : MonoBehaviour
     public void SetData (JGetShopItem json)
     {
         jHero = json;
-        SetOwnedStatus (json.is_hero_owned, (json.default_item_id == PlayerData.costume_id));
         txtHeroName.text = json.item_name[0];
+        SetOwnedStatus (json.is_hero_owned, (json.default_item_id == PlayerData.costume_id));
         string imagePath = BundleManager.instance.GetItemLoadPath (DownloadType.THUMB, json.item_type_id, json.item_id);
         BundleManager.instance.LoadImage (imgHero, imagePath);
     }
@@ -52,6 +57,10 @@ public class ItemSelectHero : MonoBehaviour
             btnChoose.gameObject.SetActive (!isEquiped);
             btnBuy.gameObject.SetActive (false);
             imgUsing.gameObject.SetActive (isEquiped);
+            if (isEquiped)
+            {
+                HeroManager.instance.selectedHero = this;
+            }
         }
         else
         {
@@ -67,20 +76,47 @@ public class ItemSelectHero : MonoBehaviour
     private bool GetIsEquiped ()
     {
         bool isEquiped = false;
-        if (jHero.item_id == 5 && PlayerData.costume_id == 3)
+        if (jHero.item_id == 1 && PlayerData.costume_id == 10)
             isEquiped = true;
-        else if (jHero.item_id == 6 && PlayerData.costume_id == 7)
+        else if (jHero.item_id == 2 && PlayerData.costume_id == 11)
             isEquiped = true;
-        else if (jHero.item_id == 11 && PlayerData.costume_id == 8)
+        else if (jHero.item_id == 3 && PlayerData.costume_id == 12)
             isEquiped = true;
-        else if (jHero.item_id == 12 && PlayerData.costume_id == 9)
+        else if (jHero.item_id == 4 && PlayerData.costume_id == 13)
             isEquiped = true;
-        else if (jHero.item_id == 13 && PlayerData.costume_id == 10)
+        else if (jHero.item_id == 5 && PlayerData.costume_id == 14)
             isEquiped = true;
-        else if (jHero.item_id == 19 && PlayerData.costume_id == 18)
+        else if (jHero.item_id == 6 && PlayerData.costume_id == 15)
+            isEquiped = true;
+        else if (jHero.item_id == 7 && PlayerData.costume_id == 16)
+            isEquiped = true;
+        else if (jHero.item_id == 8 && PlayerData.costume_id == 17)
+            isEquiped = true;
+        else if (jHero.item_id == 9 && PlayerData.costume_id == 18)
             isEquiped = true;
 
         return isEquiped;
+    }
+
+    private void Equip ()
+    {
+        imgFrame.color = Color.white;
+        imgFrameName.color = Color.white;
+        imgHero.color = Color.white;
+        btnChoose.gameObject.SetActive (false);
+        btnBuy.gameObject.SetActive (false);
+        imgUsing.gameObject.SetActive (true);
+        HeroManager.instance.selectedHero = this;
+    }
+
+    public void Unequip ()
+    {
+        imgFrame.color = Color.white;
+        imgFrameName.color = Color.white;
+        imgHero.color = Color.white;
+        btnChoose.gameObject.SetActive (true);
+        btnBuy.gameObject.SetActive (false);
+        imgUsing.gameObject.SetActive (false);
     }
 
 }

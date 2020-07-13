@@ -1,0 +1,125 @@
+
+btn_poker.png
+size: 502,513
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+ArmL
+  rotate: true
+  xy: 127, 38
+  size: 117, 106
+  orig: 117, 106
+  offset: 0, 0
+  index: -1
+ArmR
+  rotate: false
+  xy: 2, 108
+  size: 123, 169
+  orig: 123, 169
+  offset: 0, 0
+  index: -1
+BG
+  rotate: false
+  xy: 295, 237
+  size: 205, 274
+  orig: 205, 274
+  offset: 0, 0
+  index: -1
+Belt
+  rotate: true
+  xy: 392, 26
+  size: 91, 32
+  orig: 91, 32
+  offset: 0, 0
+  index: -1
+BlinkA
+  rotate: false
+  xy: 120, 4
+  size: 79, 32
+  orig: 79, 32
+  offset: 0, 0
+  index: -1
+BlinkB
+  rotate: true
+  xy: 426, 2
+  size: 79, 32
+  orig: 79, 32
+  offset: 0, 0
+  index: -1
+Body
+  rotate: true
+  xy: 2, 279
+  size: 232, 291
+  orig: 232, 291
+  offset: 0, 0
+  index: -1
+Bow
+  rotate: true
+  xy: 262, 227
+  size: 50, 30
+  orig: 50, 30
+  offset: 0, 0
+  index: -1
+Coin
+  rotate: false
+  xy: 235, 13
+  size: 31, 32
+  orig: 31, 32
+  offset: 0, 0
+  index: -1
+Face
+  rotate: true
+  xy: 2, 5
+  size: 101, 116
+  orig: 101, 116
+  offset: 0, 0
+  index: -1
+FingR
+  rotate: false
+  xy: 262, 173
+  size: 11, 52
+  orig: 11, 52
+  offset: 0, 0
+  index: -1
+ForeArmL
+  rotate: true
+  xy: 293, 5
+  size: 112, 97
+  orig: 112, 97
+  offset: 0, 0
+  index: -1
+ForeArmR
+  rotate: false
+  xy: 432, 83
+  size: 56, 152
+  orig: 56, 152
+  offset: 0, 0
+  index: -1
+HairB1
+  rotate: false
+  xy: 235, 47
+  size: 56, 108
+  orig: 56, 108
+  offset: 0, 0
+  index: -1
+HairB2
+  rotate: true
+  xy: 127, 157
+  size: 120, 133
+  orig: 120, 133
+  offset: 0, 0
+  index: -1
+HairF
+  rotate: true
+  xy: 294, 119
+  size: 116, 136
+  orig: 116, 136
+  offset: 0, 0
+  index: -1
+ThumbR
+  rotate: true
+  xy: 275, 215
+  size: 10, 16
+  orig: 10, 16
+  offset: 0, 0
+  index: -1

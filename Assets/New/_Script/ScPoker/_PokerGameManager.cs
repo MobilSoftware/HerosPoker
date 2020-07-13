@@ -592,7 +592,7 @@ public class _PokerGameManager : MonoBehaviour
                         break;
 
                     instance.tableCard[t].gameObject.SetActive (true);
-                    Debug.LogError ("opening card: " + t);
+                    //Debug.LogError ("opening card: " + t);
                 }
             }
         }

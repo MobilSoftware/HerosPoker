@@ -44,9 +44,21 @@ public class ItemMail : MonoBehaviour
 
         txtTitle.text = strSubTitle;
         txtReceivedDate.text = json.when_created[1];
-        if (json.mail_claimed == 0 || json.mail_read == 0)
+
+        if (json.mail_read == 0)
+        {
             objNotif.SetActive (true);
+        }
         else
-            objNotif.SetActive (false);
+        {
+            if (json.mail_claimed == 0 && json.item_type_id != 0)
+            {
+                objNotif.SetActive (true);
+            }
+            else
+            {
+                objNotif.SetActive (false);
+            }
+        }
     }
 }

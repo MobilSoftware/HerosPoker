@@ -747,10 +747,8 @@ public class PhotonTexasPokerManager : PunBehaviour
 
         if (bMoneyEnuf <= _PokerGameManager.startBet)
         {
-            Debug.LogError ("inside money enough: " + PlayerData.owned_coin);
             if (PlayerData.owned_coin > _PokerGameManager.startBet * 10)
             {
-                Debug.LogError ("inside bankrupt");
                 Bankrupt ();
             }
             //else if (PlayerData.owned_coin == 0 && PlayerData.charityCount > 0)
@@ -766,7 +764,6 @@ public class PhotonTexasPokerManager : PunBehaviour
             //}
             else
             {
-                Debug.LogError ("inside else");
                 GlobalVariables.bQuitOnNextRound = false;
                 ImLeaving ();
                 //StartCoroutine (PokerManager.instance.uiPause._LoadMenu ());
@@ -1244,7 +1241,7 @@ public class PhotonTexasPokerManager : PunBehaviour
 
             if (botCount == 0)
                 SyncBot ();
-            Debug.LogError ("actor ID: " + newBot.ID);
+            //Debug.LogError ("actor ID: " + newBot.ID);
         }
         else
         {
@@ -1278,7 +1275,7 @@ public class PhotonTexasPokerManager : PunBehaviour
 
         if (PhotonNetwork.isMasterClient)
         {
-            Debug.LogError ("in otehr p leave room");
+            //Debug.LogError ("in otehr p leave room");
             PhotonUtility.SetPlayerPropertiesArray (disconnectedPlayer, new string[] { PhotonEnums.Player.Active, PhotonEnums.Player.NextRoundIn, PhotonEnums.Player.SlotIndex }, new object[] { false, false, -1 });
             //HomeSceneManager.Instance.SetOtp (HomeSceneManager.Instance.otp);
 

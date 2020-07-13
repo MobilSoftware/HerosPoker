@@ -44,7 +44,12 @@ public class BundleManager : MonoBehaviour
     private string dlAssetName = "bundle.unity3d";
     private int downloadCount;
     private int downloadedCount;
+    private Dictionary<int, _SpineObject> dictStandHeroes;      //<costume_id, spine>
 
+    private void Start ()
+    {
+        dictStandHeroes = new Dictionary<int, _SpineObject> ();
+    }
 
     public void ProcessGetVersion (JGetVersion json )
     {
@@ -365,6 +370,29 @@ public class BundleManager : MonoBehaviour
         WWW www = new WWW ("file:///" + _path);
         yield return www;
         imgIcon.texture = www.texture;
+    }
+
+    public _SpineObject LoadFromBundle ( int _costumeID )
+    {
+        AssetBundle ab = AssetBundle.LoadFromFile (GetItemLoadPath (DownloadType.ASSET, 6, _costumeID));
+        GameObject objHero = (GameObject) ab.LoadAsset (_costumeID + "_0", typeof (GameObject));
+        _SpineObject hero = objHero.GetComponent<_SpineObject> ();
+        ab.Unload (false);
+        return hero;
+
+        //if (!dictStandHeroes.ContainsKey (_costumeID))
+        //{
+        //    AssetBundle ab = AssetBundle.LoadFromFile (GetItemLoadPath (DownloadType.ASSET, 6, _costumeID));
+        //    GameObject objHero = (GameObject) ab.LoadAsset (_costumeID + "_0", typeof (GameObject));
+        //    _SpineObject hero = objHero.GetComponent<_SpineObject> ();
+        //    dictStandHeroes.Add (_costumeID, hero);
+        //    ab.Unload (false);
+        //    return hero;
+        //}
+        //else
+        //{
+        //    return dictStandHeroes[_costumeID];
+        //}
     }
 
     public void OnPositiveClicked (int returnCode )

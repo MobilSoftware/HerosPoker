@@ -61,8 +61,8 @@ public class PokerRoomManager : MonoBehaviour
             {
                 GlobalVariables.MinBetAmount = minBets[btnIndex];
                 GlobalVariables.MaxBuyIn = maxBuyIn[btnIndex];
-                GlobalVariables.gameType = GameType.TexasPoker;
                 Hide ();
+                GlobalVariables.gameType = GameType.TexasPoker;
                 _SceneManager.instance.SetActiveScene (SceneType.HOME, false);
                 _SceneManager.instance.SetActiveScene (SceneType.POKER, true);
             }
@@ -77,6 +77,7 @@ public class PokerRoomManager : MonoBehaviour
             {
                 GlobalVariables.MinBetAmount = minBets[btnIndex];
                 GlobalVariables.MaxBuyIn = maxBuyIn[btnIndex];
+                GlobalVariables.gameType = GameType.TexasPoker;
                 Hide ();
                 _SceneManager.instance.SetActiveScene (SceneType.HOME, false);
                 _SceneManager.instance.SetActiveScene (SceneType.POKER, true);

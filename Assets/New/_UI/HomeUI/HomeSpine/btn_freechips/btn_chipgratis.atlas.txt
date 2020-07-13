@@ -1,0 +1,55 @@
+
+btn_chipgratis.png
+size: 96,115
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Board
+  rotate: false
+  xy: 2, 2
+  size: 92, 64
+  orig: 92, 64
+  offset: 0, 0
+  index: -1
+ChainA
+  rotate: false
+  xy: 37, 100
+  size: 19, 13
+  orig: 19, 13
+  offset: 0, 0
+  index: -1
+ChainB
+  rotate: true
+  xy: 75, 97
+  size: 16, 17
+  orig: 16, 17
+  offset: 0, 0
+  index: -1
+ChainC
+  rotate: false
+  xy: 58, 98
+  size: 15, 15
+  orig: 15, 15
+  offset: 0, 0
+  index: -1
+ChainD
+  rotate: true
+  xy: 2, 105
+  size: 8, 15
+  orig: 8, 15
+  offset: 0, 0
+  index: -1
+ChainE
+  rotate: true
+  xy: 19, 105
+  size: 8, 16
+  orig: 8, 16
+  offset: 0, 0
+  index: -1
+Handle
+  rotate: false
+  xy: 2, 68
+  size: 92, 27
+  orig: 92, 27
+  offset: 0, 0
+  index: -1

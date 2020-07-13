@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3919967320
+CRC: 1381295788
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: c9a011303860ca01343d0eea93c34afd
+    Hash: 34843667f74b0400e306d4bac090f466
   TypeTreeHash:
     serializedVersion: 2
     Hash: 3e8099e4f556b3292f8204aae06d0083
@@ -40,5 +40,5 @@ ClassTypes:
 - Class: 115
   Script: {instanceID: 0}
 Assets:
-- Assets/New/_Hero/Alexander/18_1.prefab
+- Assets/New/_Hero/Alexander/15_1.prefab
 Dependencies: []

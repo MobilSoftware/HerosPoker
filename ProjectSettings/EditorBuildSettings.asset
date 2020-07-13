@@ -11,73 +11,76 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/New/_Scene/SeMessage.unity
     guid: e36e6536cee3248238bd17638eb16e66
-  - enabled: 0
+  - enabled: 1
     path: Assets/New/_Scene/SeHome.unity
     guid: c8ef76df76d3d478baace90696d5b49e
-  - enabled: 0
+  - enabled: 1
     path: Assets/New/_Scene/SeProfile.unity
     guid: 7c810d3366b2f4e3fb00fee1de5410e3
-  - enabled: 0
+  - enabled: 1
     path: Assets/New/_Scene/SeHero.unity
     guid: 72b1f755cf28e417db125a3627865385
-  - enabled: 0
+  - enabled: 1
     path: Assets/New/_Scene/SeShop.unity
     guid: ef074c8e5028a4abd9fcebe69904f56a
-  - enabled: 0
+  - enabled: 1
     path: Assets/New/_Scene/SeLeaderboard.unity
     guid: a06a71f3dd12a4645b6f004df7651b12
-  - enabled: 0
+  - enabled: 1
     path: Assets/New/_Scene/SeFriend.unity
     guid: af49c6744b6944d9992146b04abfc2bd
-  - enabled: 0
+  - enabled: 1
     path: Assets/New/_Scene/SeTransfer.unity
     guid: a99953a06622d48b98305428da9eb831
-  - enabled: 0
+  - enabled: 1
     path: Assets/New/_Scene/SeReceiveItem.unity
     guid: 7c1a39507ac6e475eb28c9b88284b92c
-  - enabled: 0
+  - enabled: 1
     path: Assets/New/_Scene/SeInbox.unity
     guid: 723679821e46e446da3442495985a901
-  - enabled: 0
+  - enabled: 1
     path: Assets/New/_Scene/SeCoupon.unity
     guid: af72010c2fa7b4777ac23c4f5562fbe7
-  - enabled: 0
+  - enabled: 1
     path: Assets/New/_Scene/SeRedeem.unity
     guid: 1e478da9d880a4c7fb3b99865052812e
-  - enabled: 0
+  - enabled: 1
     path: Assets/New/_Scene/SeOtherProfile.unity
     guid: 4532f9ee6dd604eeb85e3bc2981da8c9
-  - enabled: 0
+  - enabled: 1
     path: Assets/New/_Scene/SePokerRoom.unity
     guid: 6b07f1f8e55604451bcbe0b6625b2168
-  - enabled: 0
+  - enabled: 1
     path: Assets/New/_Scene/SeVerify.unity
     guid: 51e150ac08e7d4d99853778e2475851b
-  - enabled: 0
+  - enabled: 1
     path: Assets/New/_Scene/SeVIP.unity
     guid: ea5220d90719e444287b5d926fb2e6a3
-  - enabled: 0
+  - enabled: 1
     path: Assets/New/_Scene/SeBegin.unity
     guid: edc8b0952e7394abbb34e73e139ea9d9
-  - enabled: 0
+  - enabled: 1
     path: Assets/New/_Scene/SeLogin.unity
     guid: e0dc47a134d51434a9d85421b691059f
-  - enabled: 0
+  - enabled: 1
     path: Assets/New/_Scene/SeSicbo.unity
     guid: 467c1f446075a488b9d708cb87984364
-  - enabled: 0
+  - enabled: 1
     path: Assets/New/_Scene/SePoker.unity
     guid: 93a15bb5f5b1947e3a9008a67f94e141
-  - enabled: 0
+  - enabled: 1
     path: Assets/SlotoScenes/SlotoScene.unity
     guid: 6ba6e830a7236408cb12ba5f1468d902
-  - enabled: 0
+  - enabled: 1
     path: Assets/New/_Scene/SeDailyRewards.unity
     guid: bcecd8a8e621547e1a07cd7b78cdfb80
-  - enabled: 0
+  - enabled: 1
     path: Assets/New/_Scene/SeWeeklyRewards.unity
     guid: 7c6ac81dae4574cd7aa4b74dd8153bf0
-  - enabled: 0
+  - enabled: 1
+    path: Assets/New/_Scene/SeMoneySlot.unity
+    guid: 7801e5d452a4b497c994c2503ff14a1f
+  - enabled: 1
     path: Assets/New/_Scene/SeSettings.unity
     guid: 06046743c52a4490eae30737eb072116
   m_configObjects: {}

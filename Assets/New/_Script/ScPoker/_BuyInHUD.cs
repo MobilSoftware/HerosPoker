@@ -28,7 +28,7 @@ public class _BuyInHUD : MonoBehaviour
         btnBuy.onClick.AddListener(ConfirmBuy);
         btnClose.onClick.AddListener(Exit);
 
-        Debug.LogError ("start buy in hud");
+        //Debug.LogError ("start buy in hud");
         gameObject.SetActive(false);
     }
 

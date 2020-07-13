@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3400267812
+CRC: 3046107668
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 4fe502e69be7c2b88393df45067e0766
+    Hash: c8c46fe4aa5faa2803a3d0a93f9907e2
   TypeTreeHash:
     serializedVersion: 2
     Hash: 3e8099e4f556b3292f8204aae06d0083
@@ -40,5 +40,5 @@ ClassTypes:
 - Class: 115
   Script: {instanceID: 0}
 Assets:
-- Assets/New/_Hero/Hercules/26_1.prefab
+- Assets/New/_Hero/Hercules/18_1.prefab
 Dependencies: []

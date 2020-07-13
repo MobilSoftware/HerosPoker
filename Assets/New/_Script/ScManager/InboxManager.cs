@@ -100,16 +100,28 @@ public class InboxManager : MonoBehaviour
             SetNotifStatus (claimingMails[0]);
         }
 
-        SetReceiveStatus (selectedMail.json);
+        if (selectedMail != null)
+            SetReceiveStatus (selectedMail.json);
 
     }
 
     public void SetNotifStatus ( ItemMail itemMail )
     {
-        if (itemMail.json.mail_read == 0 || itemMail.json.mail_claimed == 0)
+        if (itemMail.json.mail_read == 0)
+        {
             itemMail.objNotif.SetActive (true);
+        }
         else
-            itemMail.objNotif.SetActive (false);
+        {
+            if (itemMail.json.mail_claimed == 0 && itemMail.json.item_type_id != 0)
+            {
+                itemMail.objNotif.SetActive (true);
+            }
+            else
+            {
+                itemMail.objNotif.SetActive (false);
+            }
+        }
     }
 
     private bool CheckClaimable (JInbox _json )
@@ -195,7 +207,13 @@ public class InboxManager : MonoBehaviour
 
         for (int i = 0; i < json.inboxs.Length; i++)
         {
-            if (json.inboxs[i].mail_read == 0 || json.inboxs[i].mail_claimed == 0)
+            if (json.inboxs[i].mail_read == 0)
+            {
+                HomeManager.instance.objNotifInbox.gameObject.SetActive (true);
+                break;
+            }
+
+            if (json.inboxs[i].mail_claimed == 0 && json.inboxs[i].item_type_id != 0)
             {
                 HomeManager.instance.objNotifInbox.gameObject.SetActive (true);
                 break;
@@ -209,7 +227,13 @@ public class InboxManager : MonoBehaviour
         HomeManager.instance.objNotifInbox.gameObject.SetActive (false);
         for (int i = 0; i < mails.Count; i++)
         {
-            if (mails[i].json.mail_read == 0 || json.inboxs[i].mail_claimed == 0)
+            if (mails[i].json.mail_read == 0)
+            {
+                HomeManager.instance.objNotifInbox.gameObject.SetActive (true);
+                break;
+            }
+
+            if (mails[i].json.mail_claimed == 0 && mails[i].json.item_type_id != 0)
             {
                 HomeManager.instance.objNotifInbox.gameObject.SetActive (true);
                 break;

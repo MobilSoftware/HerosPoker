@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ApiManager : MonoBehaviour
@@ -32,7 +33,12 @@ public class ApiManager : MonoBehaviour
 
     public void RErrorHandler ( ApiBridge.ResponseParam error )
     {
-        LoginManager.instance.btnGuest.interactable = true;
+        if (LoginManager.instance != null)
+            LoginManager.instance.btnGuest.interactable = true;
+        if (error.error_code == 19)
+        {
+            SettingsManager.instance.Logout ();
+        }
         Debug.LogError ("RErrorHandler from " + error.uri + " (Seed #" + error.seed.ToString ()
                     + ")\n(Code #" + error.error_code + ") {" + error.error_msg[0] + " || " + error.error_msg[1] + "}");
         if (Rays.Utilities.Congest.DEVELOPMENT)
@@ -130,23 +136,41 @@ public class ApiManager : MonoBehaviour
         JGetHome json = JsonUtility.FromJson<JGetHome> (response.post_data);
         _SceneManager.instance.SetActiveScene (SceneType.LOGIN, false);
         PlayerData.UpdateData (json.player);
-        Logger.E (json.player.costume_equiped + " costume");
         if (json.player.costume_equiped == 0)
             _SceneManager.instance.SetActiveScene (SceneType.BEGIN, true);
         else
         {
+            StartChatSession ();
+            GetChat ();
             GetShop ();
             GetInbox ();
             GetLeaderboard ();
             GetFriend ();
             GetDailyTransferLimit ();
             GetWeeklyLogin ();
-            _SceneManager.instance.SetActiveScene (SceneType.HOME, true);
+            MoneySlotManager.instance.json.next_in = json.player.money_slot_next_in;
+            MoneySlotManager.instance.StartTimer ();
+            //_SceneManager.instance.SetActiveScene (SceneType.HOME, true);
+            HomeManager.instance.Show ();
             HomeManager.instance.Init ();
         }
 
         if (json.player.friend_gift_me.Length > 0)
             HomeManager.instance.objNotifInbox.SetActive (true);
+        else
+            HomeManager.instance.objNotifInbox.SetActive (false);
+        if (json.player.friend_request_me.Length > 0)
+            HomeManager.instance.objNotifFriend.SetActive (true);
+        else
+            HomeManager.instance.objNotifFriend.SetActive (false);
+        if (json.player.can_claim_daily)
+        {
+            DailyRewardsManager.instance.btnClaim.interactable = true;
+        }
+        else
+        {
+            DailyRewardsManager.instance.btnClaim.interactable = false;
+        }
     }
 
     //public void GetProfile (int friendID = 0)
@@ -207,9 +231,16 @@ public class ApiManager : MonoBehaviour
         Logger.E ("Return Set Hero: " + response.post_data);
         JSetHero json = JsonUtility.FromJson<JSetHero> (response.post_data);
         PlayerData.costume_id = json.player.costume_equiped;
-        BeginManager.instance.Hide ();
-        HomeManager.instance.Init ();
+        _SceneManager.instance.SetActiveScene (SceneType.BEGIN, false);
+        //_SceneManager.instance.SetActiveScene (SceneType.HOME, true);
         HomeManager.instance.Show ();
+        HomeManager.instance.Init ();
+        GetShop ();
+        GetInbox ();
+        GetLeaderboard ();
+        GetFriend ();
+        GetDailyTransferLimit ();
+        GetWeeklyLogin ();
     }
 
     public void SetCostume (int costumeID = 0 )
@@ -223,8 +254,8 @@ public class ApiManager : MonoBehaviour
         Logger.E ("Return Set Costume: " + response.post_data);
         JSetCostume json = JsonUtility.FromJson<JSetCostume> (response.post_data);
         PlayerData.costume_id = json.player.costume_equiped;
-        HomeManager.instance.Init ();
-        HeroManager.instance.UpdateStatusEquipped ();
+        //HomeManager.instance.Init ();
+        //HeroManager.instance.UpdateStatusEquipped ();
     }
 
     public void GetShop (int itemType = 0)
@@ -469,6 +500,7 @@ public class ApiManager : MonoBehaviour
     private void RGetDailyLogin (ApiBridge.ResponseParam response )
     {
         Logger.E ("Return Get Daily Login: " + response.post_data);
+        DailyRewardsManager.instance.btnClaim.interactable = false;
         JGetDailyLogin json = JsonUtility.FromJson<JGetDailyLogin> (response.post_data);
         int itemValue = int.Parse (json.reward.item_amount);
         ItemReceiveData data = new ItemReceiveData (json.reward.item_type, json.reward.item_id, itemValue);
@@ -513,7 +545,97 @@ public class ApiManager : MonoBehaviour
             _SceneManager.instance.UpdateAllCoinAndCoupon ();
             WeeklyRewardsManager.instance.SetWeeklyDaysStatus (json);
             WeeklyRewardsManager.instance.IncrementProgressBar ();
+            WeeklyRewardsManager.instance.json.login_count++;
         }
+    }
+
+    public void GetMoneySlot ()
+    {
+        api.GetMoneySlot ();
+    }
+
+    private void RGetMoneySlot (ApiBridge.ResponseParam response )
+    {
+        Logger.E ("Return Get Money Slot: " + response.post_data);
+        JGetMoneySlot json = JsonUtility.FromJson<JGetMoneySlot> (response.post_data);
+        MoneySlotManager.instance.SetJson (json);
+    }
+
+    public void UpdateAnnouncementSession (ApiBridge.ResponseParam response )
+    {
+        Logger.E ("Update Announcement Session: " + response.post_data);
+        JUpdateAnnouncement json = JsonUtility.FromJson<JUpdateAnnouncement> (response.post_data);
+        HomeManager.instance.runningText.AddQueue (json.announcement.announcement_text);
+    }
+
+    public void GetChat (int friendID = -1)
+    {
+        api.GetChat (friendID);
+    }
+
+    private void RGetChatPublic (ApiBridge.ResponseParam response )
+    {
+        //when friend ID = -1, get public chat content
+        Logger.E ("Return Get Chat Public: " + response.post_data);
+        JGetChatPublic json = JsonUtility.FromJson<JGetChatPublic> (response.post_data);
+        HomeManager.instance.SetJson (json);
+    }
+
+    private void RGetChatList (ApiBridge.ResponseParam response )
+    {
+        //when friend ID = 0, get private chat list
+        Logger.E ("Return Get Chat List: " + response.post_data);
+    }
+
+    private void RGetChatPrivate (ApiBridge.ResponseParam response )
+    {
+        //when friend ID else, get private chat content with [friendID]
+        Logger.E ("Return Get Chat Private: " + response.post_data);
+    }
+
+    public void StartChatSession (int friendID = 0)
+    {
+        api.StartChatSession (friendID);
+        Logger.E ("start chat session");
+    }
+
+    public void EndChatSession ()
+    {
+        api.EndChatSession ();
+    }
+
+    public void UpdatePublicChatSession (ApiBridge.ResponseParam response )
+    {
+        Logger.E ("Update Public Chat Session: " + response.post_data);
+        if (HomeManager.instance.json != null)
+        {
+            JGetChatPublic json = JsonUtility.FromJson<JGetChatPublic> (response.post_data);
+            List<JPublicChat> updateChat = new List<JPublicChat> ();
+            int lastChatID = HomeManager.instance.GetLastPublicChatID ();
+            for (int i = 0; i < json.chat.Length; i++)
+            {
+                if (json.chat[i].chat_public_id > lastChatID)
+                    updateChat.Add (json.chat[i]);
+            }
+            HomeManager.instance.AddPublicChat (updateChat.ToArray());
+        }
+
+    }
+
+    public void UpdatePrivateChatSession (ApiBridge.ResponseParam response )
+    {
+        Logger.E ("Update Private Chat Session: " + response.post_data);
+    }
+
+    public void SendChat (string strContent, int friendID = 0 )
+    {
+        api.SendChat (strContent, friendID);
+    }
+
+    private void RSendChatPublic (ApiBridge.ResponseParam response )
+    {
+        Logger.E ("Return Send Chat Public: " + response.post_data);
+
     }
 
     #region gameplay

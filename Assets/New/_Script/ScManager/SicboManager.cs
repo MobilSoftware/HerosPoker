@@ -71,7 +71,7 @@ public class SicboManager : PunBehaviour
         if (PhotonNetwork.room != null)
         {
             PhotonNetwork.LeaveRoom ();
-            Debug.LogError ("leaving photon room");
+            //Debug.LogError ("leaving photon room");
         }
         OnOthers ();
         GlobalVariables.bQuitOnNextRound = false;

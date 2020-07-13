@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1487630840
+CRC: 439631076
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 4a2e1db13c93ae9799b913efe0a4e45a
+    Hash: c6d1140f09022fdb8c45b60b484f78db
   TypeTreeHash:
     serializedVersion: 2
     Hash: 3e8099e4f556b3292f8204aae06d0083
@@ -40,5 +40,5 @@ ClassTypes:
 - Class: 115
   Script: {instanceID: 0}
 Assets:
-- Assets/New/_Hero/GajahMada/24_1.prefab
+- Assets/New/_Hero/GajahMada/17_1.prefab
 Dependencies: []

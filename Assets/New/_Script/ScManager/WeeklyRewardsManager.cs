@@ -31,7 +31,8 @@ public class WeeklyRewardsManager : MonoBehaviour
 
     private bool isInit;
     private SceneType prevSceneType;
-    private JGetWeeklyLogin json;
+    [HideInInspector]
+    public JGetWeeklyLogin json;
 
     private void Start ()
     {

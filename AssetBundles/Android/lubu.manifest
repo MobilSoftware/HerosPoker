@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 529932960
+CRC: 2886417780
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: c1834664204d4aeaed75b8af22cab74b
+    Hash: dd0e71242f6a7313d13ed22bb324ddc5
   TypeTreeHash:
     serializedVersion: 2
     Hash: 01e71ceb059093aa7918939ca5483f70
@@ -53,7 +53,7 @@ Assets:
 - Assets/New/_Hero/LuBu/LuBuSit.png
 - Assets/New/_Hero/LuBu/LuBuSit.atlas.txt
 - Assets/New/_Hero/LuBu/LuBuSit.json
-- Assets/New/_Hero/LuBu/3_1.prefab
-- Assets/New/_Hero/LuBu/LubuStand/3_0.prefab
+- Assets/New/_Hero/LuBu/10_1.prefab
+- Assets/New/_Hero/LuBu/LubuStand/10_0.prefab
 - Assets/New/_Hero/LuBu/LuBuSit_SkeletonData.asset
 Dependencies: []

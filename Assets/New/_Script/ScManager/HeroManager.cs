@@ -29,6 +29,8 @@ public class HeroManager : MonoBehaviour
     public TextMeshProUGUI tmpCoin;
     public TextMeshProUGUI tmpCoupon;
     public Button btnClose;
+    [HideInInspector]
+    public ItemSelectHero selectedHero;
 
     private bool isInit;
     private SceneType prevSceneType;
@@ -36,6 +38,7 @@ public class HeroManager : MonoBehaviour
     public bool isSettingJson;
     private JGetShopItem[] sortedHeroes;
     private List<ItemSelectHero> selectHeroes;
+    private Coroutine crUpdateStatus;
 
     private void Start ()
     {
@@ -57,9 +60,9 @@ public class HeroManager : MonoBehaviour
         {
             isInit = true;
             canvas.sortingOrder = (int) SceneType.HERO;
+            StartCoroutine (_WaitSetJson ());
         }
 
-        StartCoroutine (_WaitSetJson ());
         canvas.enabled = true;
         tmpCoin.text = Convert.ToInt64 (PlayerData.owned_coin).toShortCurrency ();
         tmpCoupon.text = Convert.ToInt64 (PlayerData.owned_coupon).toCouponShortCurrency ();
@@ -77,6 +80,14 @@ public class HeroManager : MonoBehaviour
     {
         sortedHeroes = unsortedHeroes.OrderBy (x => (x.default_item_id == PlayerData.costume_id) ? 0 : 1).ThenBy(x => x.is_hero_owned ? 0 : 1).ToArray ();
         isSettingJson = false;
+        isInit = false;
+        if (parentItems.childCount > 0)
+        {
+            for (int i = 0; i < parentItems.childCount; i++)
+            {
+                Destroy (parentItems.GetChild (i).gameObject);
+            }
+        }
     }
 
     IEnumerator _WaitSetJson ()
@@ -92,7 +103,10 @@ public class HeroManager : MonoBehaviour
     private void Hide ()
     {
         canvas.enabled = false;
-        _SceneManager.instance.activeSceneType = prevSceneType; 
+        _SceneManager.instance.activeSceneType = prevSceneType;
+        //_SceneManager.instance.SetActiveScene (SceneType.HOME, true);
+        HomeManager.instance.Show ();
+        HomeManager.instance.Init ();
     }
 
     private void SetItemSelectHero()
@@ -123,17 +137,39 @@ public class HeroManager : MonoBehaviour
         }
     }
 
-    public void UpdateStatusEquipped ()
-    {
-        for (int i = 0; i < selectHeroes.Count; i++)
-        {
-            selectHeroes[i].SetData (sortedHeroes[i]);
-        }
-    }
+    //public void UpdateStatusEquipped ()
+    //{
+    //    if (crUpdateStatus != null)
+    //        StopCoroutine (crUpdateStatus);
+    //    crUpdateStatus = StartCoroutine (_UpdateStatusEquipped ());
+    //}
+
+    //IEnumerator _UpdateStatusEquipped()
+    //{
+    //    //if (selectedHero != null)
+    //    //{
+    //    //    selectedHero.Unequip ();
+    //    //}
+    //    for (int i = 0; i < selectHeroes.Count; i++)
+    //    {
+    //        selectHeroes[i].SetData (sortedHeroes[i]);
+    //        yield return _WFSUtility.wef;
+    //    }
+    //}
 
     public void Logout ()
     {
+        if (crUpdateStatus != null)
+        {
+            StopCoroutine (crUpdateStatus);
+            crUpdateStatus = null;
+        }
         isInit = false;
         isSettingJson = true;
+    }
+
+    public void UnequipSelected ()
+    {
+        selectedHero.Unequip ();
     }
 }

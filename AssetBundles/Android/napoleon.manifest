@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 38711865
+CRC: 2975091768
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: e59ac0928bfabae417cd6715b374a1a4
+    Hash: 40ff303442f8fcdfcfd232a19fb21766
   TypeTreeHash:
     serializedVersion: 2
     Hash: 3e8099e4f556b3292f8204aae06d0083
@@ -40,5 +40,5 @@ ClassTypes:
 - Class: 115
   Script: {instanceID: 0}
 Assets:
-- Assets/New/_Hero/Napoleon/9_1.prefab
+- Assets/New/_Hero/Napoleon/13_1.prefab
 Dependencies: []

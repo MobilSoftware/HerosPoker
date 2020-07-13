@@ -64,13 +64,15 @@ public class SettingsManager : MonoBehaviour
         canvas.enabled = false;
     }
 
-    private void Logout ()
+    public void Logout ()
     {
         FacebookManager.instance.Logout ();
         ShopManager.instance.Logout ();
         HeroManager.instance.Logout ();
         LeaderboardManager.instance.Logout ();
         FriendManager.instance.Logout ();
+        MoneySlotManager.instance.Logout ();
+        HomeManager.instance.json = null;
         Hide ();
         PlayerPrefs.DeleteAll ();
         _SceneManager.instance.SetActiveScene (SceneType.HOME, false);

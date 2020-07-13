@@ -1,0 +1,41 @@
+
+btn_slotwestern.png
+size: 482,431
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+7
+  rotate: false
+  xy: 317, 34
+  size: 109, 115
+  orig: 109, 115
+  offset: 0, 0
+  index: -1
+Back
+  rotate: true
+  xy: 244, 151
+  size: 278, 236
+  orig: 278, 236
+  offset: 0, 0
+  index: -1
+Coin
+  rotate: false
+  xy: 244, 99
+  size: 45, 50
+  orig: 45, 50
+  offset: 0, 0
+  index: -1
+Front
+  rotate: false
+  xy: 2, 2
+  size: 313, 62
+  orig: 313, 62
+  offset: 0, 0
+  index: -1
+Mid
+  rotate: true
+  xy: 2, 66
+  size: 363, 240
+  orig: 363, 240
+  offset: 0, 0
+  index: -1

@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1421296772
+CRC: 1904136578
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 1b840fd04c066e41c5a52e0557400ca9
+    Hash: d2bbd31000652682ed6f07c276320fe9
   TypeTreeHash:
     serializedVersion: 2
     Hash: 01e71ceb059093aa7918939ca5483f70
@@ -48,11 +48,11 @@ ClassTypes:
 - Class: 224
   Script: {instanceID: 0}
 Assets:
-- Assets/New/_Hero/Cleopatra/7_1.prefab
+- Assets/New/_Hero/Cleopatra/11_1.prefab
 - Assets/New/_Hero/Cleopatra/CleopatraSit.png
 - Assets/New/_Hero/Cleopatra/CleopatraSit.atlas.txt
 - Assets/New/_Hero/Cleopatra/CleopatraSit_Atlas.asset
-- Assets/New/_Hero/Cleopatra/CleopatraStand/7_0.prefab
+- Assets/New/_Hero/Cleopatra/CleopatraStand/11_0.prefab
 - Assets/New/_Hero/Cleopatra/CleopatraSit_Material.mat
 - Assets/New/_Hero/Cleopatra/CleopatraSit_SkeletonData.asset
 - Assets/New/_Hero/Cleopatra/CleopatraSit.json

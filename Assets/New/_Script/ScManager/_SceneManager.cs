@@ -28,8 +28,9 @@ public enum SceneType
     REDEEM = 21,
     DAILY_REWARDS = 22,
     WEEKLY_REWARDS = 23,
-    RECEIVE_ITEM = 24,
-    MESSAGE = 25
+    MONEY_SLOT = 24,
+    RECEIVE_ITEM = 25,
+    MESSAGE = 26
 }
 
 public class _SceneManager : MonoBehaviour
@@ -75,6 +76,7 @@ public class _SceneManager : MonoBehaviour
     private RedeemManager redeemM;
     private DailyRewardsManager dailyRewardsM;
     private WeeklyRewardsManager weeklyRewardsM;
+    private MoneySlotManager moneySlotM;
 
     private void Start ()
     {
@@ -82,6 +84,9 @@ public class _SceneManager : MonoBehaviour
         DontDestroyOnLoad (this);
         activeSceneType = SceneType.SPLASH;
         LoadMessageScene ();
+        //PlayerPrefs.SetInt ("publicChatSession", 0);
+        //PlayerPrefs.SetInt ("privateChatSession", 0);
+        //PlayerPrefs.Save ();
     }
 
     private void LoadMessageScene ()
@@ -106,7 +111,7 @@ public class _SceneManager : MonoBehaviour
             ApiManager.instance.GetVersion ();
         else
         {
-            Debug.LogError ("check internet");
+            //Debug.LogError ("check internet");
             MessageManager.instance.Show (this.gameObject, "Mohon periksa koneksi internet anda", ButtonMode.OK_CANCEL, -3, "Coba Lagi", "Keluar");
         }
     }
@@ -121,7 +126,8 @@ public class _SceneManager : MonoBehaviour
 
     public void LoadAllScenes()
     {
-        StartCoroutine (_LoadAllScenes ());
+        //StartCoroutine (_LoadAllScenes ());
+        StartCoroutine (_LoadLocalScenes ());
 //#if UNITY_EDITOR
 //        StartCoroutine (_LoadLocalScenes ());
 //#else
@@ -179,6 +185,8 @@ public class _SceneManager : MonoBehaviour
         dailyRewardsM = DailyRewardsManager.instance;
         yield return _WFSUtility.wef;
         weeklyRewardsM = WeeklyRewardsManager.instance;
+        yield return _WFSUtility.wef;
+        moneySlotM = MoneySlotManager.instance;
 
 
         PhotonNetwork.ConnectUsingSettings ("v1.0");
@@ -257,6 +265,8 @@ public class _SceneManager : MonoBehaviour
         dailyRewardsM = DailyRewardsManager.instance;
         yield return _WFSUtility.wef;
         weeklyRewardsM = WeeklyRewardsManager.instance;
+        yield return _WFSUtility.wef;
+        moneySlotM = MoneySlotManager.instance;
 
         PhotonNetwork.ConnectUsingSettings ("v1.0");
         yield return _WFSUtility.wef;
@@ -280,7 +290,11 @@ public class _SceneManager : MonoBehaviour
         {
             case SceneType.LOGIN: loginM.SetCanvas (val); break;
             case SceneType.BEGIN: beginM.SetCanvas (val); break;
-            case SceneType.HOME: homeM.SetCanvas (val); break;
+            case SceneType.HOME: 
+                if (val)
+                    ApiManager.instance.GetHome ();
+                homeM.SetCanvas (val);
+                break;
             case SceneType.PROFILE: profileM.SetCanvas (val); break;
             case SceneType.SHOP: shopM.SetCanvas (val); break;
             case SceneType.POKER_ROOM: proomM.SetCanvas (val); break;
@@ -298,6 +312,7 @@ public class _SceneManager : MonoBehaviour
             case SceneType.REDEEM: redeemM.SetCanvas (val); break;
             case SceneType.DAILY_REWARDS: dailyRewardsM.SetCanvas (val); break;
             case SceneType.WEEKLY_REWARDS: weeklyRewardsM.SetCanvas (val); break;
+            case SceneType.MONEY_SLOT: moneySlotM.SetCanvas (val); break;
         }
     }
 
@@ -347,6 +362,7 @@ public class _SceneManager : MonoBehaviour
             case SceneType.REDEEM:
             case SceneType.DAILY_REWARDS:
             case SceneType.WEEKLY_REWARDS:
+            case SceneType.MONEY_SLOT:
             case SceneType.HERO:
                 SetActiveScene (activeSceneType, false);
                 break;

@@ -25,7 +25,7 @@ public class PokerOthersUI : MonoBehaviour
 
     private void OnQuitGame()
     {
-        Debug.LogError ("Quit Game");
+        //Debug.LogError ("Quit Game");
         if (GlobalVariables.gameType == GameType.TexasPoker)
         {
             if (PhotonNetwork.room != null || PhotonTexasPokerManager.instance.GetNumActivePlayers() <= 1)
@@ -124,7 +124,7 @@ public class PokerOthersUI : MonoBehaviour
         if (PhotonNetwork.room != null)
         {
             PhotonNetwork.LeaveRoom ();
-            Debug.LogError ("leaving photon room");
+            //Debug.LogError ("leaving photon room");
         }
 
         PhotonRoomInfoManager.instance.RemoveCardGameScripts ();
@@ -166,7 +166,7 @@ public class PokerOthersUI : MonoBehaviour
         if (PhotonNetwork.room != null)
         {
             PhotonNetwork.LeaveRoom ();
-            Debug.LogError ("leaving photon room");
+            //Debug.LogError ("leaving photon room");
         }
 
         PhotonRoomInfoManager.instance.RemoveCardGameScripts();

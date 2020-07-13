@@ -783,8 +783,6 @@ MonoBehaviour:
   txtVersion: {fileID: 8809934}
   txtStatusBar: {fileID: 328138731}
   fillProgressBar: {fileID: 585866033}
-  sprCoin: {fileID: 21300000, guid: 610fd56fdabe445a4a79fbb32261e229, type: 3}
-  sprCoupon: {fileID: 21300000, guid: d5e355cb933e44a00a6f42be82236f2b, type: 3}
   bLoadingScenes: 0
 --- !u!114 &1524175553
 MonoBehaviour:

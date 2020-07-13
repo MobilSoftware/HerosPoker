@@ -103,6 +103,7 @@ public class PokerManager : MonoBehaviour
         objPoker.SetActive (true);
         canvas.enabled = true;
 
+        //Debug.LogError ("a");
         PhotonRoomInfoManager.instance.InitialiseCardGameScripts ();
         RoomInfoManager.instance.JoinRandomRoom ();
 

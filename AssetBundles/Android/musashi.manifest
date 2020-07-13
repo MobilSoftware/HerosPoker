@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2446876013
+CRC: 2688501489
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: c6189efd15977e7558f0f130de8f59af
+    Hash: 0eb44e4a29991c95a46d17301ca0cc9b
   TypeTreeHash:
     serializedVersion: 2
     Hash: 3e8099e4f556b3292f8204aae06d0083
@@ -40,5 +40,5 @@ ClassTypes:
 - Class: 115
   Script: {instanceID: 0}
 Assets:
-- Assets/New/_Hero/Musashi/8_1.prefab
+- Assets/New/_Hero/Musashi/12_1.prefab
 Dependencies: []

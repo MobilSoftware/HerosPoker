@@ -119,6 +119,7 @@ public class RoomInfoManager : MonoBehaviour
     public void JoinRandomRoom()
     {
         Logger.W ("random room joining");
+        Logger.W ("gameType: " + GlobalVariables.gameType);
         //string city = GlobalVariables.environment.ToString();
         string city = "prototype";
         string gametype = GlobalVariables.gameType.ToString();
