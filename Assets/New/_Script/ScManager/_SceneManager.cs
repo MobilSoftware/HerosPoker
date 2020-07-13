@@ -212,8 +212,10 @@ public class _SceneManager : MonoBehaviour
     {
         AsyncOperation async;
         string[] enums = Enum.GetNames (typeof (SceneType));
+        BundleManager bundleM = BundleManager.instance;
         for (int i = 2; i < enums.Length; i++)
         {
+            bundleM.txtStatusBar.text = "Memuat permainan " + Mathf.RoundToInt (((float) i / (float) enums.Length) * 100).ToString () + "%";
             string loadPath = BundleManager.instance.GetSceneLoadPath (i);
             //Logger.E ("loading scene: " + loadPath);
             AssetBundle ab = AssetBundle.LoadFromFile (loadPath);
