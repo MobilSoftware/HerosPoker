@@ -309,7 +309,8 @@ public class SlotoManagerScript : MonoBehaviour
             }
             else //No Jackpot Type
             {
-                slotIcons[i].SetIconValue(0, iconSprite[0], tileSprite[0]);
+                int tempIconValue = Random.Range(0, 6);
+                slotIcons[i].SetIconValue(tempIconValue, iconSprite[tempIconValue], tileSprite[tempIconValue]);
             }
             slotIcons[i].fixedValue = true;
         }
