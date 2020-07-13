@@ -138,8 +138,10 @@ public class _SceneManager : MonoBehaviour
     IEnumerator _LoadLocalScenes ()
     {
         AsyncOperation async;
+        BundleManager bundleM = BundleManager.instance;
         for (int i = 2; i < SceneManager.sceneCountInBuildSettings; i++)
         {
+            bundleM.txtStatusBar.text = "Memuat permainan " + Mathf.RoundToInt(((float)i / (float)SceneManager.sceneCountInBuildSettings) * 100).ToString () + "%";
             async = SceneManager.LoadSceneAsync (i, LoadSceneMode.Additive);
             while (!async.isDone)
                 yield return _WFSUtility.wef;
@@ -224,6 +226,7 @@ public class _SceneManager : MonoBehaviour
                 //Logger.E ("name: " + scenePath[0] + " | progress: " + async.progress);
             }
             ab.Unload (false);
+            //add progress here
         }
         yield return _WFSUtility.wef;
         homeM = HomeManager.instance;

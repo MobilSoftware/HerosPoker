@@ -269,7 +269,7 @@ public class BundleManager : MonoBehaviour
         bLoadingScenes = false;
         int counter = 1;
         fillProgressBar.fillAmount = 1;
-        txtStatusBar.text = "Memuat permainan .";
+        //txtStatusBar.text = "Memuat permainan .";
         _SceneManager.instance.LoadAllScenes ();
         while (!bLoadingScenes)
         {
@@ -277,7 +277,7 @@ public class BundleManager : MonoBehaviour
             counter++;
             if (counter > 3)
             {
-                txtStatusBar.text = "Memuat permainan .";
+                //txtStatusBar.text = "Memuat permainan .";
                 counter = 1;
             }
             yield return _WFSUtility.wfs03;
