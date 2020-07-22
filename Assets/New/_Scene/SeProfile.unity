@@ -3867,6 +3867,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 1224136782}
+  trFrame: {fileID: 1621195242}
   txtDisplayName: {fileID: 1769665274}
   txtStatus: {fileID: 390907748}
   txtStatusMsg: {fileID: 1169535860}

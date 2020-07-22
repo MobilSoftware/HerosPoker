@@ -20,6 +20,7 @@ public class LeaderboardManager : MonoBehaviour
     }
 
     public Canvas canvas;
+    public Transform trFrame;
     public Button btnClose;
     public ScrollRect scrRect;
     //public Transform parentItems;
@@ -53,10 +54,12 @@ public class LeaderboardManager : MonoBehaviour
             canvas.sortingOrder = (int) SceneType.LEADERBOARD;
             StartCoroutine (_WaitSetJson ());
         }
+        trFrame.localScale = Vector3.zero;
         canvas.enabled = true;
         scrRect.verticalNormalizedPosition = 1f;
         prevSceneType = _SceneManager.instance.activeSceneType;
         _SceneManager.instance.activeSceneType = SceneType.LEADERBOARD;
+        trFrame.LeanScale (Vector3.one, _SceneManager.TWEEN_DURATION);
     }
 
     public void SetJson ( JGetLeaderboard json )
@@ -78,8 +81,13 @@ public class LeaderboardManager : MonoBehaviour
 
     private void Hide ()
     {
-        canvas.enabled = false;
-        _SceneManager.instance.activeSceneType = prevSceneType;
+        trFrame.LeanScale (Vector3.zero, _SceneManager.TWEEN_DURATION).setOnComplete
+        (() =>
+        {
+            canvas.enabled = false;
+            _SceneManager.instance.activeSceneType = prevSceneType;
+        });
+
     }
 
     private void SetItemLeaderboards ()

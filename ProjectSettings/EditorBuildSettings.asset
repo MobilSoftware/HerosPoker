@@ -83,4 +83,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/New/_Scene/SeSettings.unity
     guid: 06046743c52a4490eae30737eb072116
+  - enabled: 1
+    path: Assets/New/_Scene/SeWatchAds.unity
+    guid: 22f9b8b342e584b7694f2183f5ed5f16
+  - enabled: 1
+    path: Assets/New/_Scene/SeDailyQuest.unity
+    guid: 5934fb43ae6ba4a4ba2dadd1ab9920e3
   m_configObjects: {}

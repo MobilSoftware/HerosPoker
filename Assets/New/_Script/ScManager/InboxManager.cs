@@ -23,6 +23,7 @@ public class InboxManager : MonoBehaviour
     }
 
     public Canvas canvas;
+    public Transform trFrame;
     public ScrollRect scrRect;
     public Sprite sprSelected;
     public Sprite sprNotSelected;
@@ -176,10 +177,14 @@ public class InboxManager : MonoBehaviour
             yield return _WFSUtility.wef;
         }
         //off loading
-
-        SetData ();
+        trFrame.localScale = Vector3.zero;
         canvas.enabled = true;
-        scrRect.verticalNormalizedPosition = 1f;
+        trFrame.LeanScale (Vector3.one, _SceneManager.TWEEN_DURATION).setOnComplete
+        (() =>
+        {
+            SetData ();
+            scrRect.verticalNormalizedPosition = 1f;
+        });
         prevSceneType = _SceneManager.instance.activeSceneType;
         _SceneManager.instance.activeSceneType = SceneType.INBOX;
     }
@@ -224,26 +229,30 @@ public class InboxManager : MonoBehaviour
 
     private void Hide ()
     {
-        HomeManager.instance.objNotifInbox.gameObject.SetActive (false);
-        for (int i = 0; i < mails.Count; i++)
+        trFrame.LeanScale (Vector3.zero, _SceneManager.TWEEN_DURATION).setOnComplete
+        (() =>
         {
-            if (mails[i].json.mail_read == 0)
+            HomeManager.instance.objNotifInbox.gameObject.SetActive (false);
+            for (int i = 0; i < mails.Count; i++)
             {
-                HomeManager.instance.objNotifInbox.gameObject.SetActive (true);
-                break;
-            }
+                if (mails[i].json.mail_read == 0)
+                {
+                    HomeManager.instance.objNotifInbox.gameObject.SetActive (true);
+                    break;
+                }
 
-            if (mails[i].json.mail_claimed == 0 && mails[i].json.item_type_id != 0)
-            {
-                HomeManager.instance.objNotifInbox.gameObject.SetActive (true);
-                break;
+                if (mails[i].json.mail_claimed == 0 && mails[i].json.item_type_id != 0)
+                {
+                    HomeManager.instance.objNotifInbox.gameObject.SetActive (true);
+                    break;
+                }
             }
-        }
-        ResetMail ();
-        canvas.enabled = false;
-        _SceneManager.instance.activeSceneType = prevSceneType;
-        currentLength = mails.Count;
-        ApiManager.instance.GetInbox ();
+            ResetMail ();
+            canvas.enabled = false;
+            _SceneManager.instance.activeSceneType = prevSceneType;
+            currentLength = mails.Count;
+            ApiManager.instance.GetInbox ();
+        });
     }
 
     public void UnSelectMail ()

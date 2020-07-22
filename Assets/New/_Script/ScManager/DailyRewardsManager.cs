@@ -21,6 +21,7 @@ public class DailyRewardsManager : MonoBehaviour
     }
 
     public Canvas canvas;
+    public Transform trFrame;
     public Button btnClaim;
     public Button btnClose;
 
@@ -56,12 +57,18 @@ public class DailyRewardsManager : MonoBehaviour
 
         prevSceneType = _SceneManager.instance.activeSceneType;
         _SceneManager.instance.activeSceneType = SceneType.DAILY_REWARDS;
+        trFrame.localScale = Vector3.zero;
         canvas.enabled = true;
+        trFrame.LeanScale (Vector3.one, _SceneManager.TWEEN_DURATION);
     }
 
     private void Hide ()
     {
-        _SceneManager.instance.activeSceneType = prevSceneType;
-        canvas.enabled = false;
+        trFrame.LeanScale (Vector3.zero, _SceneManager.TWEEN_DURATION).setOnComplete
+        (() =>
+        {
+            _SceneManager.instance.activeSceneType = prevSceneType;
+            canvas.enabled = false;
+        });
     }
 }

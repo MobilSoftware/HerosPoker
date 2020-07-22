@@ -21,6 +21,7 @@ public class WeeklyRewardsManager : MonoBehaviour
     }
 
     public Canvas canvas;
+    public Transform trFrame;
     public Button btnClose;
     public ItemWeeklyDay[] itemWeeklyDays;
     public ItemWeeklyBonus[] itemWeeklyBonus;
@@ -64,13 +65,19 @@ public class WeeklyRewardsManager : MonoBehaviour
         StartCoroutine (_WaitSetJson ());
         prevSceneType = _SceneManager.instance.activeSceneType;
         _SceneManager.instance.activeSceneType = SceneType.WEEKLY_REWARDS;
+        trFrame.localScale = Vector3.zero;
         canvas.enabled = true;
+        trFrame.LeanScale (Vector3.one, _SceneManager.TWEEN_DURATION);
     }
 
     private void Hide ()
     {
-        canvas.enabled = false;
-        _SceneManager.instance.activeSceneType = prevSceneType;
+        trFrame.LeanScale (Vector3.zero, _SceneManager.TWEEN_DURATION).setOnComplete
+        (() =>
+        {
+            canvas.enabled = false;
+            _SceneManager.instance.activeSceneType = prevSceneType;
+        });
     }
 
     public void SetJson (JGetWeeklyLogin _json )

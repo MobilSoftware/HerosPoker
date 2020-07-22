@@ -46,6 +46,8 @@ public class HomeManager : MonoBehaviour
     public Button btnDailyRewards;
     public Button btnWeeklyRewards;
     public Button btnMoneySlot;
+    public Button btnWatchAds;
+    public Button btnDailyQuest;
     public Button btnChat;
     public GameObject objNotifInbox;
     public GameObject objNotifFriend;
@@ -93,7 +95,19 @@ public class HomeManager : MonoBehaviour
         btnTransfer.onClick.AddListener (OnTransfer);
         btnDailyRewards.onClick.AddListener (OnDailyRewards);
         btnWeeklyRewards.onClick.AddListener (OnWeeklyRewards);
+        btnWatchAds.onClick.AddListener (OnWatchAds);
+        btnDailyQuest.onClick.AddListener (OnDailyQuest);
         btnMoneySlot.onClick.AddListener (OnMoneySlot);
+    }
+
+    private void OnWatchAds ()
+    {
+        _SceneManager.instance.SetActiveScene (SceneType.WATCH_ADS, true);
+    }
+
+    private void OnDailyQuest ()
+    {
+        _SceneManager.instance.SetActiveScene (SceneType.DAILY_QUEST, true);
     }
 
     private void OnChat ()

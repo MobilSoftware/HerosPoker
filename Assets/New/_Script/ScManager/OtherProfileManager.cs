@@ -21,6 +21,7 @@ public class OtherProfileManager : MonoBehaviour
     }
 
     public Canvas canvas;
+    public Transform trFrame;
     public Text txtDisplayName;
     public Text txtStatus;
     public Text txtLevel;
@@ -105,14 +106,20 @@ public class OtherProfileManager : MonoBehaviour
             isInit = true;
         }
 
+        trFrame.localScale = Vector3.zero;
         canvas.enabled = true;
         prevSceneType = _SceneManager.instance.activeSceneType;
         _SceneManager.instance.activeSceneType = SceneType.OTHER_PROFILE;
+        trFrame.LeanScale (Vector3.one, _SceneManager.TWEEN_DURATION);
     }
 
     public void Hide ()
     {
-        canvas.enabled = false;
-        _SceneManager.instance.activeSceneType = prevSceneType;
+        trFrame.LeanScale (Vector3.zero, _SceneManager.TWEEN_DURATION).setOnComplete
+        (() =>
+        {
+            canvas.enabled = false;
+            _SceneManager.instance.activeSceneType = prevSceneType;
+        });
     }
 }

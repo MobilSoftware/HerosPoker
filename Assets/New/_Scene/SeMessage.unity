@@ -415,6 +415,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 40440956}
+  trFrame: {fileID: 587812567601413753}
   objFrameTitle: {fileID: 1687659732}
   txtTitle: {fileID: 943182160}
   tmpDescription: {fileID: 807801408226528032}

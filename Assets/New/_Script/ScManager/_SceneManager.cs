@@ -29,8 +29,10 @@ public enum SceneType
     DAILY_REWARDS = 22,
     WEEKLY_REWARDS = 23,
     MONEY_SLOT = 24,
-    RECEIVE_ITEM = 25,
-    MESSAGE = 26
+    DAILY_QUEST = 25,
+    WATCH_ADS = 26,
+    RECEIVE_ITEM = 27,
+    MESSAGE = 28
 }
 
 public class _SceneManager : MonoBehaviour
@@ -53,6 +55,8 @@ public class _SceneManager : MonoBehaviour
 
     [HideInInspector]
     public SceneType activeSceneType;
+    [HideInInspector]
+    public const float TWEEN_DURATION = 0.2f;
 
     public Camera mainCamera;
 
@@ -77,6 +81,8 @@ public class _SceneManager : MonoBehaviour
     private DailyRewardsManager dailyRewardsM;
     private WeeklyRewardsManager weeklyRewardsM;
     private MoneySlotManager moneySlotM;
+    private DailyQuestManager dailyQuestM;
+    private WatchAdsManager watchAdsM;
 
     private void Start ()
     {
@@ -189,6 +195,10 @@ public class _SceneManager : MonoBehaviour
         weeklyRewardsM = WeeklyRewardsManager.instance;
         yield return _WFSUtility.wef;
         moneySlotM = MoneySlotManager.instance;
+        yield return _WFSUtility.wef;
+        dailyQuestM = DailyQuestManager.instance;
+        yield return _WFSUtility.wef;
+        watchAdsM = WatchAdsManager.instance;
 
 
         PhotonNetwork.ConnectUsingSettings ("v1.0");
@@ -272,6 +282,10 @@ public class _SceneManager : MonoBehaviour
         weeklyRewardsM = WeeklyRewardsManager.instance;
         yield return _WFSUtility.wef;
         moneySlotM = MoneySlotManager.instance;
+        yield return _WFSUtility.wef;
+        dailyQuestM = DailyQuestManager.instance;
+        yield return _WFSUtility.wef;
+        watchAdsM = WatchAdsManager.instance;
 
         PhotonNetwork.ConnectUsingSettings ("v1.0");
         yield return _WFSUtility.wef;
@@ -318,6 +332,8 @@ public class _SceneManager : MonoBehaviour
             case SceneType.DAILY_REWARDS: dailyRewardsM.SetCanvas (val); break;
             case SceneType.WEEKLY_REWARDS: weeklyRewardsM.SetCanvas (val); break;
             case SceneType.MONEY_SLOT: moneySlotM.SetCanvas (val); break;
+            case SceneType.DAILY_QUEST: dailyQuestM.SetCanvas (val); break;
+            case SceneType.WATCH_ADS: watchAdsM.SetCanvas (val); break;
         }
     }
 
@@ -368,6 +384,8 @@ public class _SceneManager : MonoBehaviour
             case SceneType.DAILY_REWARDS:
             case SceneType.WEEKLY_REWARDS:
             case SceneType.MONEY_SLOT:
+            case SceneType.DAILY_QUEST:
+            case SceneType.WATCH_ADS:
             case SceneType.HERO:
                 SetActiveScene (activeSceneType, false);
                 break;

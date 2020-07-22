@@ -21,6 +21,7 @@ public class ProfileManager : MonoBehaviour
     }
 
     public Canvas canvas;
+    public Transform trFrame;
     public Text txtDisplayName;
     public InputField txtStatus;
     public Text txtStatusMsg;
@@ -119,6 +120,7 @@ public class ProfileManager : MonoBehaviour
         {
             equipedCards[a].objEmpty.SetActive (true);
         }
+        trFrame.localScale = Vector3.zero;
         canvas.enabled = true;
         prevSceneType = _SceneManager.instance.activeSceneType;
         _SceneManager.instance.activeSceneType = SceneType.PROFILE;
@@ -142,23 +144,28 @@ public class ProfileManager : MonoBehaviour
                 }
             }
         }
+        trFrame.LeanScale (Vector3.one, _SceneManager.TWEEN_DURATION);
     }
 
     public void Hide ()
     {
-        canvas.enabled = false;
-        _SceneManager.instance.activeSceneType = prevSceneType;
-
-        List<int> featuredHeroes = new List<int> ();
-        for (int i = 0; i < equipedCards.Length; i++)
+        trFrame.LeanScale (Vector3.zero, _SceneManager.TWEEN_DURATION).setOnComplete
+        (() =>
         {
-            if (!equipedCards[i].objEmpty.activeSelf)
-                featuredHeroes.Add (equipedCards[i].heroID);
-        }
-        if (featuredHeroes.Count > 0)
-            ApiManager.instance.SetHeroFeatured (featuredHeroes.ToArray ());
-        else
-            ApiManager.instance.SetHeroFeatured (new int[] {0});
+            canvas.enabled = false;
+            _SceneManager.instance.activeSceneType = prevSceneType;
+
+            List<int> featuredHeroes = new List<int> ();
+            for (int i = 0; i < equipedCards.Length; i++)
+            {
+                if (!equipedCards[i].objEmpty.activeSelf)
+                    featuredHeroes.Add (equipedCards[i].heroID);
+            }
+            if (featuredHeroes.Count > 0)
+                ApiManager.instance.SetHeroFeatured (featuredHeroes.ToArray ());
+            else
+                ApiManager.instance.SetHeroFeatured (new int[] { 0 });
+        });
     }
 
     public void UpdateCoinAndCoupon ()

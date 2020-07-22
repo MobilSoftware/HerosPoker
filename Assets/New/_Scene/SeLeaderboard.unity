@@ -1489,6 +1489,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 116257269}
+  trFrame: {fileID: 924741822}
   btnClose: {fileID: 1006304843}
   scrRect: {fileID: 1698508897}
   itemLeaderboards:

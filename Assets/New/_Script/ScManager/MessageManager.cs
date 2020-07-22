@@ -27,6 +27,7 @@ public class MessageManager : MonoBehaviour
     }
 
     public Canvas canvas;
+    public Transform trFrame;
 
     public GameObject objFrameTitle;
     public Text txtTitle;
@@ -103,14 +104,20 @@ public class MessageManager : MonoBehaviour
             canvas.sortingOrder = (int) SceneType.MESSAGE;
             isInit = true;
         }
+        trFrame.localScale = Vector3.zero;
         canvas.enabled = true;
         prevSceneType = _SceneManager.instance.activeSceneType;
         _SceneManager.instance.activeSceneType = SceneType.MESSAGE;
+        trFrame.LeanScale (Vector3.one, _SceneManager.TWEEN_DURATION);
     }
 
     public void Hide ()
     {
-        canvas.enabled = false;
-        _SceneManager.instance.activeSceneType = prevSceneType;
+        trFrame.LeanScale (Vector3.zero, _SceneManager.TWEEN_DURATION).setOnComplete
+        (() =>
+        {
+            canvas.enabled = false;
+            _SceneManager.instance.activeSceneType = prevSceneType;
+        });
     }
 }

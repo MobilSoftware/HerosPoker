@@ -21,6 +21,7 @@ public class ReceiveItemManager : MonoBehaviour
     }
 
     public Canvas canvas;
+    public Transform trFrame;
     public Transform parentItems;
     public ItemReceive prefabItemReceive;
     public Button btnOK;
@@ -53,21 +54,27 @@ public class ReceiveItemManager : MonoBehaviour
             ItemReceive ir = Instantiate (prefabItemReceive, parentItems);
             ir.SetData (items[i]);
         }
+        trFrame.localScale = Vector3.zero;
 
         canvas.enabled = true;
         prevSceneType = _SceneManager.instance.activeSceneType;
         _SceneManager.instance.activeSceneType = SceneType.RECEIVE_ITEM;
+        trFrame.LeanScale (Vector3.one, _SceneManager.TWEEN_DURATION);
     }
 
     public void Hide()
     {
-        _SceneManager.instance.activeSceneType = prevSceneType;
-        canvas.enabled = false;
-        int childCount = parentItems.childCount;
-        for (int i = 0; i < childCount; i++)
+        trFrame.LeanScale (Vector3.zero, _SceneManager.TWEEN_DURATION).setOnComplete
+        (() =>
         {
-            Destroy (parentItems.GetChild (i).gameObject);
-        }
+            _SceneManager.instance.activeSceneType = prevSceneType;
+            canvas.enabled = false;
+            int childCount = parentItems.childCount;
+            for (int i = 0; i < childCount; i++)
+            {
+                Destroy (parentItems.GetChild (i).gameObject);
+            }
+        });
     }
 
     public void ShowCombined ()

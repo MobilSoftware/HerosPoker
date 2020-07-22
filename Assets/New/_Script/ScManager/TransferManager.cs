@@ -22,6 +22,7 @@ public class TransferManager : MonoBehaviour
     }
 
     public Canvas canvas;
+    public Transform trFrame;
     public Button btnClose;
     public GameObject objInput;
     public GameObject objConfirm;
@@ -184,9 +185,11 @@ public class TransferManager : MonoBehaviour
             canvas.sortingOrder = (int) SceneType.TRANSFER;
             isInit = true;
         }
+        trFrame.localScale = Vector3.zero;
+        canvas.enabled = true;
+        trFrame.LeanScale (Vector3.one, _SceneManager.TWEEN_DURATION);
         prevSceneType = _SceneManager.instance.activeSceneType;
         _SceneManager.instance.activeSceneType = SceneType.TRANSFER;
-        canvas.enabled = true;
     }
 
     private void Hide ()
@@ -196,10 +199,14 @@ public class TransferManager : MonoBehaviour
             StopCoroutine (crToConfirm);
             crToConfirm = null;
         }
-        canvas.enabled = false;
-        isInit = false;
-        ResetAll ();
-        ToInput ();
-        _SceneManager.instance.activeSceneType = prevSceneType;
+        trFrame.LeanScale (Vector3.zero, _SceneManager.TWEEN_DURATION).setOnComplete
+        (() =>
+        { 
+            canvas.enabled = false;
+            isInit = false;
+            ResetAll ();
+            ToInput ();
+            _SceneManager.instance.activeSceneType = prevSceneType;
+        });
     }
 }

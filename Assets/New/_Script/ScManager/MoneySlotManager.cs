@@ -22,6 +22,7 @@ public class MoneySlotManager : MonoBehaviour
     }
 
     public Canvas canvas;
+    public Transform trFrame;
     public Button btnSpin;
     public Button btnClose;
     public ItemReel[] reels;
@@ -74,15 +75,21 @@ public class MoneySlotManager : MonoBehaviour
             canvas.sortingOrder = (int) SceneType.MONEY_SLOT;
             isInit = true;
         }
+        trFrame.localScale = Vector3.zero;
         canvas.enabled = true;
         prevSceneType = _SceneManager.instance.activeSceneType;
         _SceneManager.instance.activeSceneType = SceneType.MONEY_SLOT;
+        trFrame.LeanScale (Vector3.one, _SceneManager.TWEEN_DURATION);
     }
 
     private void Hide ()
     {
-        canvas.enabled = false;
-        _SceneManager.instance.activeSceneType = prevSceneType;
+        trFrame.LeanScale (Vector3.zero, _SceneManager.TWEEN_DURATION).setOnComplete
+        (() =>
+        {
+            canvas.enabled = false;
+            _SceneManager.instance.activeSceneType = prevSceneType;
+        });
     }
 
     public void SetJson (JGetMoneySlot _json )
