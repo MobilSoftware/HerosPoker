@@ -272,7 +272,6 @@ public class HomeManager : MonoBehaviour
         canvas.sortingOrder = (int) SceneType.HOME;
         tmpDisplayName.text = PlayerData.display_name;
 
-        //standHero.LoadSpine (PlayerData.hero_id);
         standHero.LoadFromBundle (PlayerData.costume_id);
     }
 
@@ -330,7 +329,6 @@ public class HomeManager : MonoBehaviour
 
     IEnumerator _AddPublicChat (JPublicChat[] chat )
     {
-        Logger.E ("adding chat");
         for (int i = 0; i < chat.Length; i++)
         {
             ItemMinichat imc = Instantiate (prefabItemMinichat, parentMinichat);

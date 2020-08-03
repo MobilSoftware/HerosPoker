@@ -6,7 +6,7 @@ namespace Rays.Utilities
 {
     public static class Congest
     {
-        public const bool DEVELOPMENT = true;
+        public const bool DEVELOPMENT = false;
 
         public const string DOMAIN = "http://194.59.165.164/";
         public const string APIVER = "v1.0";

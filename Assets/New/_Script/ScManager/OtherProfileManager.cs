@@ -71,7 +71,7 @@ public class OtherProfileManager : MonoBehaviour
     {
         if (json.on_friend_block || json.on_friend_block_me)
         {
-            MessageManager.instance.Show (this.gameObject, "Tidak bisa menampilkan profil karena anda berada di daftar blok pemain ini");
+            MessageManager.instance.Show (this.gameObject, "Tidak bisa menampilkan karena anda berada di daftar blok pemain ini");
             return;
         }
         jFriend = json;
