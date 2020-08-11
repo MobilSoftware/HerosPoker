@@ -347,7 +347,7 @@ public class _SceneManager : MonoBehaviour
             mainCamera.gameObject.SetActive (false);
             activeSceneType = SceneType.SLOTO;
         }
-        else 
+        else
         {
             slotoM.gameObject.SetActive (false);
             mainCamera.gameObject.SetActive (true);
@@ -371,6 +371,9 @@ public class _SceneManager : MonoBehaviour
                 Debug.Log ("Open Pause Menu");
                 break;
             case SceneType.SLOTO:
+                SetActiveScene (activeSceneType, false);
+                SetActiveScene (SceneType.HOME, true);
+                break;
             case SceneType.PROFILE:
             case SceneType.SHOP:
             case SceneType.VERIFY:
@@ -386,6 +389,7 @@ public class _SceneManager : MonoBehaviour
             case SceneType.MONEY_SLOT:
             case SceneType.DAILY_QUEST:
             case SceneType.WATCH_ADS:
+            case SceneType.POKER_ROOM:
             case SceneType.HERO:
                 SetActiveScene (activeSceneType, false);
                 break;
