@@ -107,7 +107,7 @@ internal class PhotonHandler : MonoBehaviour
     /// <param name="pause">If the app pauses.</param>
     protected void OnApplicationPause(bool pause)
     {
-        if (PhotonNetwork.BackgroundTimeout > 0.1f)
+        if (PhotonNetwork.BackgroundTimeout > 0.001f)
         {
             if (timerToStopConnectionInBackground == null)
             {
@@ -219,19 +219,20 @@ internal class PhotonHandler : MonoBehaviour
     /// <summary>A thread which runs independent from the Update() calls. Keeps connections online while loading or in background. See PhotonNetwork.BackgroundTimeout.</summary>
     public static bool FallbackSendAckThread()
     {
-        if (sendThreadShouldRun && !PhotonNetwork.offlineMode && PhotonNetwork.networkingPeer != null)
+        //if (sendThreadShouldRun && !PhotonNetwork.offlineMode && PhotonNetwork.networkingPeer != null)
+        if (sendThreadShouldRun && PhotonNetwork.networkingPeer != null)
         {
             // check if the client should disconnect after some seconds in background
-            if (timerToStopConnectionInBackground != null && PhotonNetwork.BackgroundTimeout > 0.1f)
+            if (timerToStopConnectionInBackground != null && PhotonNetwork.BackgroundTimeout > 0.001f)
             {
                 if (timerToStopConnectionInBackground.ElapsedMilliseconds > PhotonNetwork.BackgroundTimeout * 1000)
                 {
-                    if (PhotonNetwork.connected)
-                    {
-                        PhotonNetwork.Disconnect();
-                    }
-                    timerToStopConnectionInBackground.Stop();
-                    timerToStopConnectionInBackground.Reset();
+                    //if (PhotonNetwork.connected)
+                    //{
+                    //    PhotonNetwork.Disconnect();
+                    //}
+                    //timerToStopConnectionInBackground.Stop();
+                    //timerToStopConnectionInBackground.Reset();
                     return sendThreadShouldRun;
                 }
             }

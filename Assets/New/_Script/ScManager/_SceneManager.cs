@@ -163,6 +163,7 @@ public class _SceneManager : MonoBehaviour
         vipM = VipManager.instance;
         yield return _WFSUtility.wef;
         pokerM = PokerManager.instance;
+        PhotonNetwork.ConnectUsingSettings("v1.0");
         yield return _WFSUtility.wef;
         beginM = BeginManager.instance;
         yield return _WFSUtility.wef;
@@ -201,7 +202,6 @@ public class _SceneManager : MonoBehaviour
         watchAdsM = WatchAdsManager.instance;
 
 
-        PhotonNetwork.ConnectUsingSettings ("v1.0");
         yield return _WFSUtility.wef;
         SetActiveScene (SceneType.SLOTO, false);
         yield return _WFSUtility.wef;

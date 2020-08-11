@@ -105,6 +105,8 @@ public class _PokerGameHUD : MonoBehaviour
             GlobalVariables.bQuitOnNextRound = false;
             //StartCoroutine(PokerManager.instance.uiPause._LoadMenu ());
             PokerManager.instance.uiOthers.LoadMenu ();
+            PlayerPrefs.SetString(PrefEnum.PHOTON_ROOM_NAME.ToString(), PhotonNetwork.room.Name);
+            PlayerPrefs.Save();
             MenuPhotonNetworkManager.instance.Disconnect();
             lowConnectionCount = 0;
         }

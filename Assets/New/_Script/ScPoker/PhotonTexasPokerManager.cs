@@ -1192,12 +1192,15 @@ public class PhotonTexasPokerManager : PunBehaviour
     {
         _PlayerPokerActor ppa = null;
 
-        foreach (_PlayerPokerActor p in _PokerGameManager.instance.unsortedPlayers)
+        if (_PokerGameManager.instance.unsortedPlayers.Length > 0)
         {
-            if (p._myParasitePlayer.nickname == nickname)
+            foreach (_PlayerPokerActor p in _PokerGameManager.instance.unsortedPlayers)
             {
-                ppa = p;
-                break;
+                if (p._myParasitePlayer.nickname == nickname)
+                {
+                    ppa = p;
+                    break;
+                }
             }
         }
 
@@ -1759,8 +1762,8 @@ public class PhotonTexasPokerManager : PunBehaviour
             TimeSpan diff = curTime - lastPausedTime;
             float diffVal = (float) Math.Floor (diff.TotalSeconds);
 
-            if (diffVal > _timeLeftforPause)
-                MessageManager.instance.Show (gameObject, "Koneksi terputus", ButtonMode.OK, 2);
+            //if (diffVal > _timeLeftforPause)
+            //    MessageManager.instance.Show (gameObject, "Koneksi terputus", ButtonMode.OK, 2);
         }
     }
 

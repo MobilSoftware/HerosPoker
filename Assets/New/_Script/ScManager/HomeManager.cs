@@ -49,6 +49,8 @@ public class HomeManager : MonoBehaviour
     public Button btnWatchAds;
     public Button btnDailyQuest;
     public Button btnChat;
+    public Button btnCoin;
+    public Button btnGem;
     public GameObject objNotifInbox;
     public GameObject objNotifFriend;
     public TextMeshProUGUI tmpDisplayName;
@@ -78,6 +80,8 @@ public class HomeManager : MonoBehaviour
         btnPoker.onClick.AddListener (OnPokerRoom);
         btnMinigame.onClick.AddListener (OnMinigame);
         btnShop.onClick.AddListener (OnShop);
+        btnCoin.onClick.AddListener(OnShop);
+        btnGem.onClick.AddListener(OnShop);
         btnHideMinigame.onClick.AddListener (OnHideGames);
         btnOriental.onClick.AddListener (OnOriental);
         btnWestern.onClick.AddListener (OnWestern);
