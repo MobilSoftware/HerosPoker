@@ -273,7 +273,7 @@ public class SlotoManagerScript : MonoBehaviour
         else if (type == ButtonScript.ButtonType.Help)
         {
             helpBG.gameObject.SetActive(true);
-            helpFG.sprite = helpFGSprite[slotType];
+            helpFG.sprite = helpFGSprite[slotType-1];
         }
         else if (type == ButtonScript.ButtonType.Minimize)
         {
