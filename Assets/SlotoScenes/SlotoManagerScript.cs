@@ -33,6 +33,10 @@ public class SlotoManagerScript : MonoBehaviour
     public Sprite[] tileSprite2;
     public Sprite[] iconSprite2;
 
+    public SpriteRenderer helpBG;
+    public SpriteRenderer helpFG;
+    public Sprite[] helpFGSprite;
+
     private Sprite[] tileSprite;
     private Sprite[] iconSprite;
 
@@ -264,7 +268,16 @@ public class SlotoManagerScript : MonoBehaviour
         }
         else if (type == ButtonScript.ButtonType.Plus)
         {
-            Debug.Log("Insert Plus Code Here");
+            _SceneManager.instance.SetActiveScene(SceneType.SHOP, true);
+        }
+        else if (type == ButtonScript.ButtonType.Help)
+        {
+            helpBG.gameObject.SetActive(true);
+            helpFG.sprite = helpFGSprite[slotType];
+        }
+        else if (type == ButtonScript.ButtonType.Minimize)
+        {
+            helpBG.gameObject.SetActive(false);
         }
     }
 
