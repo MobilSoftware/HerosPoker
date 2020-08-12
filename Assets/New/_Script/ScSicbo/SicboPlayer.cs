@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,8 +8,10 @@ public class SicboPlayer : MonoBehaviour
 {
     //public Text textDisplayName;
     public Text textCoinValue;
+    public Text textCoinDiff;
     public Button btnReset;
     public Button[] btnBetValues;   //length = 4
+    public Image[] imgBtnBets;      //length = 4
     public Button[] btnBetTypes;    //length = 50
     public Image[] imgChips;        //length = 50
     public Text[] txtChipValues;    //length = 50
@@ -39,13 +42,14 @@ public class SicboPlayer : MonoBehaviour
     private long betValue;
     private ApiBridge.SicboBetType betType;
     private long totalBet;      //just for syncing when leavin before master receive submit record
+    private Coroutine crSetTextCoinDiff;
 
     private void Start ()
     {
         records = new Dictionary<ApiBridge.SicboBetType, long> ();
         if (btnReset != null)
         {
-            btnReset.onClick.AddListener (ResetBet);
+            btnReset.onClick.AddListener (OnReset);
             btnBetValues[0].onClick.AddListener (() => OnBetValue (0));
             btnBetValues[1].onClick.AddListener (() => OnBetValue (1));
             btnBetValues[2].onClick.AddListener (() => OnBetValue (2));
@@ -128,6 +132,8 @@ public class SicboPlayer : MonoBehaviour
             case 3: betValue = 1000; break;
         }
 
+        SetDimmerBetChip(btnIndex);
+
         if (betValue > PlayerData.owned_coin)
         {
             betValue = 0;
@@ -135,6 +141,29 @@ public class SicboPlayer : MonoBehaviour
             return;
         }
         sprChip = sprChips[btnIndex];
+    }
+
+    private void SetDimmerBetChip (int indexSelectedBtn)
+    {
+        if (indexSelectedBtn == -1)
+        {
+            for (int i = 0; i < imgBtnBets.Length; i++)
+            {
+                imgBtnBets[i].color = Color.white;
+            }
+        } else
+        {
+            for (int i = 0; i < imgBtnBets.Length; i++)
+            {
+                if (i != indexSelectedBtn)
+                {
+                    imgBtnBets[i].color = Color.gray;
+                } else
+                {
+                    imgBtnBets[i].color = Color.white;
+                }
+            }
+        }
     }
 
     private void OnBetType ( int btnIndex )
@@ -280,8 +309,18 @@ public class SicboPlayer : MonoBehaviour
         parasite.SetSicboBets (strBets);
     }
 
-    private void ResetBet ()
+    private void OnReset ()
     {
+        MessageManager.instance.Show(this.gameObject, "Yakin ingin reset?", ButtonMode.OK_CANCEL, 1, "Reset", "Batal");
+    }
+
+    private void ResetBet (bool isButton = true)
+    {
+        if (isButton)
+        {
+            PlayerData.owned_coin += totalBet;
+            textCoinValue.text = PlayerData.owned_coin.toShortCurrency();
+        }
         totalBet = 0;
         records.Clear ();
         for (int i = 0; i < 50; i++)
@@ -305,8 +344,9 @@ public class SicboPlayer : MonoBehaviour
 
     public void CleanUp ()
     {
-        ResetBet ();
+        ResetBet (false);
         HideWinLose ();
+        SetDimmerBetChip(-1);
         betValue = 0;
         betType = ApiBridge.SicboBetType.None;
     }
@@ -448,6 +488,51 @@ public class SicboPlayer : MonoBehaviour
                     Destroy (parentChips[i].GetChild (j).gameObject);
                 }
             }
+        }
+    }
+
+    public void SetTextCoinDiff (long lCoinDiff)
+    {
+        if (crSetTextCoinDiff != null)
+            StopCoroutine(crSetTextCoinDiff);
+        crSetTextCoinDiff = StartCoroutine(_SetTextCoinDiff(lCoinDiff));
+    }
+
+    IEnumerator _SetTextCoinDiff (long lCoinDiff)
+    {
+        if (textCoinDiff != null)
+        {
+            lCoinDiff *= 1000;
+            if (lCoinDiff > 0)
+            {
+                textCoinDiff.gameObject.SetActive(true);
+                textCoinDiff.text = "+" + lCoinDiff.ToString ("N0");
+            }
+            else if (lCoinDiff < 0)
+            {
+                textCoinDiff.gameObject.SetActive(true);
+                textCoinDiff.text = "-" + (lCoinDiff * (-1)).ToString ("N0");
+            }
+
+            yield return _WFSUtility.wfs3;
+
+            textCoinDiff.gameObject.SetActive(false);
+        }
+    }
+
+    private void OnPositiveClicked (int returnedCode)
+    {
+        switch (returnedCode)
+        {
+            case 1: ResetBet(); break;
+        }
+    }
+
+    private void OnNegativeClicked (int returnedCode)
+    {
+        switch (returnedCode)
+        {
+            case 1: MessageManager.instance.Hide(); break;
         }
     }
 }

@@ -260,6 +260,7 @@ public class ApiManager : MonoBehaviour
 
     public void GetShop (int itemType = 0)
     {
+        ShopManager.instance.ClearShop();
         api.GetShop (itemType);
         ShopManager.instance.isSettingJson = true;
         HeroManager.instance.isSettingJson = true;
@@ -290,8 +291,8 @@ public class ApiManager : MonoBehaviour
         }
         PlayerData.owned_coin = long.Parse (json.player.coin);
         PlayerData.owned_coupon = long.Parse (json.player.coupon);
+        ShopManager.instance.UpdateStatus(json);
         _SceneManager.instance.UpdateAllCoinAndCoupon ();
-        ShopManager.instance.UpdateStatus (json);
         MessageManager.instance.Show (this.gameObject, "Anda berhasil membeli " + json.item.item_name[0]);
     }
 
