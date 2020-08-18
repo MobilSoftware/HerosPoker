@@ -105,7 +105,9 @@ public class RoomInfoManager : MonoBehaviour
         if (!PhotonNetwork.connected)
         {
             if (PhotonNetwork.connectionState == ConnectionState.Connected)
+            {
                 MenuPhotonNetworkManager.instance.Disconnect();
+            }
 
             StartCoroutine(ReconnectBehaviour());
             return;
@@ -202,7 +204,16 @@ public class RoomInfoManager : MonoBehaviour
         else
             GlobalVariables.bIsCoins = true;
 
-        StartCoroutine(LoadGame());
+        
+        if (PlayerPrefs.GetString(PrefEnum.PHOTON_ROOM_NAME.ToString(), string.Empty).Equals(PhotonNetwork.room.Name))
+        {
+            Debug.LogError("if 1: " + PhotonNetwork.room.Name);
+            //PokerManager.instance.uiOthers.OnSwitchTable(true);
+            SwitchingRoom();
+        } else
+        {
+            StartCoroutine(LoadGame());
+        }
         //HomeSceneManager.Instance.HitAbsent(PhotonNetwork.room.Name);
     }
 
@@ -229,7 +240,7 @@ public class RoomInfoManager : MonoBehaviour
         if (!PhotonNetwork.connected)
         {
             //DisconnectFromSwitchRoom();
-            Logger.E ("photon not connect");
+            Debug.LogError ("photon not connect");
             PokerManager.instance.uiOthers.LoadMenu ();
             yield break;
         }
@@ -247,10 +258,12 @@ public class RoomInfoManager : MonoBehaviour
         if (waitingSwitch)
         {
             //DisconnectFromSwitchRoom();
+            Debug.LogError("wait switch true");
             PokerManager.instance.uiOthers.LoadMenu ();
         }
         else if(!waitingSwitch)
         {
+            Debug.LogError("wait switch false");
             if (GlobalVariables.bIsCoins)
             {
                 long lCredit = PlayerData.owned_coin;
@@ -314,14 +327,24 @@ public class RoomInfoManager : MonoBehaviour
     private IEnumerator LoadGame()
     {
         Resources.UnloadUnusedAssets ();
-        Logger.W ("loading game");
         yield return _WFSUtility.wfs05;
 
         if (GlobalVariables.gameType == GameType.TexasPoker)
         {
-            _PokerGameHUD.instance.Show();
+            //if (PlayerPrefs.GetString(PrefEnum.PHOTON_ROOM_NAME.ToString(), string.Empty).Equals(PhotonNetwork.room.Name))
+            //{
+            //    Debug.LogError("if 1: " + PhotonNetwork.room.Name);
+            //    PokerManager.instance.uiOthers.OnSwitchTable(true);
+            //}
+            //else
+            //{
+                Debug.LogError("else 1: " + PhotonNetwork.room.Name);
+                PlayerPrefs.SetString(PrefEnum.PHOTON_ROOM_NAME.ToString(), PhotonNetwork.room.Name);
+                PlayerPrefs.Save();
+                _PokerGameHUD.instance.Show();
 
-            PhotonTexasPokerManager.instance.PrepareGame();
+                PhotonTexasPokerManager.instance.PrepareGame();
+            //}
         } else if (GlobalVariables.gameType == GameType.Sicbo)
         {
             SicboManager.instance.PrepareGame ();

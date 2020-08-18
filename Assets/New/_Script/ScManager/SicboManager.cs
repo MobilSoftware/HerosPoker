@@ -325,6 +325,7 @@ public class SicboManager : PunBehaviour
 
     IEnumerator _StartTimer (float timerValue )
     {
+        SoundManager.instance.PlaySFX(SFXType.SFX_RoundStart, Vector3.zero);
         objStart.SetActive (true);
         objEnd.SetActive (false);
         yield return _WFSUtility.wfs2;
@@ -515,6 +516,8 @@ public class SicboManager : PunBehaviour
                 long lCoin = PhotonUtility.GetPlayerProperties<long> (unsortedPlayers[i].photonPlayer, PhotonEnums.Player.Money);
                 if (unsortedPlayers[i].photonPlayer.NickName == PlayerData.id.ToString ())
                 {
+                    long lCoinDiff = lCoin - PlayerData.owned_coin;
+                    unsortedPlayers[i].SetTextCoinDiff(lCoinDiff);
                     PlayerData.owned_coin = lCoin;
                     _SceneManager.instance.UpdateAllCoinAndCoupon ();
                 }

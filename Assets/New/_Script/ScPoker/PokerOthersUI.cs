@@ -11,7 +11,7 @@ public class PokerOthersUI : MonoBehaviour
     {
         btnQuitGame.onClick.AddListener (OnQuitGame);
         btnForceQuit.onClick.AddListener(OnQuitGame);
-        btnSwitchTable.onClick.AddListener (OnSwitchTable);
+        btnSwitchTable.onClick.AddListener (() => OnSwitchTable());
     }
 
     public void Show()
@@ -60,7 +60,7 @@ public class PokerOthersUI : MonoBehaviour
         //Hide();
     }
 
-    private void OnSwitchTable()
+    public void OnSwitchTable(bool isRejoin = false)
     {
         if (GlobalVariables.gameType == GameType.TexasPoker)
         {
@@ -73,7 +73,7 @@ public class PokerOthersUI : MonoBehaviour
                     //StartCoroutine(_LoadSwitchTable());
                     LoadSwitchTable ();
                 }
-                else if (PhotonTexasPokerManager.instance != null && PhotonTexasPokerManager.instance.GetNumActivePlayers () > 1)
+                else if (PhotonTexasPokerManager.instance != null && PhotonTexasPokerManager.instance.GetNumActivePlayers () > 1 && !isRejoin)
                     MessageManager.instance.Show (gameObject, "Apakah kamu yakin ingin pindah ke meja lain?", ButtonMode.OK_CANCEL, 2);
                 else
                 {

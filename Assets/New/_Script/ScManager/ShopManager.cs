@@ -50,6 +50,7 @@ public class ShopManager : MonoBehaviour
     private List<JGetShopItem> jsonItemHeroes;
     private List<ItemHero> itemHeroes;
     private JGetShopItem[] sortedItemHeroes;
+    private Coroutine crUpdateStatus;
 
     private void Start ()
     {
@@ -154,10 +155,13 @@ public class ShopManager : MonoBehaviour
         if (jsonItemCoins == null)
             return;
 
-        for (int i = 0; i < jsonItemCoins.Count; i++)
+        if (parentCoin.childCount == 0)
         {
-            ItemCoin ic = Instantiate (prefabItemCoin, parentCoin);
-            ic.SetData (jsonItemCoins[i]);
+            for (int i = 0; i < jsonItemCoins.Count; i++)
+            {
+                ItemCoin ic = Instantiate(prefabItemCoin, parentCoin);
+                ic.SetData(jsonItemCoins[i]);
+            }
         }
     }
 
@@ -166,12 +170,28 @@ public class ShopManager : MonoBehaviour
         if (sortedItemHeroes == null)
             return;
 
-        itemHeroes = new List<ItemHero> ();
-        for (int i = 0; i < sortedItemHeroes.Length; i++)
+        if (parentHero.childCount == 0)
         {
-            ItemHero ih = Instantiate (prefabItemHero, parentHero);
-            ih.SetData (sortedItemHeroes[i]);
-            itemHeroes.Add (ih);
+            itemHeroes = new List<ItemHero>();
+            for (int i = 0; i < sortedItemHeroes.Length; i++)
+            {
+                ItemHero ih = Instantiate(prefabItemHero, parentHero);
+                ih.SetData(sortedItemHeroes[i]);
+                itemHeroes.Add(ih);
+            }
+        }
+    }
+
+    public void ClearShop()
+    {
+        for (int i = 0; i < parentCoin.childCount; i++)
+        {
+            Destroy(parentCoin.GetChild(i).gameObject);
+        }
+
+        for (int x = 0; x < parentCoin.childCount; x++)
+        {
+            Destroy(parentHero.GetChild(x).gameObject);
         }
     }
 
@@ -191,6 +211,14 @@ public class ShopManager : MonoBehaviour
 
     public void UpdateStatus (JBuyShop json )
     {
+        if (crUpdateStatus != null)
+            StopCoroutine(crUpdateStatus);
+
+        crUpdateStatus = StartCoroutine(_UpdateStatus(json));
+    }
+
+    IEnumerator _UpdateStatus(JBuyShop json)
+    {
         if (json.item.item_type_id == 5)
         {
             for (int i = 0; i < jsonItemHeroes.Count; i++)
@@ -202,16 +230,19 @@ public class ShopManager : MonoBehaviour
                         jsonItemHeroes[i].is_costume_owned = true;
                         jsonItemHeroes[i].is_hero_owned = true;
                     }
+
+                    yield return _WFSUtility.wef;
                 }
             }
 
-            sortedItemHeroes = jsonItemHeroes.OrderBy (x => x.is_hero_owned ? 1 : 0).ThenBy (x => (x.is_new == 0) ? 0 : 1).ThenBy (x => int.Parse (x.price_idr)).ThenBy (x => long.Parse (x.price_coin)).ToArray ();
+            sortedItemHeroes = jsonItemHeroes.OrderBy(x => x.is_hero_owned ? 1 : 0).ThenBy(x => (x.is_new == 0) ? 0 : 1).ThenBy(x => int.Parse(x.price_idr)).ThenBy(x => long.Parse(x.price_coin)).ToArray();
             for (int x = 0; x < itemHeroes.Count; x++)
             {
-                itemHeroes[x].SetData (sortedItemHeroes[x]);
+                itemHeroes[x].SetData(sortedItemHeroes[x]);
+                yield return _WFSUtility.wef;
             }
 
-            HeroManager.instance.UpdateStatusOwned (jsonItemHeroes);
+            HeroManager.instance.UpdateStatusOwned(jsonItemHeroes);
         }
     }
 

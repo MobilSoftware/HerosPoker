@@ -5492,6 +5492,8 @@ MonoBehaviour:
   btnWatchAds: {fileID: 872031365}
   btnDailyQuest: {fileID: 896864823}
   btnChat: {fileID: 1767692606}
+  btnCoin: {fileID: 994750201}
+  btnGem: {fileID: 1049887451}
   objNotifInbox: {fileID: 934020899}
   objNotifFriend: {fileID: 1704929694}
   tmpDisplayName: {fileID: 813463285}
