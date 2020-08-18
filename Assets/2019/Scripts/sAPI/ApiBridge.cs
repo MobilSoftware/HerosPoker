@@ -620,6 +620,7 @@ public class ApiBridge : MonoBehaviour
     {
         public string phone_num;
         public string status_message;
+        public string display_name;
     }
 
     public int SetPhoneNum ( string phoneNum, int playerId = 0, string token = "" )
@@ -641,7 +642,7 @@ public class ApiBridge : MonoBehaviour
 
 
 
-    public int SetStatus ( string statusMsg, int playerId = 0, string token = "" )
+    public int SetStatus (string statusMsg, string displayName, int playerId = 0, string token = "" )
     {
         if (ParseToken (playerId, token))
         {
@@ -649,6 +650,7 @@ public class ApiBridge : MonoBehaviour
             param.player_id = apiPlayerId;
             param.token = apiToken;
             param.status_message = statusMsg;
+            param.display_name = displayName;
             string paramJson = JsonUtility.ToJson (param);
             API api = new API ("setstatus.php", "RSetStatus", paramJson, 1);
             param = null; paramJson = "";
